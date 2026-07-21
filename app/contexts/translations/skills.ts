@@ -1,0 +1,32 @@
+export const skills = {
+  en: {
+    'skills.title': 'Team capabilities',
+    'skills.subtitle': 'Not a personal tech dump — the stack our team uses to build products, attract traffic, and turn it into leads.',
+    'skills.product': 'Product development',
+    'skills.marketing': 'Marketing & growth',
+    'skills.aiOps': 'AI & operations',
+    'skills.showMore': 'Show more',
+    'skills.showLess': 'Show less',
+    'skills.moreTech': 'more',
+  },
+  ru: {
+    'skills.title': 'Компетенции команды',
+    'skills.subtitle': 'Не личный список технологий, а стек команды: разработка, привлечение трафика и конверсия в заявки.',
+    'skills.product': 'Разработка продуктов',
+    'skills.marketing': 'Маркетинг и рост',
+    'skills.aiOps': 'AI и инфраструктура',
+    'skills.showMore': 'Ещё',
+    'skills.showLess': 'Свернуть',
+    'skills.moreTech': '',
+  },
+  kz: {
+    'skills.title': 'Команда құзыреттері',
+    'skills.subtitle': 'Жеке тізім емес — команда стегі: өнім әзірлеу, трафик және өтінімге айналдыру.',
+    'skills.product': 'Өнім әзірлеу',
+    'skills.marketing': 'Маркетинг және өсу',
+    'skills.aiOps': 'AI және инфрақұрылым',
+    'skills.showMore': 'Тағы',
+    'skills.showLess': 'Жабу',
+    'skills.moreTech': '',
+  },
+};

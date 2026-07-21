@@ -1,0 +1,62 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#030712;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0c0a09;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#93c5fd;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fb923c;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative gradient orbs (dark theme style) -->
+  <circle cx="150" cy="150" r="100" fill="rgba(96,165,250,0.08)"/>
+  <circle cx="1100" cy="480" r="120" fill="rgba(251,146,60,0.06)"/>
+  <circle cx="1050" cy="150" r="80" fill="rgba(96,165,250,0.1)"/>
+  
+  <!-- Subtle grid pattern -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Main icon (same style as site icon - simple circle with A) -->
+  <g transform="translate(120, 250)">
+    <circle cx="0" cy="0" r="120" fill="url(#iconGradient)"/>
+    <text x="0" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="140" font-weight="600" fill="white" text-anchor="middle" letter-spacing="0">A</text>
+  </g>
+  
+  <!-- Text content -->
+  <g transform="translate(400, 200)">
+    <!-- Name -->
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="300" fill="url(#textGradient)" letter-spacing="0.08em">
+      Aidar
+    </text>
+    
+    <!-- Title -->
+    <text x="0" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="300" fill="rgba(255,255,255,0.9)" letter-spacing="0.06em">
+      Разработка сайтов и приложений
+    </text>
+    
+    <!-- Description -->
+    <text x="0" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="300" fill="rgba(255,255,255,0.7)" letter-spacing="0.02em">
+      Веб-разработка • AI интеграции • Мобильные приложения
+    </text>
+    
+    <!-- Stats -->
+    <text x="0" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="300" fill="rgba(255,255,255,0.6)" letter-spacing="0.02em">
+      6+ лет опыта • 47+ проектов
+    </text>
+  </g>
+</svg>

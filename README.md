@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AnimatedSection - Переиспользуемый компонент для анимации при скролле
 
-## Getting Started
+## Использование
 
-First, run the development server:
+Просто оберните любой контент в компонент `AnimatedSection`:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```tsx
+import AnimatedSection from '../common/AnimatedSection';
+
+export default function MyComponent() {
+  return (
+    <AnimatedSection animationType="slide-up" delay={100}>
+      <h2>Заголовок</h2>
+      <p>Контент появится с анимацией при скролле</p>
+    </AnimatedSection>
+  );
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Параметры
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `animationType`: `'slide-up' | 'fade-in' | 'slide-left' | 'slide-right'` - тип анимации
+- `delay`: число (мс) - задержка перед анимацией
+- `threshold`: число (0-1) - процент видимости для запуска (по умолчанию 0.1)
+- `triggerOnce`: boolean - запускать только один раз (по умолчанию true)
+- `className`: string - дополнительные CSS классы
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Примеры
 
-## Learn More
+### Базовое использование
+```tsx
+<AnimatedSection>
+  <div>Контент</div>
+</AnimatedSection>
+```
 
-To learn more about Next.js, take a look at the following resources:
+### С задержкой
+```tsx
+<AnimatedSection delay={200}>
+  <div>Появится через 200ms</div>
+</AnimatedSection>
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Разные типы анимаций
+```tsx
+<AnimatedSection animationType="slide-left">
+  <div>Слева направо</div>
+</AnimatedSection>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<AnimatedSection animationType="fade-in">
+  <div>Просто появление</div>
+</AnimatedSection>
+```
 
-## Deploy on Vercel
+### Stagger эффект для списков
+```tsx
+{items.map((item, index) => (
+  <AnimatedSection key={item.id} delay={index * 100}>
+    <div>{item.title}</div>
+  </AnimatedSection>
+))}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
