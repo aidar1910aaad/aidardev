@@ -23,18 +23,18 @@ export default function EditorialHero() {
   const titleEnd = titleEndRaw.startsWith('home.hero.') ? '' : titleEndRaw;
 
   return (
-    <section className="editorial-grid relative overflow-hidden border-b border-[#11110f] pt-14 lg:pt-20">
-      <div className="mx-auto max-w-[1440px] border-x border-[#cfcdc5] bg-[#f4f2ec]/92">
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_19rem]">
-          <div className="px-4 py-8 sm:px-8 sm:py-12 lg:border-r lg:border-[#cfcdc5] lg:px-12 lg:py-20 xl:px-16">
-            <AnimatedSection animationType="fade-in">
+    <section className="editorial-grid relative border-b border-[#11110f] pt-14 lg:overflow-hidden lg:pt-20">
+      <div className="mx-auto w-full max-w-[1440px] bg-[#f4f2ec]/92 lg:border-x lg:border-[#cfcdc5]">
+        <div className="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_19rem]">
+          <div className="min-w-0 px-4 py-7 sm:px-8 sm:py-12 lg:border-r lg:border-[#cfcdc5] lg:px-12 lg:py-20 xl:px-16">
+            <AnimatedSection animationType="fade-in" className="min-w-0">
               <p className="editorial-kicker editorial-kicker--badge">{t('home.hero.badge')}</p>
-              <h1 className="mt-4 max-w-5xl text-[1.875rem] font-semibold leading-[1.08] tracking-[-0.04em] sm:mt-6 sm:text-[2.5rem] sm:leading-[1.05] lg:mt-8 lg:text-[clamp(3rem,7vw,7rem)] lg:leading-[0.9] lg:tracking-[-0.065em]">
+              <h1 className="mt-4 max-w-full break-words text-[1.625rem] font-semibold leading-[1.15] tracking-[-0.03em] sm:mt-6 sm:text-[2.35rem] sm:leading-[1.08] lg:mt-8 lg:text-[clamp(3rem,7vw,7rem)] lg:leading-[0.9] lg:tracking-[-0.065em]">
                 {t('home.hero.title')}{' '}
                 <span className="text-[#2446e8]">{t('home.hero.titleAccent')}</span>
                 {titleEnd ? ` ${titleEnd}` : ''}
               </h1>
-              <ul className="hero-metrics mt-5 lg:hidden" aria-label={t('home.hero.badge')}>
+              <ul className="mt-5 grid grid-cols-3 gap-1.5 lg:hidden" aria-label={t('home.hero.badge')}>
                 <li className="hero-metrics__item">
                   <span className="hero-metrics__value">{projectCount}+</span>
                   <span className="hero-metrics__label">{t('home.hero.metrics.projects')}</span>
@@ -49,44 +49,48 @@ export default function EditorialHero() {
                 </li>
               </ul>
             </AnimatedSection>
-            <AnimatedSection className="mt-5 max-w-3xl sm:mt-8 lg:mt-10" delay={100}>
-              <p className="text-[0.9375rem] leading-6 text-[#55544e] sm:text-xl sm:leading-8">
+
+            <AnimatedSection className="mt-5 min-w-0 sm:mt-8 lg:mt-10" delay={100}>
+              <p className="max-w-full break-words text-sm leading-6 text-[#55544e] sm:text-xl sm:leading-8">
                 {t('home.hero.subtitle')}
               </p>
-              <ul className="mt-5 flex flex-wrap gap-2 lg:hidden" aria-label={t('home.hero.badge')}>
+              <ul className="mt-4 flex flex-col gap-1.5 lg:hidden" aria-label={t('home.hero.badge')}>
                 {trustSignals.map((signal) => (
                   <li key={signal} className="hero-trust-pill">
                     {signal}
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 grid grid-cols-2 gap-2.5 sm:mt-8 sm:flex sm:flex-row sm:flex-wrap sm:gap-3">
+              <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-3">
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'home_hero')}
-                  className="col-span-2 inline-flex min-h-12 items-center justify-between bg-[#2446e8] px-5 py-3.5 text-sm font-bold text-white hover:bg-[#1836c7] sm:col-span-1 sm:min-h-13 sm:px-7 sm:py-4"
+                  className="inline-flex min-h-12 w-full items-center justify-between bg-[#2446e8] px-5 py-3.5 text-sm font-bold text-white hover:bg-[#1836c7] sm:w-auto sm:min-h-13 sm:px-7 sm:py-4"
                 >
                   {t('home.hero.primary')} <span className="ml-4" aria-hidden>↗</span>
                 </a>
-                <Link
-                  href={`/${language}#projects`}
-                  onClick={() => analyticsEvents.scrollToSection('projects')}
-                  className="inline-flex min-h-12 items-center justify-center border border-[#11110f] px-4 py-3.5 text-sm font-bold hover:bg-[#11110f] hover:text-white sm:min-h-13 sm:justify-between sm:px-7 sm:py-4"
-                >
-                  {t('home.hero.secondary')} <span className="ml-3 hidden sm:inline" aria-hidden>↓</span>
-                </Link>
-                <Link
-                  href={`/${language}/pricing`}
-                  onClick={() => analyticsEvents.calculatePriceClick('home_hero')}
-                  className="inline-flex min-h-12 items-center justify-center border border-[#cfcdc5] bg-white px-4 py-3.5 text-sm font-bold hover:border-[#11110f] sm:min-h-13 sm:border-transparent sm:bg-transparent sm:px-2 sm:py-4 sm:underline sm:decoration-2 sm:underline-offset-8 sm:hover:text-[#2446e8]"
-                >
-                  {t('home.hero.pricing')} <span className="ml-2 hidden sm:inline" aria-hidden>→</span>
-                </Link>
+                <div className="grid grid-cols-2 gap-2.5 sm:contents">
+                  <Link
+                    href={`/${language}#projects`}
+                    onClick={() => analyticsEvents.scrollToSection('projects')}
+                    className="inline-flex min-h-12 items-center justify-center border border-[#11110f] px-3 py-3.5 text-center text-sm font-bold hover:bg-[#11110f] hover:text-white sm:min-h-13 sm:justify-between sm:px-7 sm:py-4"
+                  >
+                    {t('home.hero.secondary')} <span className="ml-3 hidden sm:inline" aria-hidden>↓</span>
+                  </Link>
+                  <Link
+                    href={`/${language}/pricing`}
+                    onClick={() => analyticsEvents.calculatePriceClick('home_hero')}
+                    className="inline-flex min-h-12 items-center justify-center border border-[#cfcdc5] bg-white px-3 py-3.5 text-center text-sm font-bold hover:border-[#11110f] sm:min-h-13 sm:border-transparent sm:bg-transparent sm:px-2 sm:py-4 sm:underline sm:decoration-2 sm:underline-offset-8 sm:hover:text-[#2446e8]"
+                  >
+                    {t('home.hero.pricing')} <span className="ml-2 hidden sm:inline" aria-hidden>→</span>
+                  </Link>
+                </div>
               </div>
             </AnimatedSection>
-            <AnimatedSection className="mt-8 lg:hidden" delay={180}>
+
+            <AnimatedSection className="mt-8 min-w-0 lg:hidden" delay={180}>
               <div className="flex items-end justify-between gap-3 border-t border-[#cfcdc5] pt-5">
                 <p className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[#68675f]">
                   {t('home.hero.preview')}
@@ -94,12 +98,12 @@ export default function EditorialHero() {
                 <Link
                   href={`/${language}#projects`}
                   onClick={() => analyticsEvents.scrollToSection('projects')}
-                  className="text-xs font-bold text-[#2446e8]"
+                  className="shrink-0 text-xs font-bold text-[#2446e8]"
                 >
                   {t('home.hero.previewAll')} →
                 </Link>
               </div>
-              <div className="hero-preview-scroll mt-3 flex gap-2.5 overflow-x-auto pb-1">
+              <div className="hero-preview-scroll -mx-4 mt-3 flex gap-2.5 overflow-x-auto px-4 pb-1">
                 {previewProjects.map((project, index) => (
                   <Link
                     key={project.id}
@@ -124,9 +128,13 @@ export default function EditorialHero() {
               </div>
             </AnimatedSection>
           </div>
-          <aside className="hidden border-t border-[#cfcdc5] lg:grid lg:grid-cols-1 lg:border-t-0" aria-label={t('home.hero.badge')}>
+
+          <aside className="hidden min-w-0 border-t border-[#cfcdc5] lg:grid lg:grid-cols-1 lg:border-t-0" aria-label={t('home.hero.badge')}>
             {trustSignals.map((signal, index) => (
-              <div key={signal} className={`flex min-h-28 flex-col justify-between p-5 sm:min-h-36 lg:min-h-0 lg:p-7 ${index > 0 ? 'border-t border-[#cfcdc5]' : ''}`}>
+              <div
+                key={signal}
+                className={`flex min-h-28 flex-col justify-between p-5 lg:min-h-0 lg:p-7 ${index > 0 ? 'border-t border-[#cfcdc5]' : ''}`}
+              >
                 <span className="font-mono text-xs text-[#68675f]">0{index + 1}</span>
                 <p className="mt-6 text-sm font-semibold leading-5">{signal}</p>
               </div>
