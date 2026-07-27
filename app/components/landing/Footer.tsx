@@ -108,7 +108,7 @@ export default function Footer() {
             {/* Social Links */}
             <div className="flex space-x-4">
               <a
-                href="https://github.com/aidardev"
+                href="https://github.com/aidar1910aaad"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border border-slate-600 p-3 text-slate-300 transition-colors hover:border-blue-400 hover:bg-blue-700 hover:text-white"
@@ -119,7 +119,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com/in/aidardev"
+                href="https://www.linkedin.com/in/aidar1910main/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border border-slate-600 p-3 text-slate-300 transition-colors hover:border-blue-400 hover:bg-blue-700 hover:text-white"

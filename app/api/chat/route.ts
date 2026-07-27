@@ -108,7 +108,7 @@ TELEGRAM:
 - @opunksnoo
 
 LINKEDIN:
-- linkedin.com/in/aidar1910main
+- https://www.linkedin.com/in/aidar1910main/
 
 ПРАВИЛА ОТВЕТОВ НА ВОПРОСЫ О КОНТАКТАХ:
 - Когда пользователь спрашивает о контактах, телефоне, email, telegram и т.д. - предоставляй контактную информацию
@@ -941,7 +941,7 @@ function getFallbackResponse(message: string): string {
 
   // Обработка вопросов о контактах
   if (lowerMessage.includes('контакт') || lowerMessage.includes('связаться') || lowerMessage.includes('связь')) {
-    return 'Мои контакты:\n\n• Телефон: +7 706 670 36 96 (WhatsApp)\n• Телефон: +7 702 999 36 96 (WhatsApp)\n• Email: aidar1910main@gmail.com\n• Telegram: @opunksnoo\n• LinkedIn: linkedin.com/in/aidar1910main\n\nМогу помочь с выбором проекта и сориентировать по стоимости. Что вас интересует?';
+    return 'Мои контакты:\n\n• Телефон: +7 706 670 36 96 (WhatsApp)\n• Телефон: +7 702 999 36 96 (WhatsApp)\n• Email: aidar1910main@gmail.com\n• Telegram: @opunksnoo\n• LinkedIn: https://www.linkedin.com/in/aidar1910main/\n\nМогу помочь с выбором проекта и сориентировать по стоимости. Что вас интересует?';
   }
 
   if (lowerMessage.includes('телефон') || lowerMessage.includes('номер') || lowerMessage.includes('phone')) {
@@ -957,7 +957,7 @@ function getFallbackResponse(message: string): string {
   }
 
   if (lowerMessage.includes('linkedin') || lowerMessage.includes('линкедин')) {
-    return 'Мой LinkedIn: linkedin.com/in/aidar1910main\n\nМогу помочь с выбором проекта и сориентировать по стоимости. Что вас интересует?';
+    return 'Мой LinkedIn: https://www.linkedin.com/in/aidar1910main/\n\nМогу помочь с выбором проекта и сориентировать по стоимости. Что вас интересует?';
   }
 
   return 'Спасибо за вопрос! Для точной оценки стоимости проекта лучше связаться с Aidar напрямую. Могу помочь с общими вопросами о ценах и услугах. Что вас интересует?';

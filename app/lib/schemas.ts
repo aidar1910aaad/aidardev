@@ -12,7 +12,7 @@ export function createPersonSchema() {
     url: siteUrl,
     sameAs: [
       'https://github.com/aidar1910aaad',
-      'https://www.linkedin.com/in/aidar1910main',
+      'https://www.linkedin.com/in/aidar1910main/',
     ],
     knowsAbout: [
       'Web Development',
@@ -69,7 +69,7 @@ export function createOrganizationSchema() {
     },
     sameAs: [
       'https://github.com/aidar1910aaad',
-      'https://www.linkedin.com/in/aidar1910main',
+      'https://www.linkedin.com/in/aidar1910main/',
     ],
   };
 }
