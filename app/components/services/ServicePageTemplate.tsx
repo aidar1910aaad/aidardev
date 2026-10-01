@@ -42,9 +42,10 @@ export default function ServicePageTemplate({
   const serviceSchema = useMemo(() => createServiceSchema({
     name: t(h1Key),
     description: t(introKey),
-    provider: 'Aidar',
+    provider: 'aidardev',
     areaServed: 'Kazakhstan',
-  }), [t, h1Key, introKey]);
+    serviceKey,
+  }), [t, h1Key, introKey, serviceKey]);
 
   // Breadcrumbs для навигации и SEO
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
@@ -77,8 +78,8 @@ export default function ServicePageTemplate({
 
   return (
     <>
-      <StructuredData data={serviceSchema} />
-      <StructuredData data={breadcrumbSchema} />
+      <StructuredData data={serviceSchema} id={`service-schema-${serviceKey}`} />
+      <StructuredData data={breadcrumbSchema} id={`service-breadcrumb-schema-${serviceKey}`} />
       
       <section className="border-b border-slate-300 bg-[#f7f7f5] pb-4 pt-32 text-slate-950">
         {/* Breadcrumbs */}

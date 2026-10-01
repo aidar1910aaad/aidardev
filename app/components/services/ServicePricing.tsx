@@ -63,12 +63,17 @@ export default function ServicePricing({ serviceKey }: ServicePricingProps) {
   // Определяем популярный пакет (обычно третий или средний)
   const popularIndex = packages.length >= 3 ? Math.floor(packages.length / 2) : -1;
 
+  // Заголовок под ценовой запрос («Сколько стоит …»), если он задан для услуги; t() возвращает ключ, когда перевода нет
+  const serviceTitleKey = `services.${serviceKey}.pricingTitle`;
+  const serviceTitle = t(serviceTitleKey);
+  const pricingTitle = serviceTitle !== serviceTitleKey ? serviceTitle : t('services.pricing.title');
+
   return (
     <AnimatedSection animationType="slide-up" delay={450}>
       <div className="pt-20 mb-20">
         <div className="mb-10 border-b border-slate-300 pb-6">
           <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 md:text-5xl">
-              {t('services.pricing.title')}
+              {pricingTitle}
           </h2>
         </div>
 
@@ -116,7 +121,7 @@ export default function ServicePricing({ serviceKey }: ServicePricingProps) {
                         {formatPrice(pkg.price)}
                       </span>
                       <span className="text-lg text-gray-600 dark:text-gray-400 font-light">
-                        {pkg.currency}
+                        {pkg.currency === 'KZT' ? '₸' : pkg.currency}
                       </span>
                     </div>
                   </div>

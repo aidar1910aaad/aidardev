@@ -1,18 +1,18 @@
 import { MetadataRoute } from 'next';
 import { getAllBlogPosts, type BlogPost } from './data/blog-posts';
-import { cityEntries } from './data/cities';
+import { cityEntries, isCityIndexable } from './data/cities';
 import { cityServiceCombos } from './data/city-services';
 import { getAvailableBlogLangs, shouldIndexBlogPost } from './lib/seo/blog-indexing';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
-import { getBackendUrl } from './lib/backend-config';
+import { fetchBackend, getBackendUrl } from './lib/backend-config';
 
 const BACKEND_API_URL = getBackendUrl();
 
 async function fetchBlogPosts(): Promise<BlogPost[]> {
   try {
-    const response = await fetch(`${BACKEND_API_URL}/api/blog/posts?published=true`, {
+    const response = await fetchBackend(`${BACKEND_API_URL}/api/blog/posts?published=true`, {
       next: { revalidate: 3600 }, // Кэшируем на 1 час
     });
 
@@ -132,38 +132,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  const cityLandingRoutes = languages.flatMap((lang) =>
-    cityEntries.map((city) => ({
-      url: `${siteUrl}/${lang}/cities/${city.slug}`,
+  // Только города, которые остаются в поиске (RU, с показами в Google) — см. INDEXED_CITY_SLUGS.
+  const cityLandingRoutes = cityEntries
+    .filter((city) => isCityIndexable(city.slug, 'ru'))
+    .map((city) => ({
+      url: `${siteUrl}/ru/cities/${city.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
-      priority: lang === 'ru' ? 0.85 : 0.75,
-      alternates: {
-        languages: {
-          ru: `${siteUrl}/ru/cities/${city.slug}`,
-          en: `${siteUrl}/en/cities/${city.slug}`,
-          kk: `${siteUrl}/kz/cities/${city.slug}`,
-        },
-      },
-    }))
-  );
+      priority: 0.85,
+    }));
 
-  const cityServiceRoutes = ['ru', 'en', 'kz'].flatMap((lang) =>
-    cityServiceCombos.map((combo) => ({
-      url: `${siteUrl}/${lang}/cities/${combo.citySlug}/${combo.service}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: lang === 'ru' ? 0.9 : 0.75,
-      alternates: {
-        languages: {
-          ru: `${siteUrl}/ru/cities/${combo.citySlug}/${combo.service}`,
-          en: `${siteUrl}/en/cities/${combo.citySlug}/${combo.service}`,
-          kk: `${siteUrl}/kz/cities/${combo.citySlug}/${combo.service}`,
-          'x-default': `${siteUrl}/ru/cities/${combo.citySlug}/${combo.service}`,
-        },
-      },
-    })),
-  );
+  // Уникальный текст есть только у RU-версий страниц «город × услуга».
+  const cityServiceRoutes = cityServiceCombos.map((combo) => ({
+    url: `${siteUrl}/ru/cities/${combo.citySlug}/${combo.service}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }));
 
   // Blog posts для всех языков - динамически загружаем из БД
   const blogPosts = await fetchBlogPosts();
@@ -184,10 +169,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
+  // Политика конфиденциальности — служебная страница: только RU и KZ, низкий приоритет.
+  const privacyRoutes = ['ru', 'kz'].map((lang) => ({
+    url: `${siteUrl}/${lang}/privacy`,
+    lastModified: new Date('2026-10-01'),
+    changeFrequency: 'yearly' as const,
+    priority: 0.3,
+    alternates: {
+      languages: {
+        'ru': `${siteUrl}/ru/privacy`,
+        'kk': `${siteUrl}/kz/privacy`,
+      },
+    },
+  }));
+
   // Проекты отображаются на главной странице в секции Projects
   // Отдельных страниц проектов нет, поэтому не добавляем их в sitemap
   // Если в будущем создадите страницы /projects/[id], добавьте их сюда
 
-  return [...baseRoutes, ...pricingRoutes, ...servicesIndexRoutes, ...citiesIndexRoutes, ...serviceRoutes, ...cityLandingRoutes, ...cityServiceRoutes, ...blogRoutes, ...blogPostRoutes];
+  return [...baseRoutes, ...pricingRoutes, ...servicesIndexRoutes, ...citiesIndexRoutes, ...serviceRoutes, ...cityLandingRoutes, ...cityServiceRoutes, ...blogRoutes, ...blogPostRoutes, ...privacyRoutes];
 }
 

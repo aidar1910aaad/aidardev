@@ -13,7 +13,7 @@ import { BlogAnalytics, BlogCta, BlogRelated, BlogStickyCta } from "../../../com
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
-import { getBackendUrl } from '../../../lib/backend-config';
+import { fetchBackend, getBackendUrl } from '../../../lib/backend-config';
 
 const BACKEND_API_URL = getBackendUrl();
 
@@ -22,7 +22,7 @@ async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null> {
     const url = `${BACKEND_API_URL}/api/blog/posts/${slug}`;
     console.log('🌐 [Blog Post Page] Запрос к бэкенду:', url);
     
-    const response = await fetch(url, {
+    const response = await fetchBackend(url, {
       next: { revalidate: 60 }, // Кэшируем на 60 секунд
     });
 
@@ -49,7 +49,7 @@ async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null> {
 
 async function fetchPublishedPosts(): Promise<BlogPost[]> {
   try {
-    const response = await fetch(`${BACKEND_API_URL}/api/blog/posts?published=true`, { next: { revalidate: 300 } });
+    const response = await fetchBackend(`${BACKEND_API_URL}/api/blog/posts?published=true`, { next: { revalidate: 300 } });
     if (!response.ok) return [];
     const result = await response.json();
     return (result.posts || result || []).filter((post: BlogPost) => post.published !== false);
@@ -61,7 +61,7 @@ async function fetchPublishedPosts(): Promise<BlogPost[]> {
 export async function generateStaticParams() {
   try {
     // Пытаемся загрузить посты с бэкенда
-    const response = await fetch(`${BACKEND_API_URL}/api/blog/posts?published=true`, {
+    const response = await fetchBackend(`${BACKEND_API_URL}/api/blog/posts?published=true`, {
       next: { revalidate: 3600 }, // Кэшируем на 1 час для статической генерации
     });
 
@@ -115,7 +115,7 @@ export async function generateMetadata({
   ]));
 
   return {
-    title: `${title} | Aidar - Full-Stack Developer`,
+    title,
     description,
     keywords,
     robots: indexable
@@ -132,7 +132,7 @@ export async function generateMetadata({
         .filter((available) => available !== blogLang)
         .map((available) => available === 'ru' ? 'ru_RU' : 'kk_KZ'),
       url: `${siteUrl}/${lang}/blog/${slug}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title,
       description,
       publishedTime: post.date,
@@ -190,7 +190,7 @@ export default async function BlogPostPage({
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Aidar - Full-Stack Developer',
+      name: 'aidardev',
       url: siteUrl,
     },
     mainEntityOfPage: {
@@ -230,8 +230,8 @@ export default async function BlogPostPage({
 
   return (
     <LanguageProvider initialLanguage={lang}>
-      <StructuredData data={articleSchema} />
-      <StructuredData data={breadcrumbSchema} />
+      <StructuredData data={articleSchema} id="blog-article-schema" />
+      <StructuredData data={breadcrumbSchema} id="blog-breadcrumb-schema" />
       <BlogAnalytics slug={slug} lang={lang} />
       
       <div className="min-h-screen bg-[#f7f7f5] text-slate-950">

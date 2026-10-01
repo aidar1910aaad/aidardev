@@ -84,8 +84,73 @@ export const trackUniversalEvent = (
   });
 };
 
+// ---------------------------------------------------------------------------
+// Заявки: общая модель для формы, /api/leads и события generate_lead
+// ---------------------------------------------------------------------------
+
+export const LEAD_SERVICES = ['websites', 'bots', 'ai', 'mobile', 'design', 'consulting', 'other'] as const;
+export type LeadService = (typeof LEAD_SERVICES)[number];
+
+export function isLeadService(value: unknown): value is LeadService {
+  return typeof value === 'string' && (LEAD_SERVICES as readonly string[]).includes(value);
+}
+
+export const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'] as const;
+export type UtmParams = Partial<Record<(typeof UTM_KEYS)[number], string>>;
+
+const UTM_STORAGE_KEY = 'aidardev:first-touch-utm';
+const UTM_VALUE_MAX_LENGTH = 200;
+
+/** utm_* из query-строки или объекта; прочие ключи и пустые значения отбрасываются */
+export function pickUtmParams(source: URLSearchParams | Record<string, unknown>): UtmParams {
+  const utm: UtmParams = {};
+  for (const key of UTM_KEYS) {
+    const raw = source instanceof URLSearchParams ? source.get(key) : source[key];
+    if (typeof raw !== 'string') continue;
+    const value = raw.trim().slice(0, UTM_VALUE_MAX_LENGTH);
+    if (value) utm[key] = value;
+  }
+  return utm;
+}
+
+/**
+ * First-touch UTM: utm_* посадочного URL один раз сохраняются в sessionStorage и побеждают
+ * метки следующих страниц визита. Вызывается на каждой загрузке страницы (из шапки)
+ * и при отправке заявки; возвращает сохранённые метки или метки текущего URL.
+ */
+export function captureFirstTouchUtm(): UtmParams {
+  if (typeof window === 'undefined') return {};
+  const current = pickUtmParams(new URLSearchParams(window.location.search));
+  try {
+    const stored = window.sessionStorage.getItem(UTM_STORAGE_KEY);
+    if (stored) {
+      const parsed: unknown = JSON.parse(stored);
+      if (parsed && typeof parsed === 'object') {
+        const firstTouch = pickUtmParams(parsed as Record<string, unknown>);
+        if (Object.keys(firstTouch).length) return firstTouch;
+      }
+    }
+    if (Object.keys(current).length) {
+      window.sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(current));
+    }
+  } catch {
+    // sessionStorage может быть недоступен (приватный режим Safari, запрет cookies) — берём текущий URL
+  }
+  return current;
+}
+
 // Предустановленные события для лидов (отправляются в GA4 и Яндекс.Метрику)
 export const analyticsEvents = {
+  /** Подтверждённая заявка из формы (бэкенд ответил 201): рекомендуемое событие GA4 + цель Метрики */
+  generateLead: ({ source, service }: { source: string; service: LeadService }) => {
+    trackUniversalEvent('generate_lead', {
+      event_category: 'Lead',
+      event_label: source,
+      lead_source: source,
+      service,
+    });
+  },
+
   blogView: (slug: string, locale: string) => {
     trackUniversalEvent('blog_view', {
       event_category: 'Blog',
@@ -326,4 +391,6 @@ export const analyticsEvents = {
     });
   },
 };
+
+export const generateLead = analyticsEvents.generateLead;
 

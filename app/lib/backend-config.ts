@@ -106,6 +106,26 @@ export function getClientBackendUrl(): string {
 }
 
 /**
+ * fetch к бэкенду с повторами. Сборка на Vercel иногда ловит разовый `fetch failed`
+ * до сервера (бэкенд за Tailscale Funnel) — без повтора sitemap и статьи блога
+ * собираются пустыми и висят так до следующей ревалидации.
+ * Повторяет сетевые ошибки и 5xx; 4xx возвращает сразу.
+ */
+export async function fetchBackend(url: string, init: RequestInit = {}, attempts = 3): Promise<Response> {
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      const response = await fetch(url, { ...init, signal: init.signal ?? AbortSignal.timeout(20_000) });
+      if (response.status < 500 || attempt >= attempts) return response;
+      console.warn(`⚠️ Бэкенд ответил ${response.status} (${url}), попытка ${attempt}/${attempts}`);
+    } catch (error) {
+      if (attempt >= attempts) throw error;
+      console.warn(`⚠️ Бэкенд недоступен (${url}), попытка ${attempt}/${attempts}:`, error);
+    }
+    await new Promise((resolve) => setTimeout(resolve, attempt * 1500));
+  }
+}
+
+/**
  * Проверяет, доступен ли бэкенд (для отладки)
  */
 export async function checkBackendHealth(): Promise<boolean> {

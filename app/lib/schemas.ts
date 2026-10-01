@@ -1,7 +1,45 @@
 // Утилитные функции для создания structured data схем
 // Этот файл может использоваться как на сервере, так и на клиенте
+import pricingData from '../data/pricing.json';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
+
+// Единый список профилей бренда — используется во всех схемах (Person, Organization),
+// чтобы AI/поисковые системы видели одну и ту же сущность, а не несколько разных.
+// Исследования GEO 2026 показывают, что согласованность упоминаний бренда (entity consistency)
+// коррелирует с цитированием в AI сильнее (0.664), чем классические бэклинки (0.218).
+const BRAND_SAME_AS = [
+  'https://github.com/aidar1910aaad',
+  'https://www.linkedin.com/in/aidar1910main/',
+  'https://2gis.kz/almaty/firm/70000001110666699',
+  'https://t.me/opunksnoo',
+];
+
+// Адрес, координаты и часы — дословно как в карточке 2ГИС (ссылка в BRAND_SAME_AS):
+// поисковики сверяют название, адрес и телефон сайта с картами и справочниками.
+// Юридический адрес ИП (Астана) — только в реквизитах в подвале.
+const BRAND_ADDRESS = {
+  '@type': 'PostalAddress',
+  streetAddress: 'ул. Каныша Сатпаева, 105а',
+  addressLocality: 'Алматы',
+  postalCode: '050046',
+  addressCountry: 'KZ',
+};
+
+const BRAND_GEO = {
+  '@type': 'GeoCoordinates',
+  latitude: 43.234936,
+  longitude: 76.884541,
+};
+
+const BRAND_OPENING_HOURS = [
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    opens: '09:00',
+    closes: '21:00',
+  },
+];
 
 export function createPersonSchema() {
   return {
@@ -10,10 +48,9 @@ export function createPersonSchema() {
     name: 'aidardev',
     jobTitle: 'Development Studio',
     url: siteUrl,
-    sameAs: [
-      'https://github.com/aidar1910aaad',
-      'https://www.linkedin.com/in/aidar1910main/',
-    ],
+    email: 'aidar1910main@gmail.com',
+    telephone: '+7-706-670-36-96',
+    sameAs: BRAND_SAME_AS,
     knowsAbout: [
       'Web Development',
       'React',
@@ -25,11 +62,7 @@ export function createPersonSchema() {
       'Mobile Development',
       'Chat Bots',
     ],
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'KZ',
-      addressLocality: 'Kazakhstan',
-    },
+    address: BRAND_ADDRESS,
     offers: {
       '@type': 'Offer',
       itemOffered: {
@@ -56,6 +89,8 @@ export function createOrganizationSchema() {
     description: 'Development studio for websites, AI integrations, and mobile app development services',
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
+    email: 'aidar1910main@gmail.com',
+    priceRange: '₸₸',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+7-706-670-36-96',
@@ -63,14 +98,16 @@ export function createOrganizationSchema() {
       areaServed: 'KZ',
       availableLanguage: ['Russian', 'English', 'Kazakh'],
     },
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'KZ',
+    telephone: '+7-706-670-36-96',
+    address: BRAND_ADDRESS,
+    geo: BRAND_GEO,
+    hasMap: 'https://2gis.kz/almaty/firm/70000001110666699',
+    openingHoursSpecification: BRAND_OPENING_HOURS,
+    areaServed: {
+      '@type': 'Country',
+      name: 'Kazakhstan',
     },
-    sameAs: [
-      'https://github.com/aidar1910aaad',
-      'https://www.linkedin.com/in/aidar1910main/',
-    ],
+    sameAs: BRAND_SAME_AS,
   };
 }
 
@@ -121,12 +158,32 @@ export function createFAQSchema(faqs: Array<{ question: string; answer: string }
   };
 }
 
+type PricingTier = {
+  name: string;
+  price: number;
+  currency: string;
+  description: string;
+  features: string[];
+};
+
+type PricingCategory = Record<string, PricingTier>;
+
+const pricingCategories = (pricingData as { services: Record<string, PricingCategory> }).services;
+
 export function createServiceSchema(service: {
   name: string;
   description: string;
   provider: string;
   areaServed: string;
+  // Ключ категории из app/data/pricing.json (websites, bots, ai, mobile, design, consulting).
+  // Если передан — в схему добавляется реальный диапазон цен, чтобы AI-движки могли
+  // процитировать точную стоимость услуги, а не только описание.
+  serviceKey?: keyof typeof pricingCategories;
 }) {
+  const tiers = service.serviceKey ? pricingCategories[service.serviceKey] : undefined;
+  const tierList = tiers ? Object.values(tiers) : [];
+  const prices = tierList.map((tier) => tier.price);
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -140,6 +197,55 @@ export function createServiceSchema(service: {
       '@type': 'Country',
       name: service.areaServed,
     },
+    ...(prices.length > 0
+      ? {
+          offers: {
+            '@type': 'AggregateOffer',
+            priceCurrency: tierList[0].currency,
+            lowPrice: Math.min(...prices),
+            highPrice: Math.max(...prices),
+            offerCount: prices.length,
+            offers: tierList.map((tier) => ({
+              '@type': 'Offer',
+              name: tier.name,
+              description: tier.description,
+              price: tier.price,
+              priceCurrency: tier.currency,
+              availability: 'https://schema.org/InStock',
+            })),
+          },
+        }
+      : {}),
+  };
+}
+
+// Полный прайс-лист как машиночитаемая схема — для страницы /pricing.
+// Это самый прямой источник фактов для GEO: конкретные цифры, которые
+// AI-движок может процитировать дословно вместо общей фразы "цены индивидуальны".
+export function createPricingCatalogSchema() {
+  const itemListElement = Object.values(pricingCategories).flatMap((category) =>
+    Object.values(category).map((tier) => ({
+      '@type': 'Offer',
+      name: tier.name,
+      description: tier.description,
+      price: tier.price,
+      priceCurrency: tier.currency,
+      availability: 'https://schema.org/InStock',
+      url: `${siteUrl}/ru/pricing`,
+      seller: {
+        '@type': 'ProfessionalService',
+        name: 'aidardev',
+      },
+    })),
+  );
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    name: 'aidardev — прайс-лист на разработку сайтов, ботов, AI-решений и мобильных приложений',
+    url: `${siteUrl}/ru/pricing`,
+    numberOfItems: itemListElement.length,
+    itemListElement,
   };
 }
 
@@ -149,13 +255,18 @@ export function createReviewSchema(reviews: Array<{
   reviewBody: string;
   datePublished: string;
 }>) {
+  const averageRating =
+    reviews.length > 0
+      ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+      : 0;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Aidar - Full-Stack Developer',
+    name: 'aidardev — Development Studio',
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: '4.8',
+      ratingValue: Number(averageRating.toFixed(1)),
       reviewCount: reviews.length,
     },
     review: reviews.map((review) => ({

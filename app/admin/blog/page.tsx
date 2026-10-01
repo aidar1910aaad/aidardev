@@ -266,7 +266,7 @@ export default function BlogPage() {
             </div>
             <div className="rounded-lg border border-violet-200 bg-white/80 px-3 py-2 text-sm text-gray-700 dark:border-violet-800 dark:bg-gray-900/60 dark:text-gray-300">
               {schedule.weeklyNote}
-              <div className="mt-1 text-xs text-gray-500">3 статьи в неделю · RU + KZ</div>
+              <div className="mt-1 text-xs text-gray-500">1 статья в неделю · запрос из Search Console · KZ — ночью</div>
             </div>
           </div>
         </div>

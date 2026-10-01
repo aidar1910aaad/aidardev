@@ -16,13 +16,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   const titles = {
     en: 'Telegram Bot Development Kazakhstan | WhatsApp Bot Creation Almaty, Astana',
-    ru: 'Разработка ботов в Алматы и Казахстане | Telegram, WhatsApp',
+    ru: 'Заказать разработку ботов под ключ — цены в Алматы | Telegram и WhatsApp',
     kz: 'Бот әзірлеу Алматы | Telegram, WhatsApp',
   };
   
   const descriptions = {
-    en: 'Professional Telegram and WhatsApp bot development in Almaty, Astana, Shymkent and throughout Kazakhstan. Business automation, CRM integration, chatbots. 6+ years experience, 47+ projects.',
-    ru: 'Разработка Telegram и WhatsApp ботов в Алматы, Астане и по Казахстану. Заявки, автоответы, CRM. Оценка сценария и сроков после брифа.',
+    en: 'Professional Telegram and WhatsApp bot development in Almaty, Astana, Shymkent and throughout Kazakhstan. Business automation, CRM integration, chatbots. 6+ years experience, 38+ projects.',
+    ru: 'Разработка Telegram и WhatsApp ботов под ключ в Алматы и по Казахстану: заявки, автоответы, CRM. Сроки и стоимость после брифа.',
     kz: 'Алматы және Қазақстан бойынша Telegram/WhatsApp боттары. Өтінімдер, CRM интеграциясы.',
   };
 
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/services/${serviceKey}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },

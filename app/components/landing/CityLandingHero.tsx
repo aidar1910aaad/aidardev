@@ -7,9 +7,18 @@ interface CityLandingHeroProps {
   language: SupportedLanguage;
 }
 
+// Эти 3 факта не образуют последовательность (формат работы / что делаем / процесс),
+// поэтому вместо произвольной нумерации "01/02/03" у каждого — короткий смысловой лейбл.
+const HIGHLIGHT_LABELS: Record<SupportedLanguage, string[]> = {
+  ru: ['Формат работы', 'Что делаем', 'Процесс'],
+  en: ['How we work', 'What we build', 'Process'],
+  kz: ['Жұмыс форматы', 'Не істейміз', 'Процесс'],
+};
+
 export default function CityLandingHero({ city, content, language }: CityLandingHeroProps) {
   const cityName = city.name[language];
   const citiesHref = `/${language}/cities`;
+  const highlightLabels = HIGHLIGHT_LABELS[language];
 
   return (
     <section className="border-b border-slate-300 bg-[#f7f7f5] pt-28">
@@ -63,11 +72,29 @@ export default function CityLandingHero({ city, content, language }: CityLanding
                 key={highlight}
                 className="border-b border-r border-slate-300 bg-white p-6"
               >
-                <span className="mb-6 block font-mono text-xs text-blue-700">0{index + 1}</span>
+                <span className="mb-6 block font-mono text-xs uppercase tracking-[0.14em] text-blue-700">
+                  {highlightLabels[index] ?? ''}
+                </span>
                 <p className="leading-7 text-slate-700">{highlight}</p>
               </div>
             ))}
           </div>
+
+          {content.industryPanel && (
+            <div className="mt-8 border border-blue-700 bg-blue-700/5 p-8 sm:p-10">
+              <span className="mb-6 block font-mono text-xs uppercase tracking-[0.14em] text-blue-700">
+                {content.industryPanel.eyebrow}
+              </span>
+              <div className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+                {content.industryPanel.services.map((service) => (
+                  <div key={service.name}>
+                    <p className="mb-1.5 font-semibold text-slate-950">{service.name}</p>
+                    <p className="text-sm leading-6 text-slate-700">{service.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

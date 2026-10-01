@@ -16,13 +16,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   const titles = {
     en: 'Website Development Kazakhstan | Create Website Almaty, Astana',
-    ru: 'Разработка сайтов и интернет-магазинов в Казахстане | Алматы, Астана',
+    ru: 'Создать сайт под ключ — цены в Алматы и Астане | лендинги и интернет-магазины',
     kz: 'Сайт және интернет-дүкен әзірлеу | Қазақстан, Алматы, Астана',
   };
   
   const descriptions = {
-    en: 'Professional website development in Almaty, Astana, Shymkent and throughout Kazakhstan. Landing pages, corporate sites, e-commerce platforms. 6+ years experience, 47+ projects.',
-    ru: 'Разработка сайтов и интернет-магазинов в Алматы, Астане и по Казахстану. Лендинги, корпоративные сайты, Kaspi Pay, SEO. Оценка после брифа.',
+    en: 'Professional website development in Almaty, Astana, Shymkent and throughout Kazakhstan. Landing pages, corporate sites, e-commerce platforms. 6+ years experience, 38+ projects.',
+    ru: 'Создание сайтов под ключ в Алматы, Астане и по Казахстану: лендинги, корпоративные сайты, e-commerce. Сроки и стоимость после брифа. Подключаем SEO и платежи (Kaspi Pay).',
     kz: 'Алматы, Астана және Қазақстан бойынша сайт пен интернет-дүкен әзірлеу. Лендинг, корпоративтік сайт, SEO.',
   };
 
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/services/${serviceKey}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },

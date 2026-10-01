@@ -7,7 +7,8 @@ The frontend publishes and indexes only real RU/KZ article bodies. EN blog route
 - `GET /api/blog/posts?published=true` returns `{ posts: BlogPost[] }` (or an array).
 - `GET /api/blog/posts/:slug` returns `{ post: BlogPost }`.
 - Mutations accept `Authorization: Bearer <BLOG_API_SECRET>` (the proxy also sends `x-api-key` during migration).
-- `POST /api/blog/cron/generate?slot=1|2|3` (or `BLOG_CRON_BACKEND_PATH`) accepts the same bearer secret. The frontend maps Monday/Wednesday/Friday to slots 1/2/3.
+- `POST /api/blog/cron/generate?slot=1` (or `BLOG_CRON_BACKEND_PATH`) accepts the same bearer secret. It starts the weekly article in the background and is idempotent per ISO week; `slot` is legacy and only kept for compatibility. The result is at `GET /api/blog/cron/last`.
+- The weekly article is RU only (topic = a Search Console query on positions 4–20 without its own post); the KZ version is added by the nightly backend maintenance (03:30 Almaty). Until then `content.kz` is empty, so the KZ page is not listed, indexed or put into hreflang.
 - `BlogPost.content.ru` / `.kz` must contain the actual localized HTML. A body shorter than 200 text characters is excluded from indexing.
 - `updatedAt` should be an ISO date; it is used for `dateModified` and sitemap `lastModified`.
 - After a published post is created or changed, call `POST /api/blog/revalidate` on the frontend with `Authorization: Bearer <BLOG_REVALIDATE_SECRET>` and JSON `{ "slug": "...", "languages": ["ru", "kz"] }`.
@@ -16,6 +17,6 @@ The revalidation endpoint refreshes blog lists, article pages, `/sitemap.xml`, a
 
 ## Scheduling and security
 
-`vercel.json` invokes `/api/cron/blog` at 06:00 UTC on Monday, Wednesday, and Friday. Vercel sends `Authorization: Bearer <CRON_SECRET>`; the frontend then calls the backend with `BLOG_API_SECRET`. A public request cannot trigger generation.
+`vercel.json` invokes `/api/cron/blog` once a week, on Tuesday at 05:00 UTC (10:00 Almaty). Vercel sends `Authorization: Bearer <CRON_SECRET>`; the frontend then calls the backend with `BLOG_API_SECRET`. A public request cannot trigger generation.
 
 Admin browser code only calls same-origin `/api/blog/*`. Server routes attach the backend secret. Mutations require an HttpOnly cookie named `aidardev_admin_session` matching `ADMIN_BLOG_SESSION_TOKEN`; the existing mock login deliberately cannot establish it. Replace this check with the backend agent's real authenticated session when available.

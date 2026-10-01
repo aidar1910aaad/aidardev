@@ -28,7 +28,7 @@ export const projects: Project[] = [
     description: {
       en: 'Corporate website for a solar energy company: 4-step ROI calculator, project showcase, blog, RU/KZ localization and lead generation for B2B and B2C clients across Kazakhstan',
       ru: 'Корпоративный сайт компании по солнечной энергетике: калькулятор окупаемости СЭС в 4 шага, каталог проектов, блог, RU/KZ и заявки для B2B и частных клиентов по Казахстану',
-      kz: 'Күн энергетикасы компаниясының корпоративтік сайты: 4 қадамдық окупаемость калькуляторы, жобалар каталогы, блог, RU/KZ және B2B клиенттерге арналған өтінімдер',
+      kz: 'Күн энергетикасы компаниясының корпоративтік сайты: 4 қадамды өтелу мерзімі калькуляторы, жобалар каталогы, блог, RU/KZ және B2B клиенттерге арналған өтінімдер',
     },
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'ROI Calculator'],
     image: '/portfolio/global-solar.webp',
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     description: {
       en: 'Corporate website for Astana Electrical Engineering Plant: full-screen industrial hero, product catalog, projects by industry with client logos (Kazakhmys, BI Group), news and careers',
       ru: 'Корпоративный сайт Астанинского электротехнического завода: full-screen hero с цехом, каталог оборудования, проекты по отраслям с логотипами клиентов (Казахмыс, BI Group), новости и карьера',
-      kz: 'Астана электротехникалық зауытының корпоративтік сайты: зауыт hero, өнім каталогы, клиент логотиптерімен отрасль бойынша жобалар, жаңалықтар және мансап',
+      kz: 'Астана электротехникалық зауытының корпоративтік сайты: зауыт туралы бірінші экран, өнім каталогы, клиент логотиптері бар сала бойынша жобалар, жаңалықтар және мансап',
     },
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Catalog'],
     image: '/portfolio/aetz.webp',
@@ -112,7 +112,7 @@ export const projects: Project[] = [
     description: {
       en: 'Digital marketplace for oversized and heavy cargo in Kazakhstan: cargo listings with filters, carrier offers, ratings, personal accounts, equipment rental and RU/KZ/CN/EN localization',
       ru: 'Цифровая биржа негабаритных перевозок в Казахстане: каталог грузов с фильтрами, отклики перевозчиков, рейтинги, личные кабинеты, аренда техники и локализация RU/KZ/CN/EN',
-      kz: 'Қазақстандағы габариттен тыс тасымалдау цифрлық биржасы: жük каталогы, сүзгілер, тасымалдаушы ұсыныстары, рейтингтер, жеке кабинеттер және RU/KZ/CN/EN локализация',
+      kz: 'Қазақстандағы габариттен тыс тасымалдау цифрлық биржасы: жүк каталогы, сүзгілер, тасымалдаушы ұсыныстары, рейтингтер, жеке кабинеттер және RU/KZ/CN/EN локализация',
     },
     tech: ['Next.js', 'TypeScript', 'Marketplace', 'RU/KZ/CN/EN'],
     image: '/portfolio/karshyga.webp',
@@ -214,7 +214,7 @@ export const projects: Project[] = [
     description: {
       en: 'Fintech platform Quantum (QInvesting): live open portfolio vs S&P 500, weekly performance charts, transparent gains and losses, subscription pricing and real-time analytics dashboard',
       ru: 'Fintech-платформа Quantum (QInvesting): открытый портфель в реальном времени vs S&P 500, графики недельной доходности, прозрачные плюсы и минусы, подписка и аналитика',
-      kz: 'Quantum (QInvesting) fintech платформасы: S&P 500-ге қарсы ашық портфель, апталық кірістілік графиктері, ашық аналитика және подписка',
+      kz: 'Quantum (QInvesting) fintech платформасы: S&P 500-ге қарсы ашық портфель, апталық кірістілік графиктері, ашық аналитика және жазылым',
     },
     tech: ['Next.js', 'TypeScript', 'Data Visualization', 'Fintech'],
     image: '/portfolio/qinvesting.webp',

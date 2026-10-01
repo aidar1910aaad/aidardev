@@ -20,9 +20,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional development services in Kazakhstan: website development, Telegram and WhatsApp bots, AI chatbots, UI/UX design, mobile apps, consulting and training. 6+ years experience, 47+ projects.',
-    ru: 'Профессиональные услуги разработки в Казахстане: разработка сайтов, Telegram и WhatsApp боты, AI-чатботы, UI/UX дизайн, мобильные приложения, консультации и обучение. 6+ лет опыта, 47+ проектов.',
-    kz: 'Қазақстанда кәсіби әзірлеу қызметтері: сайттарды әзірлеу, Telegram және WhatsApp боттар, AI-чатботтар, UI/UX дизайн, мобильді қосымшалар, кеңес және оқыту. 6+ жыл тәжірибе, 47+ жоба.',
+    en: 'Professional development services in Kazakhstan: website development, Telegram and WhatsApp bots, AI chatbots, UI/UX design, mobile apps, consulting and training. 6+ years experience, 38+ projects.',
+    ru: 'Профессиональные услуги разработки в Казахстане: разработка сайтов, Telegram и WhatsApp боты, AI-чатботы, UI/UX дизайн, мобильные приложения, консультации и обучение. 6+ лет опыта, 38+ проектов.',
+    kz: 'Қазақстанда кәсіби әзірлеу қызметтері: сайттарды әзірлеу, Telegram және WhatsApp боттар, AI-чатботтар, UI/UX дизайн, мобильді қосымшалар, кеңес және оқыту. 6+ жыл тәжірибе, 38+ жоба.',
   };
 
   return {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/services`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },
@@ -67,17 +67,17 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
                 <AnimatedSection animationType="slide-up" delay={0}>
                   <div className="grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
                     <div className="md:col-span-7">
-                      <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">Aidar / 01—06</p>
+                      <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{lang === 'en' ? 'aidardev / 6 service lines' : lang === 'kz' ? 'aidardev / 6 бағыт' : 'aidardev / 6 направлений'}</p>
                       <h1 className="text-5xl font-semibold tracking-[-0.05em] text-slate-950 sm:text-6xl md:text-7xl">
                         {lang === 'en' ? 'Services' : lang === 'kz' ? 'Қызметтер' : 'Услуги'}
                       </h1>
                     </div>
                     <p className="self-end text-lg leading-8 text-slate-600 md:col-span-5">
                       {lang === 'en' 
-                        ? 'Professional development services in Kazakhstan. From website development to AI integration, I help businesses grow with modern technology solutions.'
+                        ? 'Professional development services in Kazakhstan. From website development to AI integration, we help businesses grow with modern technology.'
                         : lang === 'kz'
-                        ? 'Қазақстанда кәсіби әзірлеу қызметтері. Сайттарды әзірлеуден AI интеграциясына дейін, мен бизнестің заманауи технологиялық шешімдермен өсуіне көмектесемін.'
-                        : 'Профессиональные услуги разработки в Казахстане. От разработки сайтов до интеграции AI, я помогаю бизнесу расти с помощью современных технологических решений.'}
+                        ? 'Қазақстанда кәсіби әзірлеу қызметтері. Сайт әзірлеуден AI интеграциясына дейін — бизнестің заманауи технологиялар арқылы өсуіне көмектесеміз.'
+                        : 'Профессиональные услуги разработки в Казахстане. От разработки сайтов до интеграции AI — помогаем бизнесу расти с помощью современных технологий.'}
                     </p>
                   </div>
                 </AnimatedSection>

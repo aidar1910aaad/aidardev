@@ -60,14 +60,10 @@ export async function generateMetadata({
     title: content.title,
     description: content.description,
     keywords: content.keywords,
+    // Уникальный текст есть только у RU-версии; EN/KZ — заглушки, в поиск их не пускаем.
+    robots: lang === 'ru' ? undefined : { index: false, follow: true },
     alternates: {
       canonical: `${siteUrl}/${lang}/cities/${citySlug}/${service}`,
-      languages: {
-        ru: `${siteUrl}/ru/cities/${citySlug}/${service}`,
-        en: `${siteUrl}/en/cities/${citySlug}/${service}`,
-        kk: `${siteUrl}/kz/cities/${citySlug}/${service}`,
-        'x-default': `${siteUrl}/ru/cities/${citySlug}/${service}`,
-      },
     },
     openGraph: {
       type: 'website',
@@ -107,6 +103,7 @@ export default async function CityServicePage({
     description: content.description,
     provider: 'aidardev',
     areaServed: cityName,
+    serviceKey: resolved.combo.service,
   });
   const breadcrumbSchema = createBreadcrumbSchema([
     { name: content.breadcrumbs.home, url: `${siteUrl}/${lang}` },

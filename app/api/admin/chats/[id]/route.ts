@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getBackendUrl } from '@/app/lib/backend-config';
+import { blogBackendAuthHeaders, isAuthorizedBlogAdmin } from '@/app/lib/blog-admin';
 
 const BACKEND_URL = getBackendUrl();
 
@@ -8,6 +9,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    if (!isAuthorizedBlogAdmin(request)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     // В Next.js 15 params может быть Promise
     const resolvedParams = await Promise.resolve(params);
     const chatId = resolvedParams.id;
@@ -28,6 +33,7 @@ export async function GET(
     const response = await fetch(`${BACKEND_URL}/api/chats/${chatId}`, {
       headers: {
         'Content-Type': 'application/json',
+        ...blogBackendAuthHeaders(),
       },
     });
 
@@ -72,6 +78,10 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    if (!isAuthorizedBlogAdmin(request)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     // В Next.js 15 params может быть Promise
     const resolvedParams = await Promise.resolve(params);
     const chatId = resolvedParams.id;
@@ -96,6 +106,7 @@ export async function PATCH(
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        ...blogBackendAuthHeaders(),
       },
       body: JSON.stringify(body),
     });

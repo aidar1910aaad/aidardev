@@ -65,7 +65,7 @@ export function proxy(request: NextRequest) {
     return redirectToLocale(localePrefix);
   }
 
-  const localelessPrefixes = ['/pricing', '/services', '/blog', '/cities'];
+  const localelessPrefixes = ['/pricing', '/services', '/blog', '/cities', '/privacy'];
   if (localelessPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
     return redirectToLocale(`${localePrefix}${pathname}`);
   }

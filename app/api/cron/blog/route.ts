@@ -13,11 +13,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'BLOG_API_SECRET is not configured' }, { status: 503 });
   }
 
+  // Одна статья в неделю: вторник 05:00 UTC (10:00 по Алматы). Повтор в ту же неделю бэкенд
+  // не пишет заново (ключ — ISO-неделя); slot=1 оставлен для совместимости со старым бэкендом.
   const weekday = new Date().getUTCDay();
-  const slotByWeekday: Record<number, number> = { 1: 1, 3: 2, 5: 3 };
+  const slotByWeekday: Record<number, number> = { 2: 1 };
   const slot = slotByWeekday[weekday];
   if (!slot) {
-    return NextResponse.json({ error: 'Cron is only scheduled for Monday, Wednesday, and Friday' }, { status: 400 });
+    return NextResponse.json({ error: 'Cron is only scheduled for Tuesday' }, { status: 400 });
   }
 
   const path = process.env.BLOG_CRON_BACKEND_PATH || '/api/blog/cron/generate';

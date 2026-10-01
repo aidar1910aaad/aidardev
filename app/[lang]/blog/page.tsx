@@ -17,9 +17,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Read articles about web development, AI, mobile apps, best practices and tips from a professional Full-Stack developer in Kazakhstan.',
-    ru: 'Читайте статьи о веб-разработке, AI, мобильных приложениях, лучших практиках и советах от профессионального Full-Stack разработчика в Казахстане.',
-    kz: 'Веб-дамыту, AI, мобильді қосымшалар, ең жақсы тәжірибелер және Қазақстандағы кәсіби Full-Stack әзірлеушінің кеңестері туралы мақалаларды оқыңыз.',
+    en: 'Articles from the aidardev studio about web development, AI, mobile apps and best practices for businesses in Kazakhstan.',
+    ru: 'Статьи студии aidardev о веб-разработке, AI, мобильных приложениях и лучших практиках — советы для бизнеса в Казахстане.',
+    kz: 'aidardev студиясының веб-әзірлеу, AI, мобильді қосымшалар және үздік тәжірибелер туралы мақалалары — Қазақстандағы бизнеске кеңестер.',
   };
 
   return {
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/blog`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },
   };
 }
 
-import { getBackendUrl } from '../../lib/backend-config';
+import { fetchBackend, getBackendUrl } from '../../lib/backend-config';
 
 const BACKEND_API_URL = getBackendUrl();
 
@@ -56,8 +56,8 @@ async function fetchBlogPosts(): Promise<BlogPost[]> {
   try {
     const url = `${BACKEND_API_URL}/api/blog/posts?published=true`;
     console.log('🌐 [Blog Page] Запрос к бэкенду:', url);
-    
-    const response = await fetch(url, {
+
+    const response = await fetchBackend(url, {
       next: { revalidate: 60 }, // Кэшируем на 60 секунд
     });
 

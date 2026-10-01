@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getBackendUrl } from '@/app/lib/backend-config';
+import { blogBackendAuthHeaders, isAuthorizedBlogAdmin } from '@/app/lib/blog-admin';
 
 const BACKEND_URL = getBackendUrl();
 
 export async function GET(request: NextRequest) {
   try {
+    if (!isAuthorizedBlogAdmin(request)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     
     // Проксируем все query параметры
@@ -21,6 +26,7 @@ export async function GET(request: NextRequest) {
     const response = await fetch(`${BACKEND_URL}/api/chats?${params.toString()}`, {
       headers: {
         'Content-Type': 'application/json',
+        ...blogBackendAuthHeaders(),
       },
     });
 

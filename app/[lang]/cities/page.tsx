@@ -21,15 +21,15 @@ export async function generateMetadata({
   const metadataByLanguage = {
     ru: {
       title: 'Разработка сайтов по городам Казахстана',
-      description: 'Городские SEO-страницы по разработке сайтов: Алматы, Астана, Шымкент и другие города Казахстана.',
+      description: 'Разработка сайтов для бизнеса в Алматы, Астане, Шымкенте и других городах Казахстана: что делаем, сколько стоит и сколько времени занимает.',
     },
     en: {
       title: 'Website Development by City in Kazakhstan',
-      description: 'City-focused website development pages for Almaty, Astana, Shymkent and other cities in Kazakhstan.',
+      description: 'Website development for businesses in Almaty, Astana, Shymkent and other cities of Kazakhstan.',
     },
     kz: {
       title: 'Қазақстан қалалары бойынша сайт әзірлеу',
-      description: 'Алматы, Астана, Шымкент және Қазақстанның басқа қалалары бойынша сайт әзірлеу беттері.',
+      description: 'Алматы, Астана, Шымкент және Қазақстанның басқа қалаларындағы бизнеске сайт әзірлейміз.',
     },
   };
 
@@ -59,16 +59,19 @@ export default async function CitiesIndexPage({
 
   const labels = {
     ru: {
-      title: 'Городские страницы по разработке сайтов',
-      description: 'Выберите город и перейдите на отдельную SEO-страницу с адаптированным заголовком, интро и гео-контентом.',
+      title: 'Разработка сайтов в городах Казахстана',
+      description: 'Выберите свой город — расскажем, как работаем с местным бизнесом, сколько стоит сайт и сколько времени занимает разработка.',
+      kicker: 'Казахстан / Города',
     },
     en: {
-      title: 'City pages for website development',
-      description: 'Choose a city and open a dedicated landing page with geo-focused title, intro and supporting content.',
+      title: 'Website development across Kazakhstan',
+      description: 'Choose your city to see how we work with local businesses and what we can build for you.',
+      kicker: 'Kazakhstan / Cities',
     },
     kz: {
-      title: 'Сайт әзірлеудің қалалық беттері',
-      description: 'Қаланы таңдап, жеке SEO-бетке өтіңіз: бейімделген тақырып, кіріспе және гео-контент.',
+      title: 'Қазақстан қалаларында сайт әзірлеу',
+      description: 'Қалаңызды таңдаңыз — жергілікті бизнеспен қалай жұмыс істейтінімізді және не жасай алатынымызды айтамыз.',
+      kicker: 'Қазақстан / Қалалар',
     },
   }[lang];
 
@@ -81,7 +84,7 @@ export default async function CitiesIndexPage({
             <div className="mx-auto max-w-6xl">
               <div className="mb-12 grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
                 <div className="md:col-span-7">
-                  <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">Kazakhstan / Cities</p>
+                  <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{labels.kicker}</p>
                   <h1 className="text-4xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-6xl">
                     {labels.title}
                   </h1>

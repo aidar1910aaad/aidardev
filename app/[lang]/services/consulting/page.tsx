@@ -16,14 +16,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   const titles = {
     en: 'Development Consulting Kazakhstan | Programming Training Almaty, Astana',
-    ru: 'Консультации по разработке Казахстан | Обучение программированию Алматы, Астана',
+    ru: 'Помощь и консультации по программированию — обучение | Алматы, Астана',
     kz: 'Әзірлеу бойынша кеңес Қазақстан | Бағдарламалауды оқыту Алматы, Астана',
   };
   
   const descriptions = {
-    en: 'Professional development consulting and programming training in Almaty, Astana, Shymkent and throughout Kazakhstan. Technology consultations, code review, team training. 6+ years experience, 47+ projects.',
-    ru: 'Профессиональные консультации по разработке и обучение программированию в Алматы, Астане, Шымкенте и по всему Казахстану. Консультации по технологиям, code review, обучение команды. 6+ лет опыта, 47+ проектов.',
-    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби әзірлеу бойынша кеңес беру және бағдарламалауды оқыту. Технологиялар бойынша кеңес, code review, команданы оқыту. 6+ жыл тәжірибе, 47+ жоба.',
+    en: 'Professional development consulting and programming training in Almaty, Astana, Shymkent and throughout Kazakhstan. Technology consultations, code review, team training. 6+ years experience, 38+ projects.',
+    ru: 'Консультации по разработке и обучение программированию в Алматы, Астане, Шымкенте и по всему Казахстану. Разбор задач, code review и менторинг команды. Стоимость согласуем после брифа.',
+    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби әзірлеу бойынша кеңес беру және бағдарламалауды оқыту. Технологиялар бойынша кеңес, code review, команданы оқыту. 6+ жыл тәжірибе, 38+ жоба.',
   };
 
   return {
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/services/${serviceKey}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },

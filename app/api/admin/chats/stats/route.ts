@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getBackendUrl } from '@/app/lib/backend-config';
+import { blogBackendAuthHeaders, isAuthorizedBlogAdmin } from '@/app/lib/blog-admin';
 
 const BACKEND_URL = getBackendUrl();
 
@@ -9,6 +10,10 @@ const CACHE_TTL = 30000; // 30 секунд
 
 export async function GET(request: NextRequest) {
   try {
+    if (!isAuthorizedBlogAdmin(request)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     // Проверяем кеш
     const now = Date.now();
     if (statsCache && (now - statsCache.timestamp) < CACHE_TTL) {
@@ -26,6 +31,7 @@ export async function GET(request: NextRequest) {
     const response = await fetch(`${BACKEND_URL}/api/chats/stats`, {
       headers: {
         'Content-Type': 'application/json',
+        ...blogBackendAuthHeaders(),
       },
       signal: controller.signal,
     });

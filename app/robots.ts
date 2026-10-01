@@ -8,14 +8,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: [
-          '/admin/',
-          '/api/',
-          '/login',
-          '/dashboard/',
-          '/_next/',
-          '/favicon.ico',
-        ],
+        // /_next/ открыт: без скриптов, стилей и картинок Google не видит страницу так, как её видит клиент.
+        // /login не закрыт, чтобы Google прочитал на нём noindex и убрал его из выдачи.
+        disallow: ['/admin/', '/api/', '/dashboard/'],
       },
       {
         userAgent: 'AhrefsBot',

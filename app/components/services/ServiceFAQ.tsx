@@ -53,7 +53,7 @@ export default function ServiceFAQ({ faqKey }: ServiceFAQProps) {
 
   return (
     <>
-      <StructuredData data={faqSchema} />
+      <StructuredData data={faqSchema} id={`service-faq-schema-${faqKey.replace(/\./g, '-')}`} />
       <AnimatedSection animationType="slide-up" delay={600}>
         <div className="mb-20">
         <div className="mb-10 border-b border-slate-300 pb-6">

@@ -16,13 +16,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   const titles = {
     en: 'Mobile App Development Kazakhstan | iOS and Android Apps Almaty, Astana',
-    ru: 'Разработка мобильных приложений в Астане и Алматы | iOS, Android',
+    // GSC: «разработка мобильного приложения под android цена» поз. 4, 81 показ, 0 кликов — цена в title
+    ru: 'Разработка приложений Android и iOS — цена от 800 000 ₸',
     kz: 'Мобильді қосымша әзірлеу Астана, Алматы | iOS, Android',
   };
   
   const descriptions = {
-    en: 'Professional mobile app development for iOS and Android in Almaty, Astana, Shymkent and throughout Kazakhstan. Native and cross-platform apps. 6+ years experience, 47+ projects.',
-    ru: 'Разработка мобильных приложений для iOS и Android в Астане, Алматы и по Казахстану. MVP, нативные и кроссплатформенные приложения. Оценка первой версии после брифа.',
+    en: 'Professional mobile app development for iOS and Android in Almaty, Astana, Shymkent and throughout Kazakhstan. Native and cross-platform apps. 6+ years experience, 38+ projects.',
+    ru: 'Цена разработки мобильного приложения: MVP — от 800 000 ₸, Android или iOS — от 1 200 000 ₸, полноценное — от 1 500 000 ₸. Смета после брифа, Астана и Алматы.',
     kz: 'Астана, Алматы және Қазақстан бойынша iOS/Android қосымшалар. MVP, нативті және кроссплатформалық әзірлеу.',
   };
 
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/services/${serviceKey}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },

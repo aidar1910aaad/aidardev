@@ -21,9 +21,19 @@ const Projects = dynamic(() => import("../components/landing/Projects"), {
   loading: () => <div className="min-h-[400px]" />,
 });
 
+const SocialProof = dynamic(() => import("../components/landing/SocialProof"), {
+  ssr: true,
+  loading: () => <div className="min-h-[400px]" />,
+});
+
 const Skills = dynamic(() => import("../components/landing/Skills"), {
   ssr: true,
   loading: () => <div className="min-h-[400px]" />,
+});
+
+const CtaBand = dynamic(() => import("../components/landing/CtaBand"), {
+  ssr: true,
+  loading: () => <div className="min-h-[200px]" />,
 });
 
 const Process = dynamic(() => import("../components/landing/Process"), {
@@ -61,9 +71,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = langParam || 'ru';
   // Уникальные title и description для каждой языковой версии
   const titles = {
-    ru: 'Разработка, маркетинг и AI для заявок | aidardev',
-    en: 'Development, marketing and AI for enquiries | aidardev',
-    kz: 'Өтінімдерге арналған әзірлеу, маркетинг және AI | aidardev',
+    ru: 'Разработка, маркетинг и AI для заявок',
+    en: 'Development, marketing and AI for enquiries',
+    kz: 'Өтінімдерге арналған әзірлеу, маркетинг және AI',
   };
 
   const seoDescriptions = {
@@ -89,17 +99,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}`,
-      siteName: 'aidardev — Development Studio',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: seoDescriptions[lang as keyof typeof seoDescriptions] || seoDescriptions.ru,
-      images: [
-        {
-          url: '/og-image.svg',
-          width: 1200,
-          height: 630,
-          alt: 'aidardev — development, marketing and AI studio',
-        },
-      ],
     },
   };
 }
@@ -125,14 +127,17 @@ export default async function LangHomePage({ params }: { params: Promise<{ lang:
       <StructuredDataServer data={organizationSchema} id="organization-schema" />
       <StructuredDataServer data={websiteSchema} id="website-schema" />
       
-      <div className="min-h-screen bg-[#f4f2ec] text-[#11110f]">
+      <div className="page-with-action-bar min-h-screen bg-[#f4f2ec] text-[#11110f]">
         <Header />
         <main id="main-content">
           <Hero />
           <PainOffers />
           <Projects />
+          <SocialProof />
           <Skills />
+          <CtaBand variant="stack" source="home_band_stack" />
           <Process />
+          <CtaBand variant="process" source="home_band_process" tone="ink" />
           <PricingPreview />
           <FAQ />
           <Contact />

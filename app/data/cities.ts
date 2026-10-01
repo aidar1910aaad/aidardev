@@ -1,3 +1,5 @@
+import { cityIndustryProfiles, resolveCityFaq } from './city-industries';
+
 export type SupportedLanguage = 'ru' | 'en' | 'kz';
 
 export interface CityEntry {
@@ -29,6 +31,12 @@ export interface CityLandingContent {
   sectionTitle: string;
   sectionIntro: string;
   highlights: string[];
+  // Отдельная (не "01/02/03") панель отраслевой экспертизы региона — заполнена
+  // только там, где есть реальный отраслевой профиль в city-industries.ts.
+  industryPanel?: {
+    eyebrow: string;
+    services: Array<{ name: string; description: string }>;
+  };
   faq: Array<{
     question: string;
     answer: string;
@@ -71,6 +79,28 @@ export function getCityBySlug(slug: string) {
   return cityEntries.find((city) => city.slug === slug);
 }
 
+/**
+ * Города, чьи RU-страницы остаются в поиске: у них были показы в Google
+ * (Search Console, июль–сентябрь 2026). Остальные города и все EN/KZ-копии
+ * (их тексты совпадают на 63–100%) открываются, но закрыты noindex и не попадают в sitemap.
+ */
+export const INDEXED_CITY_SLUGS = new Set([
+  'astana',
+  'almaty',
+  'atyrau',
+  'aktau',
+  'semey',
+  'pavlodar',
+  'taraz',
+  'shymkent',
+  'kostanay',
+  'karaganda',
+]);
+
+export function isCityIndexable(slug: string, lang: string): boolean {
+  return lang === 'ru' && INDEXED_CITY_SLUGS.has(slug);
+}
+
 const PRIORITY_CITY_SLUGS = new Set(['almaty', 'astana', 'shymkent', 'karaganda', 'atyrau']);
 
 const PRIORITY_CITY_KEYWORDS_RU: Record<string, string[]> = {
@@ -91,17 +121,17 @@ export function getCityLandingContent(city: CityEntry, language: SupportedLangua
       description: `Website development ${cityLocative}. Landing pages, corporate websites, e-commerce and custom web systems for businesses in ${cityName} and across Kazakhstan.`,
       h1: `Website Development ${cityLocative}`,
       heroLead: `Create a website ${cityLocative} with a strong sales focus`,
-      heroBody: `We build fast, modern and conversion-oriented websites for businesses ${cityLocative}: landing pages, company websites, e-commerce and custom platforms. The page is adapted for regional search demand and keeps the full strength of the main site content.`,
+      heroBody: `We build fast, modern and conversion-oriented websites for businesses ${cityLocative}: landing pages, company websites, e-commerce and custom platforms. We help you choose the right format, estimate the timeline and budget, and then launch the first version without unnecessary red tape.`,
       primaryCta: 'Discuss the project',
       secondaryCta: 'See portfolio',
       breadcrumbs: {
         home: 'Home',
         cities: 'Cities',
       },
-      sectionTitle: `How We work with clients ${cityLocative}`,
-      sectionIntro: `This city page is not a thin copy. It is a geo-focused landing page that keeps the strongest site sections while adapting the main intent, headings and explanatory copy for ${cityName}.`,
+      sectionTitle: `How we work with clients ${cityLocative}`,
+      sectionIntro: `Straight answers for businesses ${cityLocative}: what we can build, how long it takes, and what drives the price.`,
       highlights: [
-        `Local search intent coverage for queries like "website development ${cityName}" and "create a website ${cityName}".`,
+        `We work with businesses ${cityLocative} fully remotely: brief, prototype and progress updates, no in-person meetings required.`,
         `Suitable for landing pages, corporate websites, e-commerce, internal systems and redesign projects.`,
         `Remote workflow is fully covered: discovery, prototyping, development, QA, launch and support.`,
       ],
@@ -113,10 +143,6 @@ export function getCityLandingContent(city: CityEntry, language: SupportedLangua
         {
           question: `What kind of websites can you build for companies ${cityLocative}?`,
           answer: `We build landing pages, corporate websites, catalogs, e-commerce stores, admin dashboards and custom web platforms depending on the business model and growth stage.`,
-        },
-        {
-          question: `Why create a dedicated city page for ${cityName}?`,
-          answer: `A dedicated city page helps match geo-specific search intent, strengthens internal linking and gives search engines a clearer signal that the service is relevant for users searching in ${cityName}.`,
         },
       ],
       keywords: [
@@ -133,7 +159,7 @@ export function getCityLandingContent(city: CityEntry, language: SupportedLangua
       description: `${cityLocative} сайт әзірлеу. Лендингтер, корпоративтік сайттар, интернет-дүкендер және бизнеске арналған жеке веб-жүйелер.`,
       h1: `${cityLocative} сайт әзірлеу`,
       heroLead: `${cityLocative} бизнеске арналған заманауи сайттар`,
-      heroBody: `${cityLocative} бизнеске жылдам, заманауи және конверсияға бағытталған сайттар жасаймыз: лендингтер, корпоративтік сайттар, интернет-дүкендер және жеке платформалар. Бұл бет аймақтық сұранысқа бейімделген және негізгі сайттың күшті контентін сақтайды.`,
+      heroBody: `${cityLocative} бизнеске жылдам, заманауи және конверсияға бағытталған сайттар жасаймыз: лендингтер, корпоративтік сайттар, интернет-дүкендер және жеке платформалар. Сайт форматын таңдауға, мерзім мен құнды бағалауға көмектесеміз, содан кейін алғашқы нұсқасын артық әуре-сарсаңсыз іске қосамыз.`,
       primaryCta: 'Жобаны талқылау',
       secondaryCta: 'Портфолионы көру',
       breadcrumbs: {
@@ -141,24 +167,20 @@ export function getCityLandingContent(city: CityEntry, language: SupportedLangua
         cities: 'Қалалар',
       },
       sectionTitle: `${cityLocative} клиенттермен қалай жұмыс істейміз`,
-      sectionIntro: `Бұл жай көшірме бет емес. Мұнда негізгі сұраныс, тақырыптар және түсіндірме мәтіндер ${cityName} қаласына бейімделіп, басты сайттың мықты бөлімдері сақталған.`,
+      sectionIntro: `${cityLocative} бизнеске нақты жауаптар: не істей аламыз, қанша уақыт кетеді және баға неге байланысты.`,
       highlights: [
-        `"${cityName} сайт әзірлеу" сияқты аймақтық іздеу сұраныстарын жабады.`,
+        `${cityLocative} бизнеспен толық қашықтан жұмыс істейміз: бриф, прототип және жоба барысы — жеке кездесусіз.`,
         `Лендинг, корпоративтік сайт, интернет-дүкен, ішкі жүйе және редизайн жобаларына сай келеді.`,
         `Қашықтан толық циклмен жұмыс істейміз: талдау, прототип, әзірлеу, тестілеу, іске қосу және қолдау.`,
       ],
       faq: [
         {
           question: `${cityLocative} клиенттермен жұмыс істейсіз бе?`,
-          answer: `Иә. ${cityLocative} компаниялармен қашықтан жұмыс істейміз және талдаудан бастап іске қосу мен кейінгі қолдауға дейінгі толық циклді жабамын.`,
+          answer: `Иә. ${cityLocative} компаниялармен қашықтан жұмыс істейміз және талдаудан бастап іске қосу мен кейінгі қолдауға дейінгі толық циклді өзіміз атқарамыз.`,
         },
         {
           question: `${cityLocative} қандай сайттар жасай аласыз?`,
           answer: `Лендингтер, корпоративтік сайттар, каталогтар, интернет-дүкендер, әкімшілік панельдер және бизнес міндетіне сай жеке веб-платформалар жасаймыз.`,
-        },
-        {
-          question: `Неге ${cityName} үшін бөлек бет қажет?`,
-          answer: `Жеке қалалық бет геосұранысты жақсы жабады, ішкі сілтемелеуді күшейтеді және іздеу жүйесіне қызметтің ${cityName} қаласындағы пайдаланушыларға да өзекті екенін нақты көрсетеді.`,
         },
       ],
       keywords: [
@@ -169,14 +191,30 @@ export function getCityLandingContent(city: CityEntry, language: SupportedLangua
     };
   }
 
+  const priorityKeywords = PRIORITY_CITY_KEYWORDS_RU[city.slug] || [];
+  const prefersOrder = priorityKeywords.some((k) => k.includes('заказать'));
+  const prefersCreate = priorityKeywords.some((k) => k.includes('создание'));
+
+  // Отраслевой профиль региона (нефтесервис на западе, зерно на севере, металлургия
+  // в центре и т.д.) — делает страницу города содержательно уникальной, а не просто
+  // шаблоном с подставленным названием. См. app/data/city-industries.ts.
+  const industryProfile = cityIndustryProfiles[city.slug];
+  const industryFaq = resolveCityFaq(city.slug, cityLocative);
+
   return {
     title: `Создание сайтов ${cityLocative} | Разработка сайтов ${cityName}`,
-    description: `Профессиональная разработка сайтов ${cityLocative}. Лендинги, корпоративные сайты, интернет-магазины и сложные веб-системы для бизнеса ${cityLocative} и по всему Казахстану.`,
-    h1: `Разработка сайтов ${cityLocative}`,
+    description: `Профессиональная разработка сайтов ${cityLocative}. Лендинги, корпоративные сайты, интернет-магазины и сложные веб-системы для бизнеса ${cityLocative} и по всему Казахстану. Сроки и стоимость — после брифа.`,
+    // Подстраиваем главный заголовок под наиболее коммерческие формулировки из GSC:
+    // "заказать сайт ...", "создание сайтов ..." vs "разработка сайтов ...".
+    h1: prefersOrder
+      ? `Заказать сайт ${cityLocative}`
+      : prefersCreate
+        ? `Создание сайтов ${cityLocative}`
+        : `Разработка сайтов ${cityLocative}`,
     heroLead: PRIORITY_CITY_SLUGS.has(city.slug)
-      ? `Сайты ${cityLocative}, которые помогают получать заявки — не просто «красивая визитка»`
+      ? `Сайты ${cityLocative}, которые помогают получать заявки, а не просто закрывают пункт «нужен сайт»`
       : `Создаём сайты ${cityLocative}, которые помогают бизнесу получать заявки`,
-    heroBody: `Делаем современные, быстрые и SEO-готовые сайты для компаний ${cityLocative}: лендинги, корпоративные сайты, интернет-магазины и внутренние веб-системы. Страница собрана как полноценная гео-посадочная, а не как пустой дубль, поэтому усиливает релевантность под региональные запросы.`,
+    heroBody: `Делаем современные, быстрые и SEO-готовые сайты для компаний ${cityLocative}: лендинги, корпоративные сайты, интернет-магазины и внутренние веб-системы. Помогаем определить формат сайта, оценить сроки и стоимость, а затем собрать первую версию без лишней бюрократии.`,
     primaryCta: 'Обсудить проект',
     secondaryCta: 'Посмотреть проекты',
     breadcrumbs: {
@@ -184,25 +222,38 @@ export function getCityLandingContent(city: CityEntry, language: SupportedLangua
       cities: 'Города',
     },
     sectionTitle: `Как студия aidardev ведёт разработку сайтов ${cityLocative}`,
-    sectionIntro: `Эта страница адаптирована под городский спрос и закрывает запросы вроде "создание сайтов ${cityLocative}" и "разработка сайтов ${cityName}". При этом она не дублирует главную дословно: заголовки, интро, FAQ и перелинковка специально собраны под геозапрос.`,
+    sectionIntro: `Ниже — конкретные ответы для бизнеса ${cityLocative}: что можно сделать, сколько это занимает и от чего зависит стоимость.`,
     highlights: [
-      `Подходит для продвижения по коммерческим запросам: "создание сайтов ${cityLocative}", "разработка сайта ${cityName}", "заказать сайт ${cityLocative}".`,
-      `Используется для лендингов, корпоративных сайтов, интернет-магазинов, личных кабинетов и кастомных веб-платформ.`,
-      `Работаем удаленно по полному циклу: анализ, структура, дизайн, разработка, тестирование, запуск и поддержка.`,
+      `Работаем с бизнесом ${cityLocative} полностью удалённо: бриф, прототип и статус проекта — без обязательных личных встреч, если так удобнее.`,
+      `Делаем лендинги, корпоративные сайты, интернет-магазины, личные кабинеты и кастомные веб-платформы.`,
+      `Ведём проект по полному циклу: анализ задачи, структура, дизайн, разработка, тестирование, запуск и поддержка после сдачи.`,
     ],
+    ...(industryProfile
+      ? {
+          industryPanel: {
+            eyebrow: 'Отрасли региона',
+            services: industryProfile.services,
+          },
+        }
+      : {}),
     faq: [
       {
         question: `Работаете ли вы с клиентами ${cityLocative}?`,
-        answer: `Да, работаю с бизнесом ${cityLocative} удаленно и беру на себя полный цикл: от брифа и прототипа до запуска, аналитики и дальнейших доработок.`,
+        answer: `Да, работаем с бизнесом ${cityLocative} удалённо и берём на себя полный цикл: от брифа и прототипа до запуска, аналитики и дальнейших доработок.`,
       },
       {
         question: `Какие сайты можно заказать ${cityLocative}?`,
         answer: `Можно заказать лендинг, корпоративный сайт, каталог, интернет-магазин, админ-панель или сложную веб-систему под процессы компании. Формат зависит от вашей воронки продаж и задач бизнеса.`,
       },
       {
-        question: `Зачем нужна отдельная страница под ${cityName}?`,
-        answer: `Отдельная городская страница лучше отвечает на геозапросы, усиливает внутреннюю перелинковку и помогает поисковику понять, что услуга релевантна пользователям, которые ищут разработку сайтов именно ${cityLocative}.`,
+        question: `Сколько времени занимает создание сайта ${cityLocative}?`,
+        answer: `Обычно лендинг занимает 1-2 недели, многостраничный сайт — 3-4 недели, интернет-магазин — от 1 месяца. Если нужны личные кабинеты, CRM или нестандартная логика, срок увеличивается и фиксируется после оценки.`,
       },
+      {
+        question: `Сколько стоит создать сайт ${cityLocative}?`,
+        answer: `Стоимость зависит от объёма работ и состава функций. Для ориентира: лендинг/визитка — от 150 000 ₸, многостраничный сайт — от 300 000 ₸, интернет-магазин — от 450 000 ₸. Точную смету уточняем после брифа.`,
+      },
+      ...(industryFaq ? [industryFaq] : []),
     ],
     keywords: [
       `разработка сайтов ${cityName.toLowerCase()}`,
@@ -210,6 +261,7 @@ export function getCityLandingContent(city: CityEntry, language: SupportedLangua
       `заказать сайт ${cityName.toLowerCase()}`,
       `веб разработка ${cityName.toLowerCase()}`,
       ...(PRIORITY_CITY_KEYWORDS_RU[city.slug] || []),
+      ...(industryProfile?.keywords || []),
     ],
   };
 }

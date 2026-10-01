@@ -11,6 +11,7 @@ import {
   saveMarketingPlanProgress,
   resetMarketingPlanProgress,
 } from '@/app/lib/marketing-plan-storage';
+import { isAuthorizedBlogAdmin } from '@/app/lib/blog-admin';
 
 const PLAN_PATH = path.join(process.cwd(), 'docs', 'MARKETING_ACTION_PLAN.md');
 
@@ -40,8 +41,12 @@ function buildPlanResponse(
   };
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    if (!isAuthorizedBlogAdmin(request)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const markdown = await readFile(PLAN_PATH, 'utf-8');
     const parsed = parseMarketingPlan(markdown);
     const { progress, storage } = await readMarketingPlanProgress();
@@ -58,6 +63,10 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isAuthorizedBlogAdmin(request)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await request.json();
 
     if (
@@ -100,8 +109,12 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function DELETE() {
+export async function DELETE(request: NextRequest) {
   try {
+    if (!isAuthorizedBlogAdmin(request)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { progress, storage } = await resetMarketingPlanProgress();
     return NextResponse.json({
       success: true,

@@ -29,17 +29,19 @@ const outfit = Outfit({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
-const siteName = 'aidardev — Development Studio';
+// Бренд в шаблоне title и og:site_name — коротко «aidardev»; полное название — заголовок по умолчанию.
+const siteName = 'aidardev';
+const defaultTitle = 'aidardev — Development Studio';
 const defaultDescription = {
-  en: 'aidardev is a development studio building websites, e-commerce, Telegram bots and AI solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. 6+ years experience, 47+ projects.',
-  ru: 'aidardev — студия разработки сайтов, интернет-магазинов, Telegram-ботов и AI-решений в Алматы, Астане, Шымкенте и по всему Казахстану. 6+ лет опыта, 47+ проектов.',
-  kz: 'aidardev — Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша сайттар, интернет-дүкендер, Telegram-боттар және AI шешімдерін жасайтын әзірлеу студиясы. 6+ жыл тәжірибе, 47+ жоба.',
+  en: 'aidardev is a development studio building websites, e-commerce, Telegram bots and AI solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. 6+ years experience, 38+ projects.',
+  ru: 'aidardev — студия разработки сайтов, интернет-магазинов, Telegram-ботов и AI-решений в Алматы, Астане, Шымкенте и по всему Казахстану. 6+ лет опыта, 38+ проектов.',
+  kz: 'aidardev — Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша сайттар, интернет-дүкендер, Telegram-боттар және AI шешімдерін жасайтын әзірлеу студиясы. 6+ жыл тәжірибе, 38+ жоба.',
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: siteName,
+    default: defaultTitle,
     template: `%s | ${siteName}`,
   },
   description: defaultDescription.ru,
@@ -108,7 +110,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Aidar', url: siteUrl }],
   creator: 'Aidar',
-  publisher: 'Aidar',
+  publisher: 'aidardev',
   formatDetection: {
     email: false,
     address: false,
@@ -120,22 +122,14 @@ export const metadata: Metadata = {
     alternateLocale: ['en_US', 'kk_KZ'],
     url: siteUrl,
     siteName: siteName,
-    title: siteName,
+    title: defaultTitle,
     description: defaultDescription.ru,
-    images: [
-      {
-        url: '/og-image.svg',
-        width: 1200,
-        height: 630,
-          alt: 'aidardev — Development Studio',
-      },
-    ],
+    // Картинки превью — файлы opengraph-image.tsx у каждой страницы (app/lib/og-image.tsx).
   },
   twitter: {
     card: 'summary_large_image',
-    title: siteName,
+    title: defaultTitle,
     description: defaultDescription.ru,
-    images: ['/og-image.svg'],
     creator: '@aidardev',
   },
   robots: {

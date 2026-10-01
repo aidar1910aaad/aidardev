@@ -16,13 +16,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   const titles = {
     en: 'UI/UX Design Kazakhstan | Web Design Almaty, Astana | Website Redesign',
-    ru: 'Заказать UX/UI-дизайн сайта в Казахстане | Алматы, Астана',
-    kz: 'UX/UI дизайн заказать | Қазақстан, Алматы, Астана',
+    // GSC: «дизайн сайтов заказать» поз. 1.5, «заказать дизайн сайта» поз. 2 — главное и цена в первых 60 символах
+    ru: 'Заказать дизайн сайта — UX/UI от 150 000 ₸, Астана и Алматы',
+    kz: 'UX/UI дизайнға тапсырыс беру | Қазақстан, Алматы, Астана',
   };
   
   const descriptions = {
-    en: 'Professional UI/UX design services in Almaty, Astana, Shymkent and throughout Kazakhstan. Web design, mobile app design, website redesign. Modern interfaces, user experience optimization. 6+ years experience, 47+ projects.',
-    ru: 'UX/UI-дизайн сайтов и приложений в Алматы, Астане и по Казахстану. Лендинги, редизайн, прототипы. Оценка сроков и стоимости после брифа. Договор, поддержка после запуска.',
+    en: 'Professional UI/UX design services in Almaty, Astana, Shymkent and throughout Kazakhstan. Web design, mobile app design, website redesign. Modern interfaces, user experience optimization. 6+ years experience, 38+ projects.',
+    ru: 'Дизайн сайта под ключ: лендинг — от 150 000 ₸, многостраничный сайт — от 300 000 ₸, приложение — от 400 000 ₸. Прототип, UX/UI, адаптив. Смета после брифа.',
     kz: 'Алматы, Астана және бүкіл Қазақстан бойынша UX/UI дизайн. Лендинг, редизайн, прототип. Брифтан кейін мерзім мен бағаны бағалаймыз.',
   };
 
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/services/${serviceKey}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },

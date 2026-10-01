@@ -7,7 +7,7 @@ import StructuredDataServer from '../../../components/SEO/StructuredDataServer';
 import CityLandingHero from '../../../components/landing/CityLandingHero';
 import { LanguageProvider } from '../../../contexts/LanguageContext';
 import { createBreadcrumbSchema, createFAQSchema, createServiceSchema } from '../../../lib/schemas';
-import { cityEntries, getCityBySlug, getCityLandingContent, type SupportedLanguage } from '../../../data/cities';
+import { cityEntries, getCityBySlug, getCityLandingContent, isCityIndexable, type SupportedLanguage } from '../../../data/cities';
 
 const Projects = dynamic(() => import('../../../components/landing/Projects'), {
   ssr: true,
@@ -22,6 +22,10 @@ const Process = dynamic(() => import('../../../components/landing/Process'), {
 const Contact = dynamic(() => import('../../../components/landing/ConversionContact'), {
   ssr: true,
   loading: () => <div className="min-h-[400px]" />,
+});
+
+const StickyWhatsApp = dynamic(() => import('../../../components/landing/StickyWhatsApp'), {
+  ssr: true,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
@@ -55,34 +59,24 @@ export async function generateMetadata({
 
   const content = getCityLandingContent(city, lang);
 
+  const indexable = isCityIndexable(city.slug, lang);
+
   return {
     title: content.title,
     description: content.description,
     keywords: content.keywords,
+    // Шаблонные копии городов не участвуют в поиске, но открываются по ссылке.
+    robots: indexable ? undefined : { index: false, follow: true },
     alternates: {
       canonical: `${siteUrl}/${lang}/cities/${city.slug}`,
-      languages: {
-        ru: `${siteUrl}/ru/cities/${city.slug}`,
-        en: `${siteUrl}/en/cities/${city.slug}`,
-        kk: `${siteUrl}/kz/cities/${city.slug}`,
-      },
     },
     openGraph: {
       type: 'website',
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
-      alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/cities/${city.slug}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: content.title,
       description: content.description,
-      images: [
-        {
-          url: '/og-image.svg',
-          width: 1200,
-          height: 630,
-          alt: content.h1,
-        },
-      ],
     },
   };
 }
@@ -105,7 +99,7 @@ export default async function CityLandingPage({
   const serviceSchema = createServiceSchema({
     name: content.h1,
     description: content.description,
-    provider: 'Aidar',
+    provider: 'aidardev',
     areaServed: city.name[lang],
   });
   const breadcrumbSchema = createBreadcrumbSchema([
@@ -120,7 +114,7 @@ export default async function CityLandingPage({
       <StructuredDataServer data={faqSchema} id={`city-faq-${city.slug}`} />
       <StructuredDataServer data={breadcrumbSchema} id={`city-breadcrumbs-${city.slug}`} />
 
-      <div className="min-h-screen bg-[#f7f7f5] text-slate-950">
+      <div className="page-with-action-bar min-h-screen bg-[#f7f7f5] text-slate-950">
         <Header />
         <main>
           <CityLandingHero city={city} content={content} language={lang} />
@@ -135,18 +129,6 @@ export default async function CityLandingPage({
                 <p className="text-lg leading-8 text-slate-600 md:col-span-5">
                   {content.sectionIntro}
                 </p>
-                </div>
-
-                <div className="grid border-l border-slate-300 md:grid-cols-3">
-                  {content.highlights.map((highlight, index) => (
-                    <div
-                      key={highlight}
-                      className="border-b border-r border-slate-300 bg-white p-6"
-                    >
-                      <span className="mb-5 block font-mono text-xs text-blue-700">0{index + 1}</span>
-                      <p className="leading-7 text-slate-700">{highlight}</p>
-                    </div>
-                  ))}
                 </div>
 
                 <h2 className="border-b border-slate-300 pb-6 pt-16 text-3xl font-semibold tracking-[-0.035em]">FAQ</h2>
@@ -170,6 +152,7 @@ export default async function CityLandingPage({
           <Contact />
         </main>
         <Footer />
+        <StickyWhatsApp source="city" />
       </div>
     </LanguageProvider>
   );

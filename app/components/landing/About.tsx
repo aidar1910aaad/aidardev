@@ -89,7 +89,7 @@ export default function About() {
     return services.map(service => createServiceSchema({
       name: service.title,
       description: service.description,
-      provider: 'Aidar',
+      provider: 'aidardev',
       areaServed: 'Kazakhstan',
     }));
   }, [services]);
@@ -98,7 +98,7 @@ export default function About() {
     <>
       {/* Структурированные данные для каждой услуги */}
       {servicesSchema.map((schema, index) => (
-        <StructuredData key={`service-${index}`} data={schema} />
+        <StructuredData key={`service-${index}`} data={schema} id={`about-service-schema-${index}`} />
       ))}
       
     <section id="about" className="border-y border-slate-200 bg-stone-50 py-24 dark:border-slate-800 dark:bg-slate-950 sm:py-32">

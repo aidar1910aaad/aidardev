@@ -1,8 +1,8 @@
-/** Vercel cron: `0 6 * * 1,3,5` → Mon/Wed/Fri 06:00 UTC */
+/** Vercel cron: `0 5 * * 2` → вторник 05:00 UTC = 10:00 по Алматы, одна статья в неделю */
 
-const CRON_UTC_HOUR = 6;
+const CRON_UTC_HOUR = 5;
 const CRON_UTC_MINUTE = 0;
-const CRON_WEEKDAYS = [1, 3, 5] as const; // Mon, Wed, Fri
+const CRON_WEEKDAYS: readonly number[] = [2]; // вторник
 
 const weekdayRu: Record<number, string> = {
   0: 'воскресенье',
@@ -26,10 +26,10 @@ export function getNextBlogAutoGenerateAt(from = new Date()): Date {
       0,
       0,
     ));
-    if (!CRON_WEEKDAYS.includes(candidate.getUTCDay() as 1 | 3 | 5)) continue;
+    if (!CRON_WEEKDAYS.includes(candidate.getUTCDay())) continue;
     if (candidate.getTime() > from.getTime()) return candidate;
   }
-  // Fallback: next Monday
+  // Запасной вариант (за 8 дней вторник всегда найдётся): через неделю
   return new Date(Date.UTC(
     start.getUTCFullYear(),
     start.getUTCMonth(),
@@ -74,7 +74,7 @@ export function formatBlogAutoGenerateSchedule(nextAt: Date, now = new Date()) {
     almatyLabel: almaty,
     utcLabel: `${utc} UTC`,
     relative,
-    weeklyNote: 'Авто: пн / ср / пт в 11:00 по Алматы (06:00 UTC)',
+    weeklyNote: 'Авто: вторник в 10:00 по Алматы (05:00 UTC)',
     weekdayRu: weekdayRu[nextAt.getUTCDay()] || '',
   };
 }

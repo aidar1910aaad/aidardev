@@ -1,8 +1,9 @@
 import Header from "../../components/landing/EditorialHeader";
 import Pricing from "../../components/landing/Pricing";
 import Footer from "../../components/landing/Footer";
+import StickyWhatsApp from "../../components/landing/StickyWhatsApp";
 import StructuredDataServer from "../../components/SEO/StructuredDataServer";
-import { createWebSiteSchema } from "../../lib/schemas";
+import { createWebSiteSchema, createPricingCatalogSchema } from "../../lib/schemas";
 import { LanguageProvider } from "../../contexts/LanguageContext";
 import { Metadata } from "next";
 
@@ -17,9 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     kz: 'Веб-дамыту бағалары Қазақстан | Қызметтер құны',
   };
   const descriptions = {
-    en: 'Transparent pricing for web development, bots, AI, mobile apps in Almaty, Astana, Shymkent and throughout Kazakhstan. 6+ years experience, 47+ projects.',
-    ru: 'Прозрачные цены на разработку сайтов, ботов, AI-решений и мобильных приложений в Алматы, Астане, Шымкенте и по всему Казахстану. 6+ лет опыта, 47+ проектов.',
-    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша веб-дамыту, боттар, AI шешімдері және мобильді қосымшалар үшін ашық бағалар. 6+ жыл тәжірибе, 47+ жоба.',
+    en: 'Transparent pricing for web development, bots, AI, mobile apps in Almaty, Astana, Shymkent and throughout Kazakhstan. 6+ years experience, 38+ projects.',
+    ru: 'Прозрачные цены на разработку сайтов, ботов, AI-решений и мобильных приложений в Алматы, Астане, Шымкенте и по всему Казахстану. 6+ лет опыта, 38+ проектов.',
+    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша веб-дамыту, боттар, AI шешімдері және мобильді қосымшалар үшін ашық бағалар. 6+ жыл тәжірибе, 38+ жоба.',
   };
 
   return {
@@ -45,18 +46,21 @@ export default async function LangPricingPage({ params }: { params: Promise<{ la
   const { lang: langParam } = await params;
   const lang = langParam || 'ru';
   const websiteSchema = createWebSiteSchema();
+  const pricingCatalogSchema = createPricingCatalogSchema();
 
   return (
     <LanguageProvider initialLanguage={lang as 'ru' | 'en' | 'kz'}>
       {/* Structured Data для SEO */}
       <StructuredDataServer data={websiteSchema} id="website-schema" />
+      <StructuredDataServer data={pricingCatalogSchema} id="pricing-catalog-schema" />
       
-      <div className="min-h-screen bg-[#f7f7f5] text-[#111827]">
+      <div className="page-with-action-bar min-h-screen bg-[#f7f7f5] text-[#111827]">
         <Header />
         <main>
           <Pricing />
         </main>
         <Footer />
+        <StickyWhatsApp source="pricing" />
       </div>
     </LanguageProvider>
   );

@@ -13,6 +13,7 @@ import { pricingTranslations } from './pricing';
 import { servicesTranslations } from './services';
 import { notFound } from './not-found';
 import { home } from './home';
+import { leadForm } from './lead-form';
 
 import type { Language } from '../LanguageContext';
 
@@ -33,6 +34,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ...servicesTranslations.en,
     ...notFound.en,
     ...home.en,
+    ...leadForm.en,
   },
   ru: {
     ...navigation.ru,
@@ -50,6 +52,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ...servicesTranslations.ru,
     ...notFound.ru,
     ...home.ru,
+    ...leadForm.ru,
   },
   kz: {
     ...navigation.kz,
@@ -67,6 +70,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ...servicesTranslations.kz,
     ...notFound.kz,
     ...home.kz,
+    ...leadForm.kz,
   },
 };
 

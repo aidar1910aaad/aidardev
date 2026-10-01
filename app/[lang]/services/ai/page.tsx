@@ -16,14 +16,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   const titles = {
     en: 'AI Chatbot Development Kazakhstan | AI Integration Almaty, Astana',
-    ru: 'Разработка AI-чатботов Казахстан | ИИ интеграции Алматы, Астана',
+    ru: 'AI-чатботы под ключ — цены и интеграция в Алматы, Астане | GPT',
     kz: 'AI чатботтарды әзірлеу Қазақстан | AI интеграциялар Алматы, Астана',
   };
   
   const descriptions = {
-    en: 'Professional AI chatbot development and machine learning solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. GPT integration, AI assistants, ML analytics. 6+ years experience, 47+ projects.',
-    ru: 'Профессиональная разработка AI-чатботов и решений машинного обучения в Алматы, Астане, Шымкенте и по всему Казахстану. Интеграция GPT, AI-ассистенты, ML-аналитика. 6+ лет опыта, 47+ проектов.',
-    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби AI-чатботтарды әзірлеу және машиналық оқыту шешімдері. GPT интеграциясы, AI-ассистенттер, ML-аналитика. 6+ жыл тәжірибе, 47+ жоба.',
+    en: 'Professional AI chatbot development and machine learning solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. GPT integration, AI assistants, ML analytics. 6+ years experience, 38+ projects.',
+    ru: 'Разработка AI-чатботов под ключ для бизнеса: GPT-интеграции, AI-ассистенты, ML-аналитика. Алматы, Астана и Казахстан. Сроки и стоимость после брифа.',
+    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби AI-чатботтарды әзірлеу және машиналық оқыту шешімдері. GPT интеграциясы, AI-ассистенттер, ML-аналитика. 6+ жыл тәжірибе, 38+ жоба.',
   };
 
   return {
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: lang === 'ru' ? 'ru_RU' : lang === 'en' ? 'en_US' : 'kk_KZ',
       alternateLocale: ['ru_RU', 'en_US', 'kk_KZ'],
       url: `${siteUrl}/${lang}/services/${serviceKey}`,
-      siteName: 'Aidar - Full-Stack Developer',
+      siteName: 'aidardev',
       title: titles[lang as keyof typeof titles] || titles.ru,
       description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     },

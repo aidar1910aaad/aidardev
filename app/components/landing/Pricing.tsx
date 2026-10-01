@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import AnimatedSection from '../common/AnimatedSection';
 import { analyticsEvents } from '../../lib/analytics';
+import { buildWhatsAppUrl, PRIMARY_WHATSAPP_NUMBER } from '../../lib/whatsapp';
 import pricingData from '../../data/pricing.json';
 import Contact from './ConversionContact';
 
@@ -121,33 +122,26 @@ export default function Pricing() {
     }
   };
 
-  const scrollToChat = () => {
-    if (typeof window === 'undefined') return;
-    
-    const pathname = window.location.pathname;
-    
-    // Определяем язык из URL
-    let lang = 'ru';
-    if (pathname.startsWith('/en')) {
-      lang = 'en';
-    } else if (pathname.startsWith('/kz')) {
-      lang = 'kz';
-    } else if (pathname.startsWith('/ru')) {
-      lang = 'ru';
+  // «Рассчитать стоимость»: форма заявки стоит на этой же странице (#contact). Если её нет —
+  // открываем WhatsApp с выбранным направлением, чтобы клик не уходил в пустоту.
+  const requestEstimate = () => {
+    analyticsEvents.calculatePriceClick('Pricing Page');
+    const contact = document.getElementById('contact');
+    if (contact) {
+      contact.scrollIntoView({ behavior: 'auto' });
+      analyticsEvents.scrollToSection('contact');
+      return;
     }
-    
-    // Если мы на странице pricing (с любым языковым префиксом), переходим на главную с якорем
-    if (pathname.includes('/pricing')) {
-      window.location.href = `/${lang}#chat`;
-      analyticsEvents.calculatePriceClick('Pricing Page');
-    } else {
-      // Если на главной странице, скроллим к чату
-      const element = document.getElementById('chat');
-      if (element) {
-        element.scrollIntoView({ behavior: 'auto' });
-        analyticsEvents.calculatePriceClick('Pricing Page');
-      }
-    }
+
+    const category = categories.find((item) => item.key === selectedCategory)?.label;
+    const lines = [t('leadForm.estimateMessage')];
+    if (category) lines.push(`${t('home.contact.topicLine')}: ${category}`);
+    analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'pricing_estimate');
+    window.open(
+      buildWhatsAppUrl(lines.join('\n'), { sourcePath: window.location.pathname }),
+      '_blank',
+      'noopener,noreferrer',
+    );
   };
 
   const packages = getPackages();
@@ -160,7 +154,7 @@ export default function Pricing() {
           <AnimatedSection animationType="slide-up" delay={0}>
             <div className="grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
               <div className="md:col-span-7">
-                <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">Aidar / Pricing</p>
+                <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{t('pricing.kicker')}</p>
                 <h1 className="text-5xl font-semibold tracking-[-0.05em] text-slate-950 sm:text-6xl md:text-7xl">
                   {t('pricing.h1')}
                 </h1>
@@ -292,7 +286,7 @@ export default function Pricing() {
                           {formatPrice(pkg.price)}
                         </span>
                         <span className="text-lg text-slate-600">
-                          {pkg.currency}
+                          {pkg.currency === 'KZT' ? '₸' : pkg.currency}
                         </span>
                       </div>
                     </div>
@@ -358,7 +352,8 @@ export default function Pricing() {
               </div>
               <div className="flex flex-col justify-center gap-3 sm:flex-row md:flex-col">
                 <button
-                  onClick={scrollToChat}
+                  type="button"
+                  onClick={requestEstimate}
                   className="bg-blue-700 px-8 py-4 font-semibold text-white transition-colors hover:bg-blue-800"
                 >
                   {t('pricing.calculateButton')}

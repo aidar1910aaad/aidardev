@@ -94,7 +94,7 @@ export default function Testimonials() {
 
   return (
     <>
-      <StructuredData data={reviewsForSchema} />
+      <StructuredData data={reviewsForSchema} id="testimonials-reviews-schema" />
       <section id="testimonials" className="overflow-hidden bg-white py-24 dark:bg-slate-900 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Section: Trusted by the best */}
