@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { analyticsEvents, captureFirstTouchUtm, type LeadService } from '../../lib/analytics';
@@ -11,7 +12,7 @@ import {
   PRIMARY_WHATSAPP_NUMBER,
   sanitizePhoneInput,
 } from '../../lib/whatsapp';
-import AnimatedSection from '../common/AnimatedSection';
+import { ArrowRight, Check, PhoneIcon, WhatsAppGlyph } from '../brand/icons';
 
 const DISPLAY_PHONE = '+7 706 670 36 96';
 const NAME_MAX_LENGTH = 100;
@@ -32,26 +33,22 @@ type Status = 'idle' | 'sending' | 'success' | 'error';
 type FieldErrors = { name?: 'required'; phone?: 'required' | 'invalid' };
 
 const inputClass =
-  'block min-h-12 w-full border bg-white px-4 py-3 text-base text-[#11110f] placeholder:text-[#8a8980] focus:outline-none focus:ring-2';
+  'block h-14 w-full rounded-[14px] border-[1.5px] bg-[#fffbf7] px-4 text-base text-[#1b1f3b] placeholder:text-[#8a8da6] focus:outline-none focus:ring-2';
 const inputStateClass = (invalid: boolean) =>
   invalid
     ? 'border-[#b42318] focus:border-[#b42318] focus:ring-[#b42318]/25'
-    : 'border-[#b8b7b0] focus:border-[#2446e8] focus:ring-[#2446e8]/30';
-
-function WhatsAppGlyph({ className }: { className: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-    </svg>
-  );
-}
+    : 'border-[#e8dacb] focus:border-[#1b1f3b] focus:ring-[#1b1f3b]/15';
+const directLink =
+  'inline-flex min-h-11 items-center gap-2 rounded-full bg-white/[0.12] px-4 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#b4232c]';
 
 interface ConversionContactProps {
   /** Which form produced the lead: sent to /api/leads and to the generate_lead event. */
   source?: string;
+  /** No top padding — for pages where the previous section already has the same cream background. */
+  flushTop?: boolean;
 }
 
-export default function ConversionContact({ source = 'contact_form' }: ConversionContactProps) {
+export default function ConversionContact({ source = 'contact_form', flushTop = false }: ConversionContactProps) {
   const { language, t } = useLanguage();
   const pathname = usePathname() || '/';
   const [service, setService] = useState<LeadService | ''>('');
@@ -152,77 +149,84 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
     window.open(briefUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const reassurances = [
-    t('home.contact.reassure.reply'),
-    t('home.contact.reassure.free'),
-    t('home.contact.reassure.noSpam'),
-  ];
-
   return (
-    <section id="contact" className="bg-[#2446e8] py-16 text-white sm:py-24">
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12 xl:px-16">
-        <AnimatedSection animationType="slide-up">
-          <div className="grid gap-6 border-b border-blue-400 pb-8 lg:grid-cols-12 lg:items-end lg:pb-10">
-            <div className="lg:col-span-8">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-blue-200">
-                08 / {t('home.contact.kicker')}
-              </p>
-              <h2 className="mt-4 max-w-5xl text-3xl font-semibold tracking-[-0.045em] sm:text-5xl lg:text-7xl">
-                {t('home.contact.title')}
+    <section id="contact" className={`bg-[#fff7ef] pb-16 lg:pb-28 ${flushTop ? '' : 'pt-16 lg:pt-28'}`}>
+      <div className="mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-10">
+        <div className="relative overflow-hidden rounded-[28px] bg-[#b4232c] p-5 text-white sm:p-8 lg:rounded-[32px] lg:p-16">
+          <div className="pointer-events-none absolute -right-[120px] -top-[150px] h-[240px] w-[240px] rounded-full bg-[#ffd166]/25 lg:-right-[110px] lg:-top-[130px] lg:h-[360px] lg:w-[360px] lg:bg-[#ffd166]/30" aria-hidden />
+          <div className="pointer-events-none absolute -bottom-[120px] -left-20 h-[260px] w-[260px] rounded-full bg-white/[0.07]" aria-hidden />
+
+          <div className="relative grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
+            <div className="flex flex-col gap-5">
+              <h2 className="text-[28px] leading-[1.08] tracking-[-0.03em] sm:text-[36px] lg:text-[clamp(32px,3.4vw,48px)] lg:leading-[1.06]">
+                {t('landing.contact.title')}
               </h2>
-            </div>
-            <p className="text-base leading-7 text-blue-100 sm:text-lg sm:leading-8 lg:col-span-4">
-              {t('home.contact.subtitle')}
-            </p>
-          </div>
-        </AnimatedSection>
-
-        <AnimatedSection animationType="slide-up" delay={40}>
-          <ul className="mt-6 grid gap-2 sm:grid-cols-3 sm:gap-3">
-            {reassurances.map((item) => (
-              <li key={item} className="flex items-start gap-2.5 border border-blue-400/70 bg-white/10 p-3 text-sm font-semibold leading-5">
-                <svg viewBox="0 0 20 20" className="mt-0.5 h-4 w-4 shrink-0 fill-current text-blue-200" aria-hidden>
-                  <path
-                    fillRule="evenodd"
-                    d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 011.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </AnimatedSection>
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:gap-10">
-          <AnimatedSection animationType="slide-up" delay={80} className="lg:col-span-7">
-            {status === 'success' ? (
-              <div role="status" className="border border-blue-400 bg-white p-5 text-[#11110f] sm:p-8">
-                <div className="flex items-start gap-3">
-                  <span className="mt-1 grid h-8 w-8 shrink-0 place-items-center bg-[#25D366] text-[#06231a]" aria-hidden>
-                    <svg viewBox="0 0 20 20" className="h-4 w-4 fill-current">
-                      <path
-                        fillRule="evenodd"
-                        d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 011.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                  <h3
-                    ref={successRef}
-                    tabIndex={-1}
-                    className="text-2xl font-semibold leading-tight tracking-[-0.03em] focus:outline-none sm:text-3xl"
+              <p className="text-base leading-[1.6] text-[#ffe7da] lg:text-lg">{t('landing.contact.text')}</p>
+              <div className="flex items-center gap-3.5 self-start rounded-[18px] bg-white/[0.12] px-4 py-3.5">
+                <Image
+                  src="/team/aidar.webp"
+                  alt={t('landing.contact.founderAlt')}
+                  width={52}
+                  height={52}
+                  className="h-12 w-12 shrink-0 rounded-full object-cover ring-2 ring-[#ffd166] lg:h-[52px] lg:w-[52px]"
+                />
+                <span className="flex flex-col gap-0.5">
+                  <span className="text-[15px] font-bold leading-snug">{t('landing.contact.founder')}</span>
+                  <span className="text-[13px] font-medium leading-snug text-[#ffe7da]">{t('landing.contact.founderNote')}</span>
+                </span>
+              </div>
+              <div>
+                <p className="mb-2.5 text-[13px] font-semibold text-[#ffe7da]">{t('home.contact.orDirect')}</p>
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href={buildWhatsAppUrl(t('home.contact.baseMessage'), { sourcePath: pathname })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'home_contact')}
+                    className={directLink}
                   >
+                    <WhatsAppGlyph className="h-[18px] w-[18px]" />
+                    WhatsApp
+                  </a>
+                  <a
+                    href="https://t.me/opunksnoo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => analyticsEvents.telegramClick()}
+                    className={directLink}
+                  >
+                    Telegram · @opunksnoo
+                  </a>
+                  <a
+                    href={`tel:+${PRIMARY_WHATSAPP_NUMBER}`}
+                    onClick={() => analyticsEvents.phoneCall(DISPLAY_PHONE, 'home_contact')}
+                    className={`${directLink} tabular-nums`}
+                    aria-label={`${t('home.contact.call')} ${DISPLAY_PHONE}`}
+                  >
+                    <PhoneIcon className="h-[17px] w-[17px]" />
+                    {DISPLAY_PHONE}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {status === 'success' ? (
+              <div role="status" className="rounded-3xl bg-white p-6 text-[#1b1f3b] shadow-[0_36px_80px_rgba(27,31,59,0.28)] sm:p-8">
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#25d366] text-[#0b3d1f]" aria-hidden>
+                    <Check className="h-4 w-4" />
+                  </span>
+                  <h3 ref={successRef} tabIndex={-1} className="text-2xl leading-tight tracking-[-0.03em] focus:outline-none">
                     {t('leadForm.success.title')}
                   </h3>
                 </div>
-                <p className="mt-4 text-base leading-7 text-[#68675f]">{t('leadForm.success.text')}</p>
+                <p className="mt-4 text-base leading-7 text-[#464a66]">{t('leadForm.success.text')}</p>
                 <a
                   href={briefUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'lead_form_success')}
-                  className="mt-6 inline-flex min-h-12 items-center gap-3 border border-[#11110f] px-5 py-3 text-sm font-extrabold hover:bg-[#25D366] hover:text-[#06231a]"
+                  className="mt-6 inline-flex h-14 items-center gap-2.5 rounded-[14px] bg-[#25d366] px-6 text-base font-bold text-[#0b3d1f] hover:bg-[#1fb356]"
                 >
                   <WhatsAppGlyph className="h-5 w-5" />
                   {t('leadForm.whatsapp')}
@@ -233,12 +237,12 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                 onSubmit={submitLead}
                 noValidate
                 aria-busy={status === 'sending'}
-                className="relative border border-blue-400 bg-white p-5 text-[#11110f] sm:p-8"
+                className="relative flex flex-col rounded-3xl bg-white p-5 text-[#1b1f3b] shadow-[0_36px_80px_rgba(27,31,59,0.28)] sm:p-[30px]"
               >
                 <fieldset>
                   <legend className="mb-3 text-sm font-bold">
                     {t('home.contact.quickLabel')}{' '}
-                    <span className="font-normal text-[#68675f]">({t('home.contact.quickOptional')})</span>
+                    <span className="font-medium text-[#62667f]">({t('home.contact.quickOptional')})</span>
                   </legend>
                   <div className="flex flex-wrap gap-2">
                     {serviceChips.map((chip) => {
@@ -249,7 +253,11 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                           type="button"
                           aria-pressed={selected}
                           onClick={() => setService(selected ? '' : chip.service)}
-                          className={`quick-chip ${selected ? 'quick-chip--selected' : ''}`}
+                          className={`min-h-10 rounded-full px-4 text-sm font-semibold transition-colors ${
+                            selected
+                              ? 'border-[1.5px] border-[#1b1f3b] bg-[#1b1f3b] text-white'
+                              : 'border-[1.5px] border-[#e8dacb] bg-white text-[#1b1f3b] hover:border-[#1b1f3b]'
+                          }`}
                         >
                           {t(`home.contact.topic.${chip.key}`)}
                         </button>
@@ -258,7 +266,7 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                   </div>
                 </fieldset>
 
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   <div>
                     <label htmlFor="contact-name" className="mb-2 block text-sm font-bold">
                       {t('leadForm.name.label')}
@@ -318,7 +326,7 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                   aria-expanded={detailsOpen}
                   aria-controls="contact-details"
                   onClick={() => setDetailsOpen((open) => !open)}
-                  className="link-underline mt-6 inline-flex min-h-11 items-center"
+                  className="mt-4 inline-flex min-h-11 items-center self-start text-sm font-semibold text-[#b4232c] underline decoration-[#f3b5ad] underline-offset-4 hover:decoration-[#b4232c]"
                 >
                   {t('leadForm.task.toggle')} ({t('leadForm.optional')}) {detailsOpen ? '−' : '+'}
                 </button>
@@ -333,7 +341,7 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                   onChange={(event) => setDetails(event.target.value)}
                   placeholder={t('leadForm.task.placeholder')}
                   rows={4}
-                  className={`mt-3 w-full resize-y border border-[#b8b7b0] px-4 py-3 text-base focus:border-[#2446e8] focus:outline-none focus:ring-2 focus:ring-[#2446e8]/30 ${
+                  className={`mt-2 w-full resize-y rounded-[14px] border-[1.5px] border-[#e8dacb] bg-[#fffbf7] px-4 py-3 text-base text-[#1b1f3b] placeholder:text-[#8a8da6] focus:border-[#1b1f3b] focus:outline-none focus:ring-2 focus:ring-[#1b1f3b]/15 ${
                     detailsOpen ? 'block' : 'hidden'
                   }`}
                 />
@@ -345,7 +353,7 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                 </div>
 
                 {status === 'error' && (
-                  <div role="alert" className="mt-6 border border-[#f3b5ad] bg-[#fff4f2] p-4">
+                  <div role="alert" className="mt-4 rounded-[14px] border border-[#f3b5ad] bg-[#fff4f2] p-4">
                     <p className="text-sm font-bold text-[#b42318]">{t('leadForm.error.title')}</p>
                     <p className="mt-1 text-sm leading-6 text-[#7a271a]">{t('leadForm.error.text')}</p>
                     <a
@@ -353,7 +361,7 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'lead_form_error')}
-                      className="mt-3 inline-flex min-h-11 items-center gap-2 bg-[#25D366] px-4 py-2 text-sm font-extrabold text-[#06231a] hover:bg-[#1fb356]"
+                      className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#25d366] px-4 py-2 text-sm font-bold text-[#0b3d1f] hover:bg-[#1fb356]"
                     >
                       <WhatsAppGlyph className="h-5 w-5" />
                       {t('leadForm.whatsapp')}
@@ -361,70 +369,38 @@ export default function ConversionContact({ source = 'contact_form' }: Conversio
                   </div>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="mt-6 flex min-h-14 w-full items-center justify-center gap-3 bg-[#11110f] px-6 py-4 text-base font-extrabold text-white hover:bg-[#2446e8] disabled:cursor-wait disabled:opacity-70 disabled:hover:bg-[#11110f]"
-                >
-                  {status === 'sending' ? t('leadForm.sending') : t('leadForm.submit')}
-                  {status !== 'sending' && <span aria-hidden>→</span>}
-                </button>
-                <p className="mt-3 text-xs leading-5 text-[#68675f]">{t('leadForm.note')}</p>
-                <p className="mt-1 text-xs leading-5 text-[#68675f]">
+                <div className="mt-4 flex gap-2.5">
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="flex h-14 grow items-center justify-center gap-2.5 rounded-[14px] bg-[#1b1f3b] px-5 text-base font-bold text-white transition-colors hover:bg-[#2e3358] disabled:cursor-wait disabled:opacity-70"
+                  >
+                    {status === 'sending' ? t('leadForm.sending') : t('leadForm.submit')}
+                    {status !== 'sending' && <ArrowRight className="h-[18px] w-[18px]" />}
+                  </button>
+                  <a
+                    href={briefUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'lead_form_whatsapp')}
+                    className="flex h-14 shrink-0 items-center justify-center gap-2 rounded-[14px] bg-[#25d366] px-4 text-base font-bold text-[#0b3d1f] transition-colors hover:bg-[#1fb356] sm:px-5"
+                    aria-label="WhatsApp"
+                  >
+                    <WhatsAppGlyph className="h-5 w-5" />
+                    <span className="hidden sm:inline">WhatsApp</span>
+                  </a>
+                </div>
+                <p className="mt-3 text-xs leading-5 text-[#62667f]">{t('leadForm.note')}</p>
+                <p className="mt-1 text-xs leading-5 text-[#62667f]">
                   {t('leadForm.consent.before')}
-                  <a href={`/${language}/privacy`} className="underline underline-offset-2 hover:text-[#2446e8]">
+                  <a href={`/${language}/privacy`} className="underline underline-offset-2 hover:text-[#b4232c]">
                     {t('leadForm.consent.link')}
                   </a>
                   {t('leadForm.consent.after')}
                 </p>
               </form>
             )}
-          </AnimatedSection>
-
-          <AnimatedSection animationType="slide-up" delay={120} className="lg:col-span-5">
-            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">
-              {t('home.contact.orDirect')}
-            </p>
-            <div className="grid border-t border-blue-400">
-              <a
-                href={buildWhatsAppUrl(t('home.contact.baseMessage'), { sourcePath: pathname })}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'home_contact')}
-                className="flex min-h-20 items-center justify-between gap-4 border-b border-blue-400 p-5 hover:bg-white hover:text-[#2446e8] sm:min-h-28 sm:p-6"
-              >
-                <span>
-                  <strong className="block text-lg sm:text-xl">WhatsApp</strong>
-                  <span className="mt-0.5 block text-sm opacity-80">{DISPLAY_PHONE}</span>
-                </span>
-                <span className="text-2xl" aria-hidden>↗</span>
-              </a>
-              <a
-                href="https://t.me/opunksnoo"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => analyticsEvents.telegramClick()}
-                className="flex min-h-20 items-center justify-between gap-4 border-b border-blue-400 p-5 hover:bg-white hover:text-[#2446e8] sm:min-h-28 sm:p-6"
-              >
-                <span>
-                  <strong className="block text-lg sm:text-xl">{t('home.contact.telegram')}</strong>
-                  <span className="mt-0.5 block text-sm opacity-80">@opunksnoo</span>
-                </span>
-                <span className="text-2xl" aria-hidden>↗</span>
-              </a>
-              <a
-                href={`tel:+${PRIMARY_WHATSAPP_NUMBER}`}
-                onClick={() => analyticsEvents.phoneCall(DISPLAY_PHONE, 'home_contact')}
-                className="flex min-h-20 items-center justify-between gap-4 border-b border-blue-400 p-5 hover:bg-white hover:text-[#2446e8] sm:min-h-28 sm:p-6"
-              >
-                <span>
-                  <strong className="block text-lg sm:text-xl">{t('home.contact.call')}</strong>
-                  <span className="mt-0.5 block text-sm opacity-80">{DISPLAY_PHONE}</span>
-                </span>
-                <span className="text-2xl" aria-hidden>→</span>
-              </a>
-            </div>
-          </AnimatedSection>
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 import Header from "../../../components/landing/EditorialHeader";
 import Footer from "../../../components/landing/Footer";
+import StickyWhatsApp from '../../../components/landing/StickyWhatsApp';
 import { LanguageProvider } from "../../../contexts/LanguageContext";
 import { Metadata } from "next";
 import AnimatedSection from "../../../components/common/AnimatedSection";
@@ -234,7 +235,7 @@ export default async function BlogPostPage({
       <StructuredData data={breadcrumbSchema} id="blog-breadcrumb-schema" />
       <BlogAnalytics slug={slug} lang={lang} />
       
-      <div className="min-h-screen bg-[#f7f7f5] text-slate-950">
+      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
         <Header />
         
         <article className="border-b border-slate-300 pb-20 pt-32">
@@ -277,7 +278,7 @@ export default async function BlogPostPage({
                       {category}
                     </span>
                   </div>
-                  <h1 className="mb-8 text-4xl font-semibold leading-[1.05] tracking-[-0.045em] text-slate-950 sm:text-5xl md:text-6xl">
+                  <h1 className="mb-8 text-4xl font-semibold leading-[1.05] tracking-[-0.03em] text-slate-950 sm:text-5xl md:text-6xl">
                     {title}
                   </h1>
                   <div className="flex flex-wrap items-center gap-4 font-mono text-xs uppercase tracking-wider text-slate-500">
@@ -351,6 +352,8 @@ export default async function BlogPostPage({
         </article>
 
         <Footer />
+
+        <StickyWhatsApp source="blog_article" />
         <BlogStickyCta slug={slug} title={title} lang={lang} />
       </div>
     </LanguageProvider>

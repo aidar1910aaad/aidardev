@@ -17,7 +17,7 @@ export default function ServiceProcess({ processKey }: ServiceProcessProps) {
     <AnimatedSection animationType="slide-up" delay={400}>
       <div className="mb-20">
         <div className="mb-10 border-b border-slate-300 pb-6">
-          <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 md:text-5xl">
+          <h2 className="text-4xl font-semibold tracking-[-0.03em] text-slate-950 md:text-5xl">
               {t('services.process.title')}
           </h2>
         </div>

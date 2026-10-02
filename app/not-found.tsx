@@ -10,7 +10,7 @@ export default function NotFound() {
   const { t, language } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/20 to-orange-50/20 dark:from-gray-950 dark:via-blue-950/10 dark:to-orange-950/10">
+    <div className="brand-site min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/20 to-orange-50/20 dark:from-gray-950 dark:via-blue-950/10 dark:to-orange-950/10">
       <Header />
       
       <main className="relative min-h-[calc(100vh-200px)] flex items-center justify-center overflow-hidden pt-20">

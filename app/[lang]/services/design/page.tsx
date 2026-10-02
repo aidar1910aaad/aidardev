@@ -57,9 +57,9 @@ export default async function DesignServicePage({ params }: { params: Promise<{ 
 
   return (
     <LanguageProvider initialLanguage={lang as 'ru' | 'en' | 'kz'}>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/20 to-orange-50/20 dark:from-gray-950 dark:via-blue-950/10 dark:to-orange-950/10">
+      <div className="page-with-action-bar min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/20 to-orange-50/20 dark:from-gray-950 dark:via-blue-950/10 dark:to-orange-950/10">
         <Header />
-        <main>
+        <main id="main-content">
           <ServicePageTemplate
             serviceKey={serviceKey}
             h1Key="services.design.h1"

@@ -72,7 +72,7 @@ export default function ServicePricing({ serviceKey }: ServicePricingProps) {
     <AnimatedSection animationType="slide-up" delay={450}>
       <div className="pt-20 mb-20">
         <div className="mb-10 border-b border-slate-300 pb-6">
-          <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 md:text-5xl">
+          <h2 className="text-4xl font-semibold tracking-[-0.03em] text-slate-950 md:text-5xl">
               {pricingTitle}
           </h2>
         </div>
@@ -117,7 +117,7 @@ export default function ServicePricing({ serviceKey }: ServicePricingProps) {
                       <span className="text-sm text-gray-500 dark:text-gray-500 font-light tracking-wide">
                         {t('pricing.from')}
                       </span>
-                      <span className="text-4xl font-semibold tracking-[-0.04em] text-blue-700">
+                      <span className="text-4xl font-semibold tracking-[-0.03em] text-blue-700">
                         {formatPrice(pkg.price)}
                       </span>
                       <span className="text-lg text-gray-600 dark:text-gray-400 font-light">

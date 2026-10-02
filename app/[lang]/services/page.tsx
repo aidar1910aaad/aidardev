@@ -1,5 +1,6 @@
 import Header from "../../components/landing/EditorialHeader";
 import Footer from "../../components/landing/Footer";
+import StickyWhatsApp from '../../components/landing/StickyWhatsApp';
 import Contact from "../../components/landing/ConversionContact";
 import { LanguageProvider } from "../../contexts/LanguageContext";
 import { Metadata } from "next";
@@ -58,9 +59,9 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
 
   return (
     <LanguageProvider initialLanguage={lang as 'ru' | 'en' | 'kz'}>
-      <div className="min-h-screen bg-[#f7f7f5] text-[#111827]">
+      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-[#111827]">
         <Header />
-        <main>
+        <main id="main-content">
           <section className="border-b border-slate-300 pt-32 pb-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mx-auto max-w-7xl">
@@ -68,7 +69,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
                   <div className="grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
                     <div className="md:col-span-7">
                       <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{lang === 'en' ? 'aidardev / 6 service lines' : lang === 'kz' ? 'aidardev / 6 бағыт' : 'aidardev / 6 направлений'}</p>
-                      <h1 className="text-5xl font-semibold tracking-[-0.05em] text-slate-950 sm:text-6xl md:text-7xl">
+                      <h1 className="text-5xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-6xl md:text-7xl">
                         {lang === 'en' ? 'Services' : lang === 'kz' ? 'Қызметтер' : 'Услуги'}
                       </h1>
                     </div>
@@ -100,6 +101,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
         </main>
         <Contact />
         <Footer />
+        <StickyWhatsApp source="services" />
       </div>
     </LanguageProvider>
   );

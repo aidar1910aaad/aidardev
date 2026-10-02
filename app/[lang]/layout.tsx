@@ -16,5 +16,6 @@ export default async function LanguageLayout({
 }) {
   const { lang } = await params;
   if (!languages.includes(lang)) notFound();
-  return children;
+  // Обёртка без своей рамки (display: contents) — только задаёт палитру сайта для потомков
+  return <div className="brand-site contents">{children}</div>;
 }

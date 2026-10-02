@@ -2,10 +2,14 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import AnimatedSection from '../common/AnimatedSection';
 import { analyticsEvents } from '../../lib/analytics';
 import { cityEntries } from '../../data/cities';
 import { buildWhatsAppUrl, PRIMARY_WHATSAPP_NUMBER } from '../../lib/whatsapp';
+import Wordmark from '../brand/Wordmark';
+import { WhatsAppGlyph } from '../brand/icons';
+
+const columnTitle = 'font-[family-name:var(--font-geologica)] text-[15px] font-bold tracking-[-0.01em] text-white';
+const columnLink = 'flex min-h-10 items-center text-[15px] font-medium text-[#c3c6dd] transition-colors hover:text-white';
 
 export default function Footer() {
   const { t, language } = useLanguage();
@@ -57,12 +61,12 @@ export default function Footer() {
 
   const navLinks = [
     { id: 'about', label: t('nav.about'), href: `/${language}/services` },
-    { id: 'testimonials', label: t('nav.testimonials') },
     { id: 'projects', label: t('nav.projects') },
-    { id: 'pricing', label: t('nav.pricing'), href: `/${language}/pricing` },
-    { id: 'blog', label: t('nav.blog'), href: `/${language}/blog` },
+    { id: 'testimonials', label: t('nav.testimonials') },
     { id: 'process', label: t('nav.process') },
+    { id: 'pricing', label: t('nav.pricing'), href: `/${language}/pricing` },
     { id: 'faq', label: t('nav.faq') },
+    { id: 'blog', label: t('nav.blog'), href: `/${language}/blog` },
     { id: 'contact', label: t('nav.contact') },
   ];
 
@@ -76,75 +80,55 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t-4 border-[#2446e8] bg-[#11110f] text-white">
-      <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 xl:px-16">
-        <AnimatedSection animationType="slide-up">
-          <div className="flex flex-col gap-5 border-b border-[#3a3a35] pb-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
-            <div className="min-w-0">
-              <div className="font-[family-name:var(--font-outfit)] text-3xl font-bold tracking-[-0.055em] sm:text-4xl">
-                aidar<span className="text-[#7f96ff]">.dev</span>
-              </div>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-[#b7b6af] sm:text-base sm:leading-7">
-                {t('footer.description')}
-              </p>
-            </div>
-            <a
-              href={buildWhatsAppUrl(t('home.contact.baseMessage'))}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'footer')}
-              className="cta-band__primary w-full shrink-0 sm:w-auto"
-            >
-              {t('home.bar.cta')} <span aria-hidden>↗</span>
+    <footer className="bg-[#1b1f3b] text-[#c3c6dd]">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
+        <div className="flex flex-col gap-6 border-b border-[#2e3358] py-12 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:py-14">
+          <div className="min-w-0">
+            <a href={`/${language}`} aria-label="aidardev" className="inline-flex text-white">
+              <Wordmark className="h-8 w-auto sm:h-9" dotColor="#ffd166" />
             </a>
+            <p className="mt-4 max-w-xl text-[15px] font-medium leading-relaxed">{t('footer.description')}</p>
           </div>
-        </AnimatedSection>
+          <a
+            href={buildWhatsAppUrl(t('home.contact.baseMessage'))}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => analyticsEvents.whatsappClick(PRIMARY_WHATSAPP_NUMBER, 'footer')}
+            className="flex h-14 w-full shrink-0 items-center justify-center gap-2.5 rounded-[14px] bg-[#25d366] px-7 text-base font-bold text-[#0b3d1f] transition-colors hover:bg-[#1fb356] sm:w-auto"
+          >
+            <WhatsAppGlyph className="h-5 w-5 shrink-0" />
+            {t('footer.writeUs')}
+          </a>
+        </div>
 
-        <div className="grid gap-10 border-b border-[#3a3a35] py-10 sm:grid-cols-2 lg:grid-cols-4">
-          <AnimatedSection animationType="slide-up">
-            <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7f96ff]">
-              {t('nav.contact')}
-            </h3>
-            <ul className="mt-5 space-y-1">
+        <div className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.15fr_1fr_1fr_1.35fr] lg:gap-12">
+          <div>
+            <h3 className={columnTitle}>{t('footer.contacts')}</h3>
+            <ul className="mt-4">
               <li>
-                <a
-                  href="tel:+77066703696"
-                  onClick={() => analyticsEvents.phoneCall('+7 706 670 36 96', 'footer')}
-                  className="flex min-h-11 items-center text-sm text-[#b7b6af] transition-colors hover:text-white"
-                >
-                  <span className="mr-2 text-[#7f96ff]" aria-hidden>—</span>
+                <a href="tel:+77066703696" onClick={() => analyticsEvents.phoneCall('+7 706 670 36 96', 'footer')} className={`${columnLink} font-bold tabular-nums text-white`}>
                   +7 706 670 36 96
                 </a>
               </li>
               <li>
-                <a
-                  href="tel:+77029993696"
-                  onClick={() => analyticsEvents.phoneCall('+7 702 999 36 96', 'footer')}
-                  className="flex min-h-11 items-center text-sm text-[#b7b6af] transition-colors hover:text-white"
-                >
-                  <span className="mr-2 text-[#7f96ff]" aria-hidden>—</span>
+                <a href="tel:+77029993696" onClick={() => analyticsEvents.phoneCall('+7 702 999 36 96', 'footer')} className={`${columnLink} tabular-nums`}>
                   +7 702 999 36 96
                 </a>
               </li>
               <li>
-                <a
-                  href="https://t.me/opunksnoo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => analyticsEvents.telegramClick()}
-                  className="flex min-h-11 items-center text-sm text-[#b7b6af] transition-colors hover:text-white"
-                >
-                  <span className="mr-2 text-[#7f96ff]" aria-hidden>—</span>
-                  @opunksnoo
+                <a href="https://t.me/opunksnoo" target="_blank" rel="noopener noreferrer" onClick={() => analyticsEvents.telegramClick()} className={columnLink}>
+                  Telegram · @opunksnoo
                 </a>
               </li>
+              <li className="mt-2 text-[15px] font-medium leading-relaxed">{t('footer.office')}</li>
+              <li className="mt-1 text-[15px] font-medium leading-relaxed">{t('footer.hours')}</li>
             </ul>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-5 flex gap-2.5">
               <a
                 href="https://github.com/aidar1910aaad"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grid h-11 w-11 place-items-center border border-[#565650] text-[#b7b6af] transition-colors hover:border-[#7f96ff] hover:bg-[#2446e8] hover:text-white"
+                className="grid h-11 w-11 place-items-center rounded-xl bg-[#252a4d] text-[#c3c6dd] transition-colors hover:bg-[#b4232c] hover:text-white"
                 aria-label="GitHub"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -156,7 +140,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => analyticsEvents.linkedinClick()}
-                className="grid h-11 w-11 place-items-center border border-[#565650] text-[#b7b6af] transition-colors hover:border-[#7f96ff] hover:bg-[#2446e8] hover:text-white"
+                className="grid h-11 w-11 place-items-center rounded-xl bg-[#252a4d] text-[#c3c6dd] transition-colors hover:bg-[#b4232c] hover:text-white"
                 aria-label="LinkedIn"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -164,110 +148,94 @@ export default function Footer() {
                 </svg>
               </a>
             </div>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection animationType="slide-up" delay={70}>
-            <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7f96ff]">
-              {t('footer.navigation')}
-            </h3>
-            <ul className="mt-5">
+          <div>
+            <h3 className={columnTitle}>{t('footer.navigation')}</h3>
+            <ul className="mt-4">
               {navLinks.map((link) => (
                 <li key={link.id}>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection(link.id, link.href)}
-                    className="flex min-h-11 w-full items-center text-left text-sm text-[#b7b6af] transition-colors hover:text-white"
+                  <a
+                    href={link.href ?? `/${language}#${link.id}`}
+                    onClick={(event) => {
+                      if (link.href) return;
+                      event.preventDefault();
+                      scrollToSection(link.id);
+                    }}
+                    className={columnLink}
                   >
-                    <span className="mr-2 text-[#7f96ff]" aria-hidden>→</span>
                     {link.label}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection animationType="slide-up" delay={140}>
-            <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7f96ff]">
-              {t('footer.services')}
-            </h3>
-            <ul className="mt-5">
+          <div>
+            <h3 className={columnTitle}>{t('footer.services')}</h3>
+            <ul className="mt-4">
               {serviceLinks.map((service) => (
                 <li key={service.key}>
-                  <a
-                    href={`/${language}/services/${service.key}`}
-                    className="flex min-h-11 items-center text-sm text-[#b7b6af] transition-colors hover:text-white"
-                  >
-                    <span className="mr-2 text-[#7f96ff]" aria-hidden>→</span>
+                  <a href={`/${language}/services/${service.key}`} className={columnLink}>
                     {service.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection animationType="slide-up" delay={210}>
-            <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#7f96ff]">
-              {t('footer.cities')}
-            </h3>
-            <div className="mt-5 flex flex-wrap gap-2">
+          <div>
+            <h3 className={columnTitle}>{t('footer.cities')}</h3>
+            <div className="mt-4 flex flex-wrap gap-2">
               {cityEntries.map((city) => (
                 <a
                   key={city.slug}
                   href={`/${language}/cities/${city.slug}`}
-                  className="border border-[#565650] px-3 py-2 text-xs text-[#b7b6af] transition-colors hover:border-[#7f96ff] hover:text-white"
+                  className="rounded-full bg-[#252a4d] px-3.5 py-2 text-[13px] font-medium text-[#c3c6dd] transition-colors hover:bg-[#b4232c] hover:text-white"
                 >
                   {language === 'en' ? city.name.en : language === 'kz' ? city.name.kz : city.locative.ru}
                 </a>
               ))}
             </div>
-          </AnimatedSection>
+          </div>
         </div>
 
-        <AnimatedSection animationType="fade-in" delay={260}>
-          {/* Реквизиты студии (без банковских данных) */}
-          <p className="border-b border-[#3a3a35] py-6 text-xs leading-6 text-[#8d8c85] sm:text-sm">
-            <span className="font-semibold text-[#b7b6af]">{t('footer.legal')}:</span>{' '}
-            {t('footer.legal.entity')}
-            <span aria-hidden> · </span>
-            {t('footer.legal.id')}
-            <span aria-hidden> · </span>
-            {t('footer.legal.address')}
-            <span aria-hidden> · </span>
-            <a
-              href="mailto:aidar1910main@gmail.com"
-              onClick={() => analyticsEvents.emailClick()}
-              className="transition-colors hover:text-white"
-            >
-              aidar1910main@gmail.com
-            </a>
-            <span aria-hidden> · </span>
-            <a
-              href="tel:+77029993696"
-              onClick={() => analyticsEvents.phoneCall('+7 702 999 36 96', 'footer_legal')}
-              className="whitespace-nowrap transition-colors hover:text-white"
-            >
-              +7 702 999 3696
-            </a>
+        {/* Реквизиты студии (без банковских данных) */}
+        <p className="border-t border-[#2e3358] py-6 text-[13px] font-medium leading-6 text-[#9da0bc]">
+          <span className="font-semibold text-[#c3c6dd]">{t('footer.legal')}:</span>{' '}
+          {t('footer.legal.entity')}
+          <span aria-hidden> · </span>
+          {t('footer.legal.id')}
+          <span aria-hidden> · </span>
+          {t('footer.legal.address')}
+          <span aria-hidden> · </span>
+          <a href="mailto:aidar1910main@gmail.com" onClick={() => analyticsEvents.emailClick()} className="transition-colors hover:text-white">
+            aidar1910main@gmail.com
+          </a>
+          <span aria-hidden> · </span>
+          <a
+            href="tel:+77029993696"
+            onClick={() => analyticsEvents.phoneCall('+7 702 999 36 96', 'footer_legal')}
+            className="whitespace-nowrap transition-colors hover:text-white"
+          >
+            +7 702 999 3696
+          </a>
+        </p>
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-[#2e3358] py-6 text-[13px] font-medium text-[#9da0bc] md:flex-row">
+          <p className="text-center md:text-left">
+            © {currentYear} aidardev. {t('footer.rights')}
           </p>
-          <div className="flex flex-col items-center justify-between gap-3 pt-6 md:flex-row">
-            <p className="text-center text-sm text-[#8d8c85] md:text-left">
-              © {currentYear} aidardev. {t('footer.rights')}
-            </p>
-            <a
-              href={`/${language}/privacy`}
-              className="text-sm text-[#b7b6af] underline decoration-[#565650] underline-offset-4 transition-colors hover:text-white hover:decoration-[#7f96ff]"
-            >
-              {t('footer.privacy')}
-            </a>
-            <div className="flex items-center gap-2 text-sm text-[#8d8c85]">
-              <span>{t('footer.madeWith')}</span>
-              <svg className="h-4 w-4 text-[#ef4444]" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              </svg>
-              <span>{t('footer.inKazakhstan')}</span>
-            </div>
+          <a href={`/${language}/privacy`} className="text-[#c3c6dd] underline decoration-[#3d4263] underline-offset-4 transition-colors hover:text-white hover:decoration-[#ffd166]">
+            {t('footer.privacy')}
+          </a>
+          <div className="flex items-center gap-2">
+            <span>{t('footer.madeWith')}</span>
+            <svg className="h-4 w-4 text-[#b4232c]" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            <span>{t('footer.inKazakhstan')}</span>
           </div>
-        </AnimatedSection>
+        </div>
       </div>
     </footer>
   );

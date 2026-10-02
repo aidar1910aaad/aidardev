@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Header from '../../../../components/landing/EditorialHeader';
 import Footer from '../../../../components/landing/Footer';
+import StickyWhatsApp from '../../../../components/landing/StickyWhatsApp';
 import StructuredDataServer from '../../../../components/SEO/StructuredDataServer';
 import { LanguageProvider } from '../../../../contexts/LanguageContext';
 import { createBreadcrumbSchema, createFAQSchema, createServiceSchema } from '../../../../lib/schemas';
@@ -118,10 +119,10 @@ export default async function CityServicePage({
       <StructuredDataServer data={faqSchema} id={`city-service-faq-${citySlug}-${service}`} />
       <StructuredDataServer data={breadcrumbSchema} id={`city-service-bc-${citySlug}-${service}`} />
 
-      <div className="min-h-screen bg-[#f7f7f5] text-slate-950">
+      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
         <Header />
-        <main>
-          <section className="border-b border-slate-300 bg-[#f7f7f5] pt-28">
+        <main id="main-content">
+          <section className="border-b border-slate-300 bg-[#fff7ef] pt-28">
             <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
               <div className="mx-auto max-w-6xl">
                 <nav className="mb-10 flex flex-wrap items-center gap-2 border-b border-slate-300 pb-5 text-xs uppercase tracking-[0.14em] text-slate-500">
@@ -139,7 +140,7 @@ export default async function CityServicePage({
                     <span className="mb-7 inline-flex border border-blue-700 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
                       {cityName} · {content.breadcrumbs.service}
                     </span>
-                    <h1 className="mb-7 text-4xl font-semibold leading-[1.03] tracking-[-0.05em] sm:text-6xl">{content.h1}</h1>
+                    <h1 className="mb-7 text-4xl font-semibold leading-[1.03] tracking-[-0.035em] sm:text-6xl">{content.h1}</h1>
                     <p className="mb-6 text-xl font-medium leading-8 text-blue-700">{content.heroLead}</p>
                     <p className="max-w-3xl text-lg leading-8 text-slate-600">{content.heroBody}</p>
                   </div>
@@ -166,7 +167,7 @@ export default async function CityServicePage({
           <section className="border-b border-slate-300 py-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mx-auto max-w-6xl">
-                <h2 className="mb-4 text-3xl font-semibold tracking-[-0.04em]">{content.sectionTitle}</h2>
+                <h2 className="mb-4 text-3xl font-semibold tracking-[-0.03em]">{content.sectionTitle}</h2>
                 <p className="mb-10 max-w-3xl text-lg leading-8 text-slate-600">{content.sectionIntro}</p>
                 <div className="grid border-l border-slate-300 md:grid-cols-3">
                   {content.highlights.map((item, index) => (
@@ -193,6 +194,7 @@ export default async function CityServicePage({
           <Contact />
         </main>
         <Footer />
+        <StickyWhatsApp source="city_service" />
       </div>
     </LanguageProvider>
   );

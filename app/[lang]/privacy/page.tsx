@@ -326,14 +326,14 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
 
   return (
     <LanguageProvider initialLanguage={lang}>
-      <div className="min-h-screen bg-[#f7f7f5] text-slate-950">
+      <div className="min-h-screen bg-[#fff7ef] text-slate-950">
         <Header />
         <main className="pb-20 pt-32">
           <section className="container mx-auto px-4 sm:px-6 lg:px-8">
             <article className="mx-auto max-w-3xl">
               <header className="mb-12 border-y border-slate-300 py-10 md:py-14">
                 <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{page.kicker}</p>
-                <h1 className="text-4xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-6xl">{page.title}</h1>
+                <h1 className="text-4xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-6xl">{page.title}</h1>
                 <p className="mt-6 text-lg leading-8 text-slate-600">{page.intro}</p>
                 <p className="mt-4 text-sm text-slate-500">
                   {page.updatedLabel} <time dateTime={UPDATED_ISO}>{page.updated}</time>

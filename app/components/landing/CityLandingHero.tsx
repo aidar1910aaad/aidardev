@@ -21,7 +21,7 @@ export default function CityLandingHero({ city, content, language }: CityLanding
   const highlightLabels = HIGHLIGHT_LABELS[language];
 
   return (
-    <section className="border-b border-slate-300 bg-[#f7f7f5] pt-28">
+    <section className="border-b border-slate-300 bg-[#fff7ef] pt-28">
       <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-6xl">
           <nav className="mb-10 flex items-center gap-2 border-b border-slate-300 pb-5 text-xs uppercase tracking-[0.14em] text-slate-500">
@@ -36,7 +36,7 @@ export default function CityLandingHero({ city, content, language }: CityLanding
               {cityName} · aidardev
             </span>
 
-          <h1 className="mb-7 text-4xl font-semibold leading-[1.03] tracking-[-0.05em] text-slate-950 sm:text-6xl md:text-7xl">
+          <h1 className="mb-7 text-4xl font-semibold leading-[1.03] tracking-[-0.035em] text-slate-950 sm:text-6xl md:text-7xl">
               {content.h1}
           </h1>
 

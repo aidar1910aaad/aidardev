@@ -30,7 +30,7 @@ export default function ServiceHeader({ h1Key, introKey, introContent, serviceKe
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">
               {language === 'ru' ? 'Услуги · Казахстан' : language === 'kz' ? 'Қызметтер · Қазақстан' : 'Services · Kazakhstan'}
             </p>
-            <h1 className="text-4xl font-semibold leading-[1.04] tracking-[-0.05em] text-slate-950 sm:text-6xl md:text-7xl">
+            <h1 className="text-4xl font-semibold leading-[1.04] tracking-[-0.035em] text-slate-950 sm:text-6xl md:text-7xl">
               {t(h1Key)}
             </h1>
           </div>

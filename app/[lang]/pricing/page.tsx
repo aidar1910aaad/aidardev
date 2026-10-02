@@ -54,7 +54,7 @@ export default async function LangPricingPage({ params }: { params: Promise<{ la
       <StructuredDataServer data={websiteSchema} id="website-schema" />
       <StructuredDataServer data={pricingCatalogSchema} id="pricing-catalog-schema" />
       
-      <div className="page-with-action-bar min-h-screen bg-[#f7f7f5] text-[#111827]">
+      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-[#111827]">
         <Header />
         <main>
           <Pricing />

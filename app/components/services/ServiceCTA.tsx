@@ -61,7 +61,7 @@ export default function ServiceCTA({ serviceKey }: ServiceCTAProps) {
           </button>
           <button
             onClick={scrollToContact}
-            className="border border-slate-300 bg-[#f7f7f5] px-8 py-4 font-semibold text-slate-700 transition-colors hover:border-blue-700 hover:text-blue-700"
+            className="border border-slate-300 bg-[#fff7ef] px-8 py-4 font-semibold text-slate-700 transition-colors hover:border-blue-700 hover:text-blue-700"
           >
             {t('services.cta.contact')}
           </button>

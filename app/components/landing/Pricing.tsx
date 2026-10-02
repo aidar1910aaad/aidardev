@@ -147,7 +147,7 @@ export default function Pricing() {
   const packages = getPackages();
 
   return (
-    <section id="pricing" className="border-b border-slate-300 bg-[#f7f7f5] pt-32">
+    <section id="pricing" className="border-b border-slate-300 bg-[#fff7ef] pt-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Section Title */}
@@ -155,7 +155,7 @@ export default function Pricing() {
             <div className="grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
               <div className="md:col-span-7">
                 <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{t('pricing.kicker')}</p>
-                <h1 className="text-5xl font-semibold tracking-[-0.05em] text-slate-950 sm:text-6xl md:text-7xl">
+                <h1 className="text-5xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-6xl md:text-7xl">
                   {t('pricing.h1')}
                 </h1>
               </div>
@@ -282,7 +282,7 @@ export default function Pricing() {
                         <span className="text-sm text-slate-500">
                           {t('pricing.from')}
                         </span>
-                        <span className="text-4xl font-semibold tracking-[-0.04em] text-blue-700">
+                        <span className="text-4xl font-semibold tracking-[-0.03em] text-blue-700">
                           {formatPrice(pkg.price)}
                         </span>
                         <span className="text-lg text-slate-600">

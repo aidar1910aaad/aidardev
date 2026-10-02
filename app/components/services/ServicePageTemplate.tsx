@@ -81,7 +81,7 @@ export default function ServicePageTemplate({
       <StructuredData data={serviceSchema} id={`service-schema-${serviceKey}`} />
       <StructuredData data={breadcrumbSchema} id={`service-breadcrumb-schema-${serviceKey}`} />
       
-      <section className="border-b border-slate-300 bg-[#f7f7f5] pb-4 pt-32 text-slate-950">
+      <section className="border-b border-slate-300 bg-[#fff7ef] pb-4 pt-32 text-slate-950">
         {/* Breadcrumbs */}
         <div className="container mx-auto mb-8 px-4 sm:px-6 lg:px-8">
           <nav className="border-b border-slate-300 pb-5 text-xs uppercase tracking-[0.12em]" aria-label="Breadcrumb">
@@ -125,7 +125,7 @@ export default function ServicePageTemplate({
         </div>
       </section>
 
-      <section className="border-b border-slate-300 bg-[#f7f7f5]">
+      <section className="border-b border-slate-300 bg-[#fff7ef]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <ServiceProcess processKey={processKey} />

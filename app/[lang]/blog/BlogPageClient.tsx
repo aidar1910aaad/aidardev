@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import Header from "../../components/landing/EditorialHeader";
 import Footer from "../../components/landing/Footer";
+import StickyWhatsApp from '../../components/landing/StickyWhatsApp';
 import AnimatedSection from "../../components/common/AnimatedSection";
 import Link from "next/link";
 import type { BlogPost } from "../../data/blog-posts";
@@ -26,7 +27,7 @@ export default function BlogPageClient({ posts, lang }: BlogPageClientProps) {
   const hasMore = filteredPosts.length > visibleCount;
 
   return (
-    <div className="min-h-screen bg-[#f7f7f5] text-slate-950">
+    <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
       <Header />
       
       <main id="main-content">
@@ -149,6 +150,8 @@ export default function BlogPageClient({ posts, lang }: BlogPageClientProps) {
       </main>
 
       <Footer />
+
+      <StickyWhatsApp source="blog" />
     </div>
   );
 }

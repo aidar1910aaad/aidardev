@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Outfit } from "next/font/google";
+import { Geologica, Onest } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -9,23 +9,20 @@ import GoogleAnalytics from "./components/SEO/GoogleAnalytics";
 import YandexMetrika from "./components/SEO/YandexMetrika";
 import MicrosoftClarity from "./components/SEO/MicrosoftClarity";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+// Заголовки — Geologica, текст — Onest: обе с казахскими буквами (в cyrillic-ext).
+// Переменные шрифты: один файл на все начертания. Предзагружаем latin и cyrillic, cyrillic-ext грузится по запросу.
+const geologica = Geologica({
+  variable: "--font-geologica",
   subsets: ["latin", "cyrillic"],
   display: "swap",
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
-  adjustFontFallback: false,
-  preload: true,
-  fallback: ['system-ui', '-apple-system', 'sans-serif'],
+  fallback: ["system-ui", "-apple-system", "sans-serif"],
 });
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
+const onest = Onest({
+  variable: "--font-onest",
+  subsets: ["latin", "cyrillic"],
   display: "swap",
-  weight: ["200", "300", "400", "500", "600", "700"],
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
+  fallback: ["system-ui", "-apple-system", "sans-serif"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
@@ -172,9 +169,7 @@ export default function RootLayout({
           <meta name="yandex-verification" content={process.env.NEXT_PUBLIC_YANDEX_VERIFICATION} />
         )}
         
-        {/* Preconnect для быстрой загрузки внешних ресурсов */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Шрифты отдаём сами (next/font), к Google Fonts браузер не ходит */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -193,7 +188,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manrope.variable} ${outfit.variable} bg-[#f4f2ec] antialiased`}
+        className={`${geologica.variable} ${onest.variable} bg-white antialiased`}
       >
         <ThemeProvider>
           <LanguageProvider>

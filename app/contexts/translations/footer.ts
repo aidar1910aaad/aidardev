@@ -20,6 +20,9 @@ export const footer = {
         'footer.legal.id': 'IIN/BIN 030713550586',
         'footer.legal.address': '4k1 Zhuban Moldagaliyev St, Nura district, Astana 010000',
         'footer.privacy': 'Privacy policy',
+        'footer.hours': 'Daily, 9:00–21:00',
+        'footer.office': '105a Kanysh Satpayev St, Almaty',
+        'footer.writeUs': 'Message us on WhatsApp',
     },
     ru: {
         'footer.rights': 'Все права защищены',
@@ -42,6 +45,9 @@ export const footer = {
         'footer.legal.id': 'ИИН/БИН 030713550586',
         'footer.legal.address': 'г. Астана, район Нура, ул. Жубана Молдагалиева, 4к1, 010000',
         'footer.privacy': 'Политика конфиденциальности',
+        'footer.hours': 'Ежедневно с 9:00 до 21:00',
+        'footer.office': 'Алматы, ул. Каныша Сатпаева, 105а',
+        'footer.writeUs': 'Написать в WhatsApp',
     },
     kz: {
         'footer.rights': 'Барлық құқықтар қорғалған',
@@ -64,5 +70,8 @@ export const footer = {
         'footer.legal.id': 'ЖСН/БСН 030713550586',
         'footer.legal.address': 'Астана қ., Нұра ауданы, Жұбан Молдағалиев к-сі, 4к1, 010000',
         'footer.privacy': 'Құпиялылық саясаты',
+        'footer.hours': 'Күн сайын 9:00–21:00',
+        'footer.office': 'Алматы, Қаныш Сәтбаев көшесі, 105а',
+        'footer.writeUs': 'WhatsApp-қа жазу',
     },
   };

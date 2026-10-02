@@ -114,7 +114,7 @@ export default async function CityLandingPage({
       <StructuredDataServer data={faqSchema} id={`city-faq-${city.slug}`} />
       <StructuredDataServer data={breadcrumbSchema} id={`city-breadcrumbs-${city.slug}`} />
 
-      <div className="page-with-action-bar min-h-screen bg-[#f7f7f5] text-slate-950">
+      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
         <Header />
         <main>
           <CityLandingHero city={city} content={content} language={lang} />
@@ -123,7 +123,7 @@ export default async function CityLandingPage({
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mx-auto max-w-6xl">
                 <div className="grid gap-8 border-b border-slate-300 pb-10 md:grid-cols-12">
-                <h2 className="text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl md:col-span-7">
+                <h2 className="text-3xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-4xl md:col-span-7">
                   {content.sectionTitle}
                 </h2>
                 <p className="text-lg leading-8 text-slate-600 md:col-span-5">

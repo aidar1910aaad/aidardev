@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Header from '../../components/landing/EditorialHeader';
 import Footer from '../../components/landing/Footer';
+import StickyWhatsApp from '../../components/landing/StickyWhatsApp';
 import { LanguageProvider } from '../../contexts/LanguageContext';
 import { cityEntries, type SupportedLanguage } from '../../data/cities';
 
@@ -77,15 +78,15 @@ export default async function CitiesIndexPage({
 
   return (
     <LanguageProvider initialLanguage={lang}>
-      <div className="min-h-screen bg-[#f7f7f5] text-slate-950">
+      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
         <Header />
-        <main className="pb-20 pt-32">
+        <main id="main-content" className="pb-20 pt-32">
           <section className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-6xl">
               <div className="mb-12 grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
                 <div className="md:col-span-7">
                   <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{labels.kicker}</p>
-                  <h1 className="text-4xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-6xl">
+                  <h1 className="text-4xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-6xl">
                     {labels.title}
                   </h1>
                 </div>
@@ -113,6 +114,7 @@ export default async function CitiesIndexPage({
           </section>
         </main>
         <Footer />
+        <StickyWhatsApp source="cities" />
       </div>
     </LanguageProvider>
   );
