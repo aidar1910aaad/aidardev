@@ -1,7 +1,7 @@
 import Header from "../../../components/landing/EditorialHeader";
 import Footer from "../../../components/landing/Footer";
 import Contact from "../../../components/landing/ConversionContact";
-import ServicePageTemplate from "../../../components/services/ServicePageTemplate";
+import ServicePage from "../../../components/service-page/ServicePage";
 import { LanguageProvider } from "../../../contexts/LanguageContext";
 import { Metadata } from "next";
 import { servicesConfig } from "../../../data/services-config";
@@ -57,14 +57,14 @@ export default async function MobileServicePage({ params }: { params: Promise<{ 
 
   return (
     <LanguageProvider initialLanguage={lang as 'ru' | 'en' | 'kz'}>
-      <div className="page-with-action-bar min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/20 to-orange-50/20 dark:from-gray-950 dark:via-blue-950/10 dark:to-orange-950/10">
+      <div className="page-with-action-bar min-h-screen bg-white text-[#1b1f3b]">
         <Header />
         <main id="main-content">
-          <ServicePageTemplate
+          <ServicePage
+            lang={lang as 'ru' | 'en' | 'kz'}
             serviceKey={serviceKey}
             h1Key="services.mobile.h1"
             introKey="services.mobile.intro"
-            contentKey="services.mobile.content"
             processKey="services.mobile.process"
             examplesKey="services.mobile.examples"
             faqKey="services.mobile.faq"

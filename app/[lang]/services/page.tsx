@@ -2,11 +2,17 @@ import Header from "../../components/landing/EditorialHeader";
 import Footer from "../../components/landing/Footer";
 import StickyWhatsApp from '../../components/landing/StickyWhatsApp';
 import Contact from "../../components/landing/ConversionContact";
-import { LanguageProvider } from "../../contexts/LanguageContext";
+import { LanguageProvider, type Language } from "../../contexts/LanguageContext";
 import { Metadata } from "next";
-import { ServiceKey } from "../../data/services-config";
-import AnimatedSection from "../../components/common/AnimatedSection";
-import ServiceCardClient from "./ServiceCardClient";
+import { Check } from "../../components/brand/icons";
+import HomeProcess from "../../components/home/HomeProcess";
+import HomeReviews from "../../components/home/HomeReviews";
+import RatingRow from "../../components/home/RatingRow";
+import { container, getT, Kicker, sectionY } from "../../components/home/shared";
+import { ServiceLinkCard } from "../../components/service-page/ServiceCards";
+import { SERVICE_KEYS } from "../../components/service-page/meta";
+import StructuredDataServer from "../../components/SEO/StructuredDataServer";
+import { createBreadcrumbSchema } from "../../lib/schemas";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
@@ -52,52 +58,67 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export default async function ServicesPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang: langParam } = await params;
-  const lang = langParam || 'ru';
-
-  // Получаем все услуги
-  const availableServices: ServiceKey[] = ['websites', 'bots', 'ai', 'mobile', 'design', 'consulting'];
+  const lang: Language = langParam === 'en' || langParam === 'kz' ? langParam : 'ru';
+  const t = getT(lang);
+  const included = [1, 2, 3, 4, 5, 6].map((n) => t(`landing.included.${n}`));
 
   return (
-    <LanguageProvider initialLanguage={lang as 'ru' | 'en' | 'kz'}>
-      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-[#111827]">
+    <LanguageProvider initialLanguage={lang}>
+      <StructuredDataServer
+        id="services-breadcrumb-schema"
+        data={createBreadcrumbSchema([
+          { name: t('svc.crumb.home'), url: `${siteUrl}/${lang}` },
+          { name: t('svc.crumb.services'), url: `${siteUrl}/${lang}/services` },
+        ])}
+      />
+      <div className="page-with-action-bar min-h-screen bg-white text-[#1b1f3b]">
         <Header />
         <main id="main-content">
-          <section className="border-b border-slate-300 pt-32 pb-24">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="mx-auto max-w-7xl">
-                <AnimatedSection animationType="slide-up" delay={0}>
-                  <div className="grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
-                    <div className="md:col-span-7">
-                      <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{lang === 'en' ? 'aidardev / 6 service lines' : lang === 'kz' ? 'aidardev / 6 бағыт' : 'aidardev / 6 направлений'}</p>
-                      <h1 className="text-5xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-6xl md:text-7xl">
-                        {lang === 'en' ? 'Services' : lang === 'kz' ? 'Қызметтер' : 'Услуги'}
-                      </h1>
-                    </div>
-                    <p className="self-end text-lg leading-8 text-slate-600 md:col-span-5">
-                      {lang === 'en' 
-                        ? 'Professional development services in Kazakhstan. From website development to AI integration, we help businesses grow with modern technology.'
-                        : lang === 'kz'
-                        ? 'Қазақстанда кәсіби әзірлеу қызметтері. Сайт әзірлеуден AI интеграциясына дейін — бизнестің заманауи технологиялар арқылы өсуіне көмектесеміз.'
-                        : 'Профессиональные услуги разработки в Казахстане. От разработки сайтов до интеграции AI — помогаем бизнесу расти с помощью современных технологий.'}
-                    </p>
-                  </div>
-                </AnimatedSection>
-
-                <div className="mt-10 grid grid-cols-1 border-l border-t border-slate-300 md:grid-cols-2 lg:grid-cols-3">
-                  {availableServices.map((serviceKey, index) => (
-                    <AnimatedSection
-                      key={serviceKey}
-                      animationType="slide-up"
-                      delay={index * 75}
-                      className="h-full"
-                    >
-                      <ServiceCardClient serviceKey={serviceKey} lang={lang} />
-                    </AnimatedSection>
-                  ))}
+          <section className="hero-bg relative overflow-hidden">
+            <div className={`${container} pb-14 pt-[calc(4rem+16px)] lg:pb-20 lg:pt-[calc(5rem+32px)]`}>
+              <nav aria-label="Breadcrumb">
+                <ol className="flex flex-wrap items-center gap-x-2 text-[13px] font-medium text-[#62667f]">
+                  <li><a href={`/${lang}`} className="hover:text-[#b4232c]">{t('svc.crumb.home')}</a></li>
+                  <li aria-hidden>/</li>
+                  <li aria-current="page" className="text-[#1b1f3b]">{t('svc.crumb.services')}</li>
+                </ol>
+              </nav>
+              <div className="mt-6 grid gap-6 lg:mt-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-end lg:gap-14">
+                <div className="flex flex-col gap-[18px] lg:gap-6">
+                  <Kicker>{t('svc.catalog.kicker')}</Kicker>
+                  <h1 className="text-[40px] leading-[1.05] tracking-[-0.035em] text-[#1b1f3b] lg:text-[64px]">{t('svc.catalog.title')}</h1>
+                  <RatingRow lang={lang} source="2gis_services" />
                 </div>
+                <p className="text-base leading-[1.6] text-[#464a66] lg:text-lg">{t('svc.catalog.text')}</p>
               </div>
             </div>
           </section>
+
+          <section className="bg-white">
+            <div className={`${container} ${sectionY}`}>
+              <div className="grid gap-3.5 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+                {SERVICE_KEYS.map((key) => (
+                  <ServiceLinkCard key={key} lang={lang} service={key} />
+                ))}
+              </div>
+              <div className="mt-3.5 rounded-[22px] bg-[#fff7ef] p-5 md:mt-5 md:rounded-3xl md:p-8">
+                <h2 className="text-lg tracking-[-0.015em] text-[#1b1f3b] md:text-[22px]">{t('landing.included.title')}</h2>
+                <ul className="mt-4 grid gap-3 md:mt-[22px] md:grid-cols-2 md:gap-x-8 md:gap-y-3.5">
+                  {included.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-[15px] font-medium text-[#1b1f3b] md:gap-3 md:text-base">
+                      <span className="mt-px grid h-[22px] w-[22px] shrink-0 place-items-center rounded-full bg-[#b4232c] text-white md:h-6 md:w-6">
+                        <Check className="h-[13px] w-[13px] md:h-3.5 md:w-3.5" />
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <HomeProcess lang={lang} />
+          <HomeReviews lang={lang} />
         </main>
         <Contact />
         <Footer />
@@ -106,4 +127,3 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
     </LanguageProvider>
   );
 }
-

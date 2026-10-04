@@ -15,6 +15,7 @@ import { notFound } from './not-found';
 import { home } from './home';
 import { leadForm } from './lead-form';
 import { landing } from './landing';
+import { servicePage } from './service-page';
 
 import type { Language } from '../LanguageContext';
 
@@ -37,6 +38,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ...home.en,
     ...leadForm.en,
     ...landing.en,
+    ...servicePage.en,
   },
   ru: {
     ...navigation.ru,
@@ -56,6 +58,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ...home.ru,
     ...leadForm.ru,
     ...landing.ru,
+    ...servicePage.ru,
   },
   kz: {
     ...navigation.kz,
@@ -75,6 +78,7 @@ export const translations: Record<Language, Record<string, string>> = {
     ...home.kz,
     ...leadForm.kz,
     ...landing.kz,
+    ...servicePage.kz,
   },
 };
 
