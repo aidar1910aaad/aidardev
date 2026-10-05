@@ -18,9 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     kz: 'Веб-дамыту бағалары Қазақстан | Қызметтер құны',
   };
   const descriptions = {
-    en: 'Transparent pricing for web development, bots, AI, mobile apps in Almaty, Astana, Shymkent and throughout Kazakhstan. 6+ years experience, 38+ projects.',
-    ru: 'Прозрачные цены на разработку сайтов, ботов, AI-решений и мобильных приложений в Алматы, Астане, Шымкенте и по всему Казахстану. 6+ лет опыта, 38+ проектов.',
-    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша веб-дамыту, боттар, AI шешімдері және мобильді қосымшалар үшін ашық бағалар. 6+ жыл тәжірибе, 38+ жоба.',
+    en: 'Transparent pricing for web development, bots, AI, mobile apps in Almaty, Astana, Shymkent and throughout Kazakhstan. 8+ years in development, 68+ projects.',
+    ru: 'Прозрачные цены на разработку сайтов, ботов, AI-решений и мобильных приложений в Алматы, Астане, Шымкенте и по всему Казахстану. 8+ лет в разработке, 68+ проектов.',
+    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша веб-дамыту, боттар, AI шешімдері және мобильді қосымшалар үшін ашық бағалар. 8+ жыл тәжірибе, 68+ жоба.',
   };
 
   return {

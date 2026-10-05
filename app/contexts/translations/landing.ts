@@ -24,7 +24,7 @@ export const landing = {
     'landing.hero.quote.caption': 'Altair · отзыв в 2ГИС',
 
     'landing.stats.label': 'Цифры',
-    'landing.stats.projects': 'проектов запущено для бизнеса Казахстана',
+    'landing.stats.projects': 'проектов реализовано для бизнеса Казахстана',
     'landing.stats.rating': 'средняя оценка клиентов в 2ГИС',
     'landing.stats.years': 'лет в разработке сайтов и ботов',
     'landing.stats.minutes': 'мин',
@@ -154,7 +154,7 @@ export const landing = {
     'landing.hero.quote.caption': 'Altair · review on 2GIS',
 
     'landing.stats.label': 'Key numbers',
-    'landing.stats.projects': 'projects launched for businesses in Kazakhstan',
+    'landing.stats.projects': 'projects delivered for businesses in Kazakhstan',
     'landing.stats.rating': 'average client rating on 2GIS',
     'landing.stats.years': 'years building websites and bots',
     'landing.stats.minutes': 'min',
@@ -287,7 +287,7 @@ export const landing = {
     'landing.hero.quote.caption': 'Altair · 2ГИС-тегі пікір',
 
     'landing.stats.label': 'Сандар',
-    'landing.stats.projects': 'Қазақстан бизнесі үшін іске қосылған жоба',
+    'landing.stats.projects': 'Қазақстан бизнесі үшін іске асырылған жоба',
     'landing.stats.rating': '2ГИС-тегі клиенттердің орташа бағасы',
     'landing.stats.years': 'жыл сайттар мен боттар жасаймыз',
     'landing.stats.minutes': 'мин',

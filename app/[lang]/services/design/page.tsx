@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional UI/UX design services in Almaty, Astana, Shymkent and throughout Kazakhstan. Web design, mobile app design, website redesign. Modern interfaces, user experience optimization. 6+ years experience, 38+ projects.',
+    en: 'Professional UI/UX design services in Almaty, Astana, Shymkent and throughout Kazakhstan. Web design, mobile app design, website redesign. Modern interfaces, user experience optimization. 8+ years in development, 68+ projects.',
     ru: 'Дизайн сайта под ключ: лендинг — от 150 000 ₸, многостраничный сайт — от 300 000 ₸, приложение — от 400 000 ₸. Прототип, UX/UI, адаптив. Смета после брифа.',
     kz: 'Алматы, Астана және бүкіл Қазақстан бойынша UX/UI дизайн. Лендинг, редизайн, прототип. Брифтан кейін мерзім мен бағаны бағалаймыз.',
   };

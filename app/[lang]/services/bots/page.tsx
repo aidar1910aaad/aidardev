@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional Telegram and WhatsApp bot development in Almaty, Astana, Shymkent and throughout Kazakhstan. Business automation, CRM integration, chatbots. 6+ years experience, 38+ projects.',
+    en: 'Professional Telegram and WhatsApp bot development in Almaty, Astana, Shymkent and throughout Kazakhstan. Business automation, CRM integration, chatbots. 8+ years in development, 68+ projects.',
     ru: 'Разработка Telegram и WhatsApp ботов под ключ в Алматы и по Казахстану: заявки, автоответы, CRM. Сроки и стоимость после брифа.',
     kz: 'Алматы және Қазақстан бойынша Telegram/WhatsApp боттары. Өтінімдер, CRM интеграциясы.',
   };

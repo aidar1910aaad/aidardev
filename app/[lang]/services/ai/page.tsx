@@ -21,9 +21,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional AI chatbot development and machine learning solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. GPT integration, AI assistants, ML analytics. 6+ years experience, 38+ projects.',
+    en: 'Professional AI chatbot development and machine learning solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. GPT integration, AI assistants, ML analytics. 8+ years in development, 68+ projects.',
     ru: 'Разработка AI-чатботов под ключ для бизнеса: GPT-интеграции, AI-ассистенты, ML-аналитика. Алматы, Астана и Казахстан. Сроки и стоимость после брифа.',
-    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби AI-чатботтарды әзірлеу және машиналық оқыту шешімдері. GPT интеграциясы, AI-ассистенттер, ML-аналитика. 6+ жыл тәжірибе, 38+ жоба.',
+    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби AI-чатботтарды әзірлеу және машиналық оқыту шешімдері. GPT интеграциясы, AI-ассистенттер, ML-аналитика. 8+ жыл тәжірибе, 68+ жоба.',
   };
 
   return {

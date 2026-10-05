@@ -27,9 +27,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional development services in Kazakhstan: website development, Telegram and WhatsApp bots, AI chatbots, UI/UX design, mobile apps, consulting and training. 6+ years experience, 38+ projects.',
-    ru: 'Профессиональные услуги разработки в Казахстане: разработка сайтов, Telegram и WhatsApp боты, AI-чатботы, UI/UX дизайн, мобильные приложения, консультации и обучение. 6+ лет опыта, 38+ проектов.',
-    kz: 'Қазақстанда кәсіби әзірлеу қызметтері: сайттарды әзірлеу, Telegram және WhatsApp боттар, AI-чатботтар, UI/UX дизайн, мобильді қосымшалар, кеңес және оқыту. 6+ жыл тәжірибе, 38+ жоба.',
+    en: 'Professional development services in Kazakhstan: website development, Telegram and WhatsApp bots, AI chatbots, UI/UX design, mobile apps, consulting and training. 8+ years in development, 68+ projects.',
+    ru: 'Профессиональные услуги разработки в Казахстане: разработка сайтов, Telegram и WhatsApp боты, AI-чатботы, UI/UX дизайн, мобильные приложения, консультации и обучение. 8+ лет в разработке, 68+ проектов.',
+    kz: 'Қазақстанда кәсіби әзірлеу қызметтері: сайттарды әзірлеу, Telegram және WhatsApp боттар, AI-чатботтар, UI/UX дизайн, мобильді қосымшалар, кеңес және оқыту. 8+ жыл тәжірибе, 68+ жоба.',
   };
 
   return {

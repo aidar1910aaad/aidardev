@@ -21,9 +21,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional development consulting and programming training in Almaty, Astana, Shymkent and throughout Kazakhstan. Technology consultations, code review, team training. 6+ years experience, 38+ projects.',
+    en: 'Professional development consulting and programming training in Almaty, Astana, Shymkent and throughout Kazakhstan. Technology consultations, code review, team training. 8+ years in development, 68+ projects.',
     ru: 'Консультации по разработке и обучение программированию в Алматы, Астане, Шымкенте и по всему Казахстану. Разбор задач, code review и менторинг команды. Стоимость согласуем после брифа.',
-    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби әзірлеу бойынша кеңес беру және бағдарламалауды оқыту. Технологиялар бойынша кеңес, code review, команданы оқыту. 6+ жыл тәжірибе, 38+ жоба.',
+    kz: 'Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша кәсіби әзірлеу бойынша кеңес беру және бағдарламалауды оқыту. Технологиялар бойынша кеңес, code review, команданы оқыту. 8+ жыл тәжірибе, 68+ жоба.',
   };
 
   return {

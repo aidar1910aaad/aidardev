@@ -1,7 +1,7 @@
 export const about = {
     en: {
       'about.title': 'Services',
-    'about.subtitle': 'aidardev is a development studio specializing in websites, mobile apps, chatbots and AI solutions in Almaty, Astana, Shymkent, Aktobe, Karaganda, Taraz and other cities of Kazakhstan. Over 6 years of experience and 38+ delivered projects. We work with businesses across Kazakhstan, building modern digital products that help companies grow.',
+    'about.subtitle': 'aidardev is a development studio specializing in websites, mobile apps, chatbots and AI solutions in Almaty, Astana, Shymkent, Aktobe, Karaganda, Taraz and other cities of Kazakhstan. Over 8 years in development and 68+ delivered projects. We work with businesses across Kazakhstan, building modern digital products that help companies grow.',
     'about.intro': '',
     'about.services.websites.title': 'Websites',
     'about.services.websites.description': 'Web development in Almaty, Astana and throughout Kazakhstan. Landing pages, online stores, corporate sites, SaaS platforms.',
@@ -29,7 +29,7 @@ export const about = {
     ru: {
        // About
     'about.title': 'Услуги',
-    'about.subtitle': 'aidardev — студия разработки сайтов, мобильных приложений, чат-ботов и AI-решений в Алматы, Астане, Шымкенте, Актобе, Караганде, Таразе и других городах Казахстана. Более 6 лет опыта и 38+ реализованных проектов. Работаем с бизнесом по всему Казахстану и создаём цифровые продукты, которые помогают компаниям расти.',
+    'about.subtitle': 'aidardev — студия разработки сайтов, мобильных приложений, чат-ботов и AI-решений в Алматы, Астане, Шымкенте, Актобе, Караганде, Таразе и других городах Казахстана. Более 8 лет в разработке и 68+ реализованных проектов. Работаем с бизнесом по всему Казахстану и создаём цифровые продукты, которые помогают компаниям расти.',
     'about.intro': '',
     'about.services.websites.title': 'Веб-сайты',
     'about.services.websites.description': 'Разработка сайтов в Алматы, Астане и по всему Казахстану. Лендинги, интернет-магазины, корпоративные сайты, SaaS-платформы.',
@@ -57,7 +57,7 @@ export const about = {
     kz: {
       // About
     'about.title': 'Қызметтер',
-    'about.subtitle': 'aidardev — Алматы, Астана, Шымкент, Актобе, Қарағанды, Тараз және Қазақстанның басқа қалаларында веб-әзірлеу, мобильді қосымшалар, чат-боттар және AI шешімдерімен айналысатын әзірлеу студиясы. 6 жылдан астам тәжірибе және 38+ іске асырылған жоба. Біз бүкіл Қазақстан бойынша компаниялармен жұмыс істеп, бизнестің өсуіне көмектесетін цифрлық өнімдер жасаймыз.',
+    'about.subtitle': 'aidardev — Алматы, Астана, Шымкент, Актобе, Қарағанды, Тараз және Қазақстанның басқа қалаларында веб-әзірлеу, мобильді қосымшалар, чат-боттар және AI шешімдерімен айналысатын әзірлеу студиясы. 8 жылдан астам тәжірибе және 68+ іске асырылған жоба. Біз бүкіл Қазақстан бойынша компаниялармен жұмыс істеп, бизнестің өсуіне көмектесетін цифрлық өнімдер жасаймыз.',
     'about.intro': '',
     'about.services.websites.title': 'Веб-сайттар',
     'about.services.websites.description': 'Алматы, Астана және бүкіл Қазақстан бойынша веб-дамыту. Лендингтер, интернет-дүкендер, корпоративтік сайттар, SaaS-платформалар.',

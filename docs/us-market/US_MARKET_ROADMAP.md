@@ -144,7 +144,7 @@
     ```
     Hi [Name],
     
-    I saw your request for [service]. I'm a web developer with 6+ years of experience and 47+ completed projects.
+    I saw your request for [service]. I'm a web developer with 8+ years of experience and 68+ completed projects.
     
     I specialize in [brief description]. Here's what I can offer:
     - [Key benefit 1]
@@ -493,7 +493,7 @@
   
   I noticed [Business Name] doesn't have a website yet. In 2025, 97% of consumers search online before visiting a business.
   
-  I help small businesses like yours create professional websites that drive results. I've helped 47+ businesses get online.
+  I help small businesses like yours create professional websites that drive results. I've helped 68+ businesses get online.
   
   Would you be open to a quick 15-min chat to see if I can help?
   
@@ -521,7 +521,7 @@
   
   I help small businesses in LA create professional websites that drive results. I noticed [Business Name] [specific observation].
   
-  I've helped 47+ businesses get online or improve their web presence. Would you be open to a quick chat?
+  I've helped 68+ businesses get online or improve their web presence. Would you be open to a quick chat?
   
   Best,
   [Your name]

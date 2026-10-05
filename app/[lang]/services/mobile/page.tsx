@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional mobile app development for iOS and Android in Almaty, Astana, Shymkent and throughout Kazakhstan. Native and cross-platform apps. 6+ years experience, 38+ projects.',
+    en: 'Professional mobile app development for iOS and Android in Almaty, Astana, Shymkent and throughout Kazakhstan. Native and cross-platform apps. 8+ years in development, 68+ projects.',
     ru: 'Цена разработки мобильного приложения: MVP — от 800 000 ₸, Android или iOS — от 1 200 000 ₸, полноценное — от 1 500 000 ₸. Смета после брифа, Астана и Алматы.',
     kz: 'Астана, Алматы және Қазақстан бойынша iOS/Android қосымшалар. MVP, нативті және кроссплатформалық әзірлеу.',
   };

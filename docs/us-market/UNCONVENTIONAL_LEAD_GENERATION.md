@@ -104,7 +104,7 @@ Hi [Name],
 
 I noticed [Business Name] [specific observation about their website/business].
 
-I help small businesses in LA create professional websites. I've helped 47+ businesses get online or improve their web presence.
+I help small businesses in LA create professional websites. I've helped 68+ businesses get online or improve their web presence.
 
 Would you be open to a quick 15-min chat? I can show you how other businesses like yours are using their websites to get more customers.
 
@@ -277,7 +277,7 @@ Best,
 
 **Пример ответа:**
 ```
-"Great question! Here's what I've learned from helping 47+ small businesses:
+"Great question! Here's what I've learned from helping 68+ small businesses:
 
 1. [Useful tip 1]
 2. [Useful tip 2]

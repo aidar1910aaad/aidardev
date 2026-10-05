@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
   
   const descriptions = {
-    en: 'Professional website development in Almaty, Astana, Shymkent and throughout Kazakhstan. Landing pages, corporate sites, e-commerce platforms. 6+ years experience, 38+ projects.',
+    en: 'Professional website development in Almaty, Astana, Shymkent and throughout Kazakhstan. Landing pages, corporate sites, e-commerce platforms. 8+ years in development, 68+ projects.',
     ru: 'Создание сайтов под ключ в Алматы, Астане и по Казахстану: лендинги, корпоративные сайты, e-commerce. Сроки и стоимость после брифа. Подключаем SEO и платежи (Kaspi Pay).',
     kz: 'Алматы, Астана және Қазақстан бойынша сайт пен интернет-дүкен әзірлеу. Лендинг, корпоративтік сайт, SEO.',
   };

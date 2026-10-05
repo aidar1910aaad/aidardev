@@ -7,7 +7,7 @@ const clientIds = ['global-solar', 'inpro-engineering', 'habipark', 'fida-concre
 export default function HomeStats({ lang }: { lang: Language }) {
   const t = getT(lang);
   const stats = [
-    { value: '38+', label: t('landing.stats.projects') },
+    { value: '68+', label: t('landing.stats.projects') },
     {
       value: (
         <>
@@ -17,7 +17,7 @@ export default function HomeStats({ lang }: { lang: Language }) {
       ),
       label: t('landing.stats.rating'),
     },
-    { value: '6+', label: t('landing.stats.years') },
+    { value: '8+', label: t('landing.stats.years') },
     {
       value: (
         <>

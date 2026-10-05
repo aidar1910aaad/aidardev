@@ -30,9 +30,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 const siteName = 'aidardev';
 const defaultTitle = 'aidardev — Development Studio';
 const defaultDescription = {
-  en: 'aidardev is a development studio building websites, e-commerce, Telegram bots and AI solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. 6+ years experience, 38+ projects.',
-  ru: 'aidardev — студия разработки сайтов, интернет-магазинов, Telegram-ботов и AI-решений в Алматы, Астане, Шымкенте и по всему Казахстану. 6+ лет опыта, 38+ проектов.',
-  kz: 'aidardev — Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша сайттар, интернет-дүкендер, Telegram-боттар және AI шешімдерін жасайтын әзірлеу студиясы. 6+ жыл тәжірибе, 38+ жоба.',
+  en: 'aidardev is a development studio building websites, e-commerce, Telegram bots and AI solutions in Almaty, Astana, Shymkent and throughout Kazakhstan. 8+ years in development, 68+ projects.',
+  ru: 'aidardev — студия разработки сайтов, интернет-магазинов, Telegram-ботов и AI-решений в Алматы, Астане, Шымкенте и по всему Казахстану. 8+ лет в разработке, 68+ проектов.',
+  kz: 'aidardev — Алматы, Астана, Шымкент және бүкіл Қазақстан бойынша сайттар, интернет-дүкендер, Telegram-боттар және AI шешімдерін жасайтын әзірлеу студиясы. 8+ жыл тәжірибе, 68+ жоба.',
 };
 
 export const metadata: Metadata = {
