@@ -1,9 +1,18 @@
 import type { Metadata } from 'next';
+import { ArrowRight } from '../../components/brand/icons';
+import CityServices from '../../components/city-page/CityServices';
+import HomeProcess from '../../components/home/HomeProcess';
+import RatingRow from '../../components/home/RatingRow';
+import { container, getT, Kicker, sectionY, SectionTitle } from '../../components/home/shared';
+import Contact from '../../components/landing/ConversionContact';
 import Header from '../../components/landing/EditorialHeader';
 import Footer from '../../components/landing/Footer';
 import StickyWhatsApp from '../../components/landing/StickyWhatsApp';
+import StructuredDataServer from '../../components/SEO/StructuredDataServer';
+import { HeroBreadcrumbs } from '../../components/service-page/ServiceHero';
 import { LanguageProvider } from '../../contexts/LanguageContext';
-import { cityEntries, type SupportedLanguage } from '../../data/cities';
+import { cityEntries, getCityLandingContent, type SupportedLanguage } from '../../data/cities';
+import { createBreadcrumbSchema } from '../../lib/schemas';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
@@ -57,6 +66,7 @@ export default async function CitiesIndexPage({
 }) {
   const { lang: rawLang } = await params;
   const lang = normalizeLanguage(rawLang);
+  const t = getT(lang);
 
   const labels = {
     ru: {
@@ -76,43 +86,62 @@ export default async function CitiesIndexPage({
     },
   }[lang];
 
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: t('svc.crumb.home'), url: `${siteUrl}/${lang}` },
+    { name: t('city.crumb.cities'), url: `${siteUrl}/${lang}/cities` },
+  ]);
+
   return (
     <LanguageProvider initialLanguage={lang}>
-      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
-        <Header />
-        <main id="main-content" className="pb-20 pt-32">
-          <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-6xl">
-              <div className="mb-12 grid gap-8 border-y border-slate-300 py-10 md:grid-cols-12 md:py-14">
-                <div className="md:col-span-7">
-                  <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">{labels.kicker}</p>
-                  <h1 className="text-4xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-6xl">
-                    {labels.title}
-                  </h1>
-                </div>
-                <p className="self-end text-lg leading-8 text-slate-600 md:col-span-5">
-                  {labels.description}
-                </p>
-              </div>
+      <StructuredDataServer data={breadcrumbSchema} id="cities-breadcrumbs" />
 
-              <div className="grid border-l border-t border-slate-300 sm:grid-cols-2 lg:grid-cols-3">
-                {cityEntries.map((city, index) => (
-                  <a
-                    key={city.slug}
-                    href={`/${lang}/cities/${city.slug}`}
-                    className="group flex min-h-36 flex-col justify-between border-b border-r border-slate-300 bg-white p-6 transition-colors hover:bg-blue-50/50"
-                  >
-                    <span className="font-mono text-xs text-slate-400">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="flex items-center justify-between text-xl font-semibold tracking-[-0.02em] group-hover:text-blue-700">
-                      {lang === 'en' ? city.name.en : lang === 'kz' ? city.name.kz : city.locative.ru}
-                      <span aria-hidden="true">↗</span>
-                    </span>
-                  </a>
-                ))}
+      <div className="page-with-action-bar min-h-screen bg-white text-[#1b1f3b]">
+        <Header />
+        <main id="main-content">
+          <section className="hero-bg relative overflow-hidden">
+            <div className={`${container} relative pb-14 pt-[calc(4rem+16px)] lg:pb-20 lg:pt-[calc(5rem+32px)]`}>
+              <HeroBreadcrumbs crumbs={[{ name: t('svc.crumb.home'), href: `/${lang}` }, { name: t('city.crumb.cities') }]} />
+              <div className="mt-6 flex max-w-[820px] flex-col gap-[18px] lg:mt-8 lg:gap-6">
+                <Kicker>{labels.kicker}</Kicker>
+                <h1 className="text-[32px] leading-[1.08] tracking-[-0.035em] text-[#1b1f3b] sm:text-[42px] lg:text-[clamp(38px,3.6vw,54px)] lg:leading-[1.05]">
+                  {labels.title}
+                </h1>
+                <p className="max-w-[640px] text-base leading-[1.6] text-[#464a66] lg:text-lg">{labels.description}</p>
+                <RatingRow lang={lang} source="2gis_cities" />
               </div>
             </div>
           </section>
+
+          <section className="bg-white">
+            <div className={`${container} ${sectionY}`}>
+              <SectionTitle className="text-[#1b1f3b]">{t('city.index.grid')}</SectionTitle>
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:mt-10 lg:grid-cols-4 lg:gap-4">
+                {cityEntries.map((city) => (
+                  <li key={city.slug}>
+                    <a
+                      href={`/${lang}/cities/${city.slug}`}
+                      className="group flex h-full items-center justify-between gap-3 rounded-[18px] bg-[#fff7ef] px-5 py-4 transition-colors hover:bg-[#ffefe3]"
+                    >
+                      <span className="flex flex-col gap-0.5">
+                        <span className="font-display text-lg font-bold tracking-[-0.015em] text-[#1b1f3b]">{city.name[lang]}</span>
+                        <span className="text-[13px] font-medium text-[#62667f]">{getCityLandingContent(city, lang).h1}</span>
+                      </span>
+                      <ArrowRight className="h-5 w-5 shrink-0 text-[#b4232c] transition-transform group-hover:translate-x-0.5" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <CityServices
+            lang={lang}
+            title={t('city.index.services.title')}
+            services={['websites', 'bots', 'ai', 'mobile', 'design', 'consulting']}
+          />
+          <HomeProcess lang={lang} />
         </main>
+        <Contact />
         <Footer />
         <StickyWhatsApp source="cities" />
       </div>

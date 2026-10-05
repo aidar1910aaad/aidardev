@@ -1,31 +1,24 @@
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import CityFacts from '../../../../components/city-page/CityFacts';
+import CityHero from '../../../../components/city-page/CityHero';
+import CityServices from '../../../../components/city-page/CityServices';
+import HomeReviews from '../../../../components/home/HomeReviews';
+import { getT } from '../../../../components/home/shared';
+import Contact from '../../../../components/landing/ConversionContact';
 import Header from '../../../../components/landing/EditorialHeader';
 import Footer from '../../../../components/landing/Footer';
 import StickyWhatsApp from '../../../../components/landing/StickyWhatsApp';
 import StructuredDataServer from '../../../../components/SEO/StructuredDataServer';
+import { FaqBlock } from '../../../../components/service-page/ServiceFaqSection';
+import ServicePackages from '../../../../components/service-page/ServicePackages';
+import ServiceWork from '../../../../components/service-page/ServiceWork';
 import { LanguageProvider } from '../../../../contexts/LanguageContext';
+import { getCityLandingContent, type SupportedLanguage } from '../../../../data/cities';
+import { cityServiceCombos, getCityServiceContent, resolveCityService } from '../../../../data/city-services';
+import { servicesConfig } from '../../../../data/services-config';
 import { createBreadcrumbSchema, createFAQSchema, createServiceSchema } from '../../../../lib/schemas';
-import {
-  cityServiceCombos,
-  getCityServiceContent,
-  resolveCityService,
-} from '../../../../data/city-services';
-import type { SupportedLanguage } from '../../../../data/cities';
 import { buildWhatsAppUrl } from '../../../../lib/whatsapp';
-import TrackedWhatsAppLink from '../../../../components/common/TrackedWhatsAppLink';
-
-const Projects = dynamic(() => import('../../../../components/landing/Projects'), {
-  ssr: true,
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const Contact = dynamic(() => import('../../../../components/landing/ConversionContact'), {
-  ssr: true,
-  loading: () => <div className="min-h-[400px]" />,
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 const allowedLanguages = ['ru', 'en', 'kz'] as const;
@@ -77,6 +70,7 @@ export async function generateMetadata({
   };
 }
 
+/** «Город + услуга» в новом дизайне: тексты — прежние из data/city-services.ts, плюс пакеты, работы и отзывы. */
 export default async function CityServicePage({
   params,
 }: {
@@ -90,13 +84,18 @@ export default async function CityServicePage({
   const content = getCityServiceContent(resolved.city, resolved.combo.service, lang);
   if (!content) notFound();
 
+  const t = getT(lang);
+  const serviceKey = resolved.combo.service;
   const cityName = resolved.city.name[lang];
+  const cityPath = `/${lang}/cities/${citySlug}`;
   const whatsappMessage =
     lang === 'ru'
       ? `Здравствуйте! Интересует ${content.h1.toLowerCase()}. Хочу обсудить задачу.`
       : lang === 'kz'
         ? `Сәлеметсіз бе! ${content.h1} қызметін талқылағым келеді.`
         : `Hi! I'm interested in ${content.h1}. Let's discuss the project.`;
+  const whatsappUrl = buildWhatsAppUrl(whatsappMessage, { sourcePath: `${cityPath}/${service}` });
+  const source = `city_${citySlug}_${service}`;
 
   const faqSchema = createFAQSchema(content.faq);
   const serviceSchema = createServiceSchema({
@@ -104,13 +103,13 @@ export default async function CityServicePage({
     description: content.description,
     provider: 'aidardev',
     areaServed: cityName,
-    serviceKey: resolved.combo.service,
+    serviceKey,
   });
   const breadcrumbSchema = createBreadcrumbSchema([
     { name: content.breadcrumbs.home, url: `${siteUrl}/${lang}` },
     { name: content.breadcrumbs.cities, url: `${siteUrl}/${lang}/cities` },
-    { name: cityName, url: `${siteUrl}/${lang}/cities/${citySlug}` },
-    { name: content.breadcrumbs.service, url: `${siteUrl}/${lang}/cities/${citySlug}/${service}` },
+    { name: cityName, url: `${siteUrl}${cityPath}` },
+    { name: content.breadcrumbs.service, url: `${siteUrl}${cityPath}/${service}` },
   ]);
 
   return (
@@ -119,82 +118,40 @@ export default async function CityServicePage({
       <StructuredDataServer data={faqSchema} id={`city-service-faq-${citySlug}-${service}`} />
       <StructuredDataServer data={breadcrumbSchema} id={`city-service-bc-${citySlug}-${service}`} />
 
-      <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
+      <div className="page-with-action-bar min-h-screen bg-white text-[#1b1f3b]">
         <Header />
         <main id="main-content">
-          <section className="border-b border-slate-300 bg-[#fff7ef] pt-28">
-            <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-              <div className="mx-auto max-w-6xl">
-                <nav className="mb-10 flex flex-wrap items-center gap-2 border-b border-slate-300 pb-5 text-xs uppercase tracking-[0.14em] text-slate-500">
-                  <Link href={`/${lang}`} className="hover:text-blue-700">{content.breadcrumbs.home}</Link>
-                  <span>/</span>
-                  <Link href={`/${lang}/cities`} className="hover:text-blue-700">{content.breadcrumbs.cities}</Link>
-                  <span>/</span>
-                  <Link href={`/${lang}/cities/${citySlug}`} className="hover:text-blue-700">{cityName}</Link>
-                  <span>/</span>
-                  <span className="text-slate-900">{content.breadcrumbs.service}</span>
-                </nav>
-
-                <div className="grid gap-10 md:grid-cols-12">
-                  <div className="md:col-span-8">
-                    <span className="mb-7 inline-flex border border-blue-700 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
-                      {cityName} · {content.breadcrumbs.service}
-                    </span>
-                    <h1 className="mb-7 text-4xl font-semibold leading-[1.03] tracking-[-0.035em] sm:text-6xl">{content.h1}</h1>
-                    <p className="mb-6 text-xl font-medium leading-8 text-blue-700">{content.heroLead}</p>
-                    <p className="max-w-3xl text-lg leading-8 text-slate-600">{content.heroBody}</p>
-                  </div>
-                  <div className="flex flex-col justify-end gap-3 md:col-span-4">
-                    <TrackedWhatsAppLink
-                      href={buildWhatsAppUrl(whatsappMessage)}
-                      source={`city_${citySlug}_${service}`}
-                      className="w-full bg-blue-700 px-7 py-4 text-center font-semibold text-white hover:bg-blue-800"
-                    >
-                      {content.primaryCta}
-                    </TrackedWhatsAppLink>
-                    <Link
-                      href={content.servicePath}
-                      className="w-full border border-slate-400 bg-white px-7 py-4 text-center font-semibold hover:border-blue-700 hover:text-blue-700"
-                    >
-                      {lang === 'ru' ? 'Все услуги по направлению' : content.secondaryCta}
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="border-b border-slate-300 py-16">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="mx-auto max-w-6xl">
-                <h2 className="mb-4 text-3xl font-semibold tracking-[-0.03em]">{content.sectionTitle}</h2>
-                <p className="mb-10 max-w-3xl text-lg leading-8 text-slate-600">{content.sectionIntro}</p>
-                <div className="grid border-l border-slate-300 md:grid-cols-3">
-                  {content.highlights.map((item, index) => (
-                    <div key={item} className="border-b border-r border-slate-300 bg-white p-6">
-                      <span className="mb-5 block font-mono text-xs text-blue-700">0{index + 1}</span>
-                      <p className="leading-7 text-slate-700">{item}</p>
-                    </div>
-                  ))}
-                </div>
-                <h2 className="mb-6 mt-16 border-b border-slate-300 pb-4 text-2xl font-semibold">FAQ</h2>
-                <div className="grid gap-4 md:grid-cols-2">
-                  {content.faq.map((item) => (
-                    <article key={item.question} className="border border-slate-300 bg-white p-6">
-                      <h3 className="mb-2 font-semibold">{item.question}</h3>
-                      <p className="leading-7 text-slate-600">{item.answer}</p>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <Projects />
-          <Contact />
+          <CityHero
+            lang={lang}
+            crumbs={[
+              { name: content.breadcrumbs.home, href: `/${lang}` },
+              { name: content.breadcrumbs.cities, href: `/${lang}/cities` },
+              { name: cityName, href: cityPath },
+              { name: content.breadcrumbs.service },
+            ]}
+            kicker={`${cityName} · ${content.breadcrumbs.service}`}
+            h1={content.h1}
+            lead={content.heroLead}
+            body={content.heroBody}
+            service={serviceKey}
+            whatsappUrl={whatsappUrl}
+            source={source}
+          />
+          <CityFacts lang={lang} title={content.sectionTitle} intro={content.sectionIntro} items={content.highlights} />
+          <ServicePackages lang={lang} service={serviceKey} />
+          <ServiceWork lang={lang} service={serviceKey} examplesKey={`services.${serviceKey}.examples`} />
+          <HomeReviews lang={lang} />
+          <FaqBlock lang={lang} items={content.faq} whatsappUrl={whatsappUrl} source={`${source}_faq`} />
+          <CityServices
+            lang={lang}
+            title={t('svc.related.title')}
+            services={[serviceKey, ...servicesConfig[serviceKey].relatedServices]}
+            local={[{ href: cityPath, label: getCityLandingContent(resolved.city, lang).h1 }]}
+          />
         </main>
+        <Contact />
         <Footer />
-        <StickyWhatsApp source="city_service" />
+        <StickyWhatsApp source="city_service" message={whatsappMessage} />
       </div>
     </LanguageProvider>
   );
