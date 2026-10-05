@@ -1,14 +1,21 @@
 // Общие части главной: перевод на сервере, разметка заголовков, контейнер и подписи разделов.
 // Без хуков — используется в серверных компонентах.
+import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { translations } from '../../contexts/translations';
 import type { Language } from '../../contexts/LanguageContext';
 
 export type T = (key: string) => string;
 
-/** То же, что t() из LanguageContext, но на сервере: значение по ключу или сам ключ. */
+/**
+ * То же, что t() из LanguageContext, но на сервере: значение по ключу или сам ключ.
+ * Страницы [lang] собраны заранее для ru/en/kz, а чужой язык (/fr/services/websites) рендерится
+ * по запросу — без перевода это 404, а не падение с 500.
+ */
 export function getT(lang: Language): T {
-  return (key) => translations[lang][key] || key;
+  const dict = translations[lang];
+  if (!dict) notFound();
+  return (key) => dict[key] || key;
 }
 
 /**
