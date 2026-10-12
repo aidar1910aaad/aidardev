@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { fitTitle } from '../../../../lib/seo/title';
 import CityFacts from '../../../../components/city-page/CityFacts';
 import CityHero from '../../../../components/city-page/CityHero';
 import CityServices from '../../../../components/city-page/CityServices';
@@ -51,7 +52,7 @@ export async function generateMetadata({
   if (!content) return {};
 
   return {
-    title: content.title,
+    title: fitTitle(content.title),
     description: content.description,
     keywords: content.keywords,
     // Уникальный текст есть только у RU-версии; EN/KZ — заглушки, в поиск их не пускаем.

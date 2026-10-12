@@ -4,6 +4,7 @@ import Contact from "../../../components/landing/ConversionContact";
 import ServicePage from "../../../components/service-page/ServicePage";
 import { LanguageProvider } from "../../../contexts/LanguageContext";
 import { Metadata } from "next";
+import { fitTitle } from "../../../lib/seo/title";
 import { servicesConfig } from "../../../data/services-config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = langParam || 'ru';
   
   const titles = {
-    en: 'Mobile App Development Kazakhstan | iOS and Android Apps Almaty, Astana',
+    en: 'Mobile App Development Kazakhstan | iOS and Android',
     // GSC: «разработка мобильного приложения под android цена» поз. 4, 81 показ, 0 кликов — цена в title
     ru: 'Разработка приложений Android и iOS — цена от 800 000 ₸',
     kz: 'Мобильді қосымша әзірлеу Астана, Алматы | iOS, Android',
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 
   return {
-    title: titles[lang as keyof typeof titles] || titles.ru,
+    title: fitTitle(titles[lang as keyof typeof titles] || titles.ru),
     description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     keywords: config.targetQueries[lang as keyof typeof config.targetQueries] || config.targetQueries.ru,
     alternates: {

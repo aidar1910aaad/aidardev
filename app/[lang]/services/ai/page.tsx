@@ -4,6 +4,7 @@ import Contact from "../../../components/landing/ConversionContact";
 import ServicePage from "../../../components/service-page/ServicePage";
 import { LanguageProvider } from "../../../contexts/LanguageContext";
 import { Metadata } from "next";
+import { fitTitle } from "../../../lib/seo/title";
 import { servicesConfig } from "../../../data/services-config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const titles = {
     en: 'AI Chatbot Development Kazakhstan | AI Integration Almaty, Astana',
     ru: 'AI-чатботы под ключ — цены и интеграция в Алматы, Астане | GPT',
-    kz: 'AI чатботтарды әзірлеу Қазақстан | AI интеграциялар Алматы, Астана',
+    kz: 'AI чатботтарды әзірлеу | AI интеграциялар Алматы, Астана',
   };
   
   const descriptions = {
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 
   return {
-    title: titles[lang as keyof typeof titles] || titles.ru,
+    title: fitTitle(titles[lang as keyof typeof titles] || titles.ru),
     description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     keywords: config.targetQueries[lang as keyof typeof config.targetQueries] || config.targetQueries.ru,
     alternates: {

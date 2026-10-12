@@ -11,7 +11,8 @@ export default function StructuredDataServer({ data, id = 'structured-data' }: S
     <script
       type="application/ld+json"
       id={id}
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      // «<» экранируем: заголовки статей приходят из генератора блога, «</script>» в них не должен закрыть тег.
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }}
     />
   );
 }

@@ -4,6 +4,7 @@ import StickyWhatsApp from '../../components/landing/StickyWhatsApp';
 import Contact from "../../components/landing/ConversionContact";
 import { LanguageProvider, type Language } from "../../contexts/LanguageContext";
 import { Metadata } from "next";
+import { fitTitle } from "../../lib/seo/title";
 import { Check } from "../../components/brand/icons";
 import HomeProcess from "../../components/home/HomeProcess";
 import HomeReviews from "../../components/home/HomeReviews";
@@ -21,9 +22,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = langParam || 'ru';
   
   const titles = {
-    en: 'Services | Website Development, Bots, AI, Design, Consulting in Kazakhstan',
-    ru: 'Услуги | Разработка сайтов, боты, AI, дизайн, консультации в Казахстане',
-    kz: 'Қызметтер | Сайттарды әзірлеу, боттар, AI, дизайн, кеңес Қазақстанда',
+    en: 'Services | Website Development, Bots, AI, Design in Kazakhstan',
+    ru: 'Услуги | Разработка сайтов, боты, AI, дизайн в Казахстане',
+    kz: 'Қызметтер | Сайттарды әзірлеу, боттар, AI, дизайн Қазақстанда',
   };
   
   const descriptions = {
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 
   return {
-    title: titles[lang as keyof typeof titles] || titles.ru,
+    title: fitTitle(titles[lang as keyof typeof titles] || titles.ru),
     description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     alternates: {
       canonical: `${siteUrl}/${lang}/services`,

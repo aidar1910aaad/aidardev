@@ -4,6 +4,7 @@ import Contact from "../../../components/landing/ConversionContact";
 import ServicePage from "../../../components/service-page/ServicePage";
 import { LanguageProvider } from "../../../contexts/LanguageContext";
 import { Metadata } from "next";
+import { fitTitle } from "../../../lib/seo/title";
 import { servicesConfig } from "../../../data/services-config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
@@ -15,9 +16,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = langParam || 'ru';
   
   const titles = {
-    en: 'Development Consulting Kazakhstan | Programming Training Almaty, Astana',
-    ru: 'Помощь и консультации по программированию — обучение | Алматы, Астана',
-    kz: 'Әзірлеу бойынша кеңес Қазақстан | Бағдарламалауды оқыту Алматы, Астана',
+    en: 'Development Consulting Kazakhstan | Programming Training',
+    ru: 'Помощь и консультации по программированию | Алматы, Астана',
+    kz: 'Әзірлеу бойынша кеңес | Бағдарламалауды оқыту Алматы, Астана',
   };
   
   const descriptions = {
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 
   return {
-    title: titles[lang as keyof typeof titles] || titles.ru,
+    title: fitTitle(titles[lang as keyof typeof titles] || titles.ru),
     description: descriptions[lang as keyof typeof descriptions] || descriptions.ru,
     keywords: config.targetQueries[lang as keyof typeof config.targetQueries] || config.targetQueries.ru,
     alternates: {

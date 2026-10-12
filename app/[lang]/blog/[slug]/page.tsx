@@ -7,7 +7,8 @@ import AnimatedSection from "../../../components/common/AnimatedSection";
 import Link from "next/link";
 import { getBlogPostBySlug, type BlogPost } from "../../../data/blog-posts";
 import { notFound } from "next/navigation";
-import StructuredData from "../../../components/SEO/StructuredData";
+import StructuredDataServer from "../../../components/SEO/StructuredDataServer";
+import { fitTitle } from "../../../lib/seo/title";
 import { getAvailableBlogLangs, getBlogContentForLang, shouldIndexBlogPost } from "../../../lib/seo/blog-indexing";
 import { getRelatedPosts, getRelatedServices, splitArticleHtml } from "../../../lib/blog-utils";
 import { BlogAnalytics, BlogCta, BlogRelated, BlogStickyCta } from "../../../components/blog/BlogArticleExperience";
@@ -116,7 +117,7 @@ export async function generateMetadata({
   ]));
 
   return {
-    title,
+    title: fitTitle(title),
     description,
     keywords,
     robots: indexable
@@ -231,8 +232,8 @@ export default async function BlogPostPage({
 
   return (
     <LanguageProvider initialLanguage={lang}>
-      <StructuredData data={articleSchema} id="blog-article-schema" />
-      <StructuredData data={breadcrumbSchema} id="blog-breadcrumb-schema" />
+      <StructuredDataServer data={articleSchema} id="blog-article-schema" />
+      <StructuredDataServer data={breadcrumbSchema} id="blog-breadcrumb-schema" />
       <BlogAnalytics slug={slug} lang={lang} />
       
       <div className="page-with-action-bar min-h-screen bg-[#fff7ef] text-slate-950">
