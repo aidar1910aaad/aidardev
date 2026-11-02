@@ -80,6 +80,13 @@ describe('solutions content', () => {
         'production-accounting',
         'equipment-maintenance',
         'labor-safety',
+        'oilfield-services',
+        'mining',
+        'energy-solar',
+        'grain-elevators',
+        'fuel-fleet',
+        'timesheets-shifts',
+        'lab-quality',
       ]),
     );
     for (const solution of detailed) {
