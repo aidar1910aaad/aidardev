@@ -74,6 +74,12 @@ describe('solutions content', () => {
         'documents-1c-ai',
         'qr-instructions-training',
         'machine-energy-monitoring',
+        'concrete-plants',
+        'metal-structures',
+        'quote-calculation',
+        'production-accounting',
+        'equipment-maintenance',
+        'labor-safety',
       ]),
     );
     for (const solution of detailed) {
