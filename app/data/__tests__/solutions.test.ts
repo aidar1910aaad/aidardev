@@ -80,6 +80,12 @@ describe('solutions content', () => {
         'production-accounting',
         'equipment-maintenance',
         'labor-safety',
+        'industrial-ai',
+        'oil-gas',
+        'dealer-portal',
+        'tenders-ai',
+        'food-production',
+        'furniture-production',
       ]),
     );
     for (const solution of detailed) {
