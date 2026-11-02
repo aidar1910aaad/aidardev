@@ -825,7 +825,7 @@ const BASE_SOLUTIONS: Solution[] = [
         a: 'Первый модуль от 900 000 ₸. Смету по этапам присылаем в течение 24 часов после созвона.',
       },
     ],
-    related: ['quote-calculation', 'equipment-maintenance', 'kaspi-1c-integration'],
+    related: ['quote-calculation', 'machine-energy-monitoring', 'equipment-maintenance'],
   },
   {
     slug: 'equipment-maintenance',
@@ -889,7 +889,7 @@ const BASE_SOLUTIONS: Solution[] = [
         a: 'Для заявок через Telegram нужен мобильный интернет. Если связи нет, обсудим вариант, который сохраняет данные на телефоне и отправляет позже.',
       },
     ],
-    related: ['production-accounting', 'industrial-ai', 'oil-gas'],
+    related: ['ai-assistant-mechanic', 'machine-energy-monitoring', 'production-accounting'],
   },
   {
     slug: 'industrial-ai',
@@ -958,7 +958,7 @@ const BASE_SOLUTIONS: Solution[] = [
         a: 'Может, поэтому он показывает, откуда взял ответ, а важные решения остаются за людьми.',
       },
     ],
-    related: ['oil-gas', 'production-accounting', 'whatsapp-ai-administrator'],
+    related: ['ai-assistant-mechanic', 'voice-shift-reports', 'documents-1c-ai'],
   },
   {
     slug: 'oil-gas',

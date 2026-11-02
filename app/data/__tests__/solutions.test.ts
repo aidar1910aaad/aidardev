@@ -66,7 +66,16 @@ describe('solutions content', () => {
 
   it('keeps detailed pages honest: our row last, western numbers marked as vendor claims', () => {
     const detailed = SOLUTIONS.filter((s) => s.steps);
-    expect(detailed.map((s) => s.slug)).toContain('whatsapp-email-orders-1c');
+    expect(detailed.map((s) => s.slug)).toEqual(
+      expect.arrayContaining([
+        'whatsapp-email-orders-1c',
+        'voice-shift-reports',
+        'ai-assistant-mechanic',
+        'documents-1c-ai',
+        'qr-instructions-training',
+        'machine-energy-monitoring',
+      ]),
+    );
     for (const solution of detailed) {
       expect(solution.steps!.length).toBeGreaterThanOrEqual(3);
       expect(solution.faq.length).toBeGreaterThanOrEqual(8);
