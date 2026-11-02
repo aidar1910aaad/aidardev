@@ -14,6 +14,9 @@ import { LanguageProvider } from '../../contexts/LanguageContext';
 import { cityEntries, getCityLandingContent, type SupportedLanguage } from '../../data/cities';
 import { createBreadcrumbSchema } from '../../lib/schemas';
 
+// Только языки из generateStaticParams в [lang]/layout: чужой первый сегмент (/wp-login.php, /.env) — 404 без рендера.
+export const dynamicParams = false;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
 function normalizeLanguage(lang: string): SupportedLanguage {

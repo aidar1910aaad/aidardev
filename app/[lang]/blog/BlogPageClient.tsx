@@ -6,19 +6,19 @@ import Footer from "../../components/landing/Footer";
 import StickyWhatsApp from '../../components/landing/StickyWhatsApp';
 import AnimatedSection from "../../components/common/AnimatedSection";
 import Link from "next/link";
-import type { BlogPost } from "../../data/blog-posts";
+import type { BlogPostCard } from "../../lib/blog-utils";
 import BlogFilters from "../../components/blog/BlogFilters";
 
 interface BlogPageClientProps {
-  posts: BlogPost[];
+  posts: BlogPostCard[];
   lang: 'ru' | 'en' | 'kz';
 }
 
 export default function BlogPageClient({ posts, lang }: BlogPageClientProps) {
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPostCard[]>(posts);
   const [visibleCount, setVisibleCount] = useState(6);
   
-  const handleFilteredPostsChange = useCallback((nextPosts: BlogPost[]) => {
+  const handleFilteredPostsChange = useCallback((nextPosts: BlogPostCard[]) => {
     setFilteredPosts(nextPosts);
     setVisibleCount(6);
   }, []);
@@ -67,20 +67,20 @@ export default function BlogPageClient({ posts, lang }: BlogPageClientProps) {
             {visiblePosts.length > 0 ? (
               <>
                 <div className="grid grid-cols-1 border-l border-t border-slate-300 md:grid-cols-2 lg:grid-cols-3">
-                  {visiblePosts.map((post: BlogPost, index: number) => (
+                  {visiblePosts.map((post: BlogPostCard, index: number) => (
                   <AnimatedSection key={post.id} animationType="slide-up" delay={index * 50}>
                     <Link href={`/${lang}/blog/${post.slug}`}>
                       <article className="group flex h-full min-h-80 cursor-pointer flex-col border-b border-r border-slate-300 bg-white p-7 transition-colors hover:bg-blue-50/50">
                         <div className="mb-4">
                           <span className="inline-block border border-blue-700 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
-                            {post.category[lang]}
+                            {post.category}
                           </span>
                         </div>
                         <h2 className="mb-3 text-2xl font-semibold tracking-[-0.025em] text-slate-950 transition-colors group-hover:text-blue-700">
-                          {post.title[lang]}
+                          {post.title}
                         </h2>
                         <p className="mb-6 flex-grow text-sm leading-6 text-slate-600">
-                          {post.excerpt[lang]}
+                          {post.excerpt}
                         </p>
                         <div className="flex items-center justify-between border-t border-slate-200 pt-4 text-xs text-slate-500">
                           <span>{new Date(post.date).toLocaleDateString(lang === 'ru' ? 'ru-RU' : lang === 'en' ? 'en-US' : 'kk-KZ', { year: 'numeric', month: 'long', day: 'numeric' })}</span>

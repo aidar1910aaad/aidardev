@@ -19,14 +19,15 @@ export const serviceTint: Record<ServiceKey, { bg: string; line: string; ink: st
 
 /**
  * Проекты на странице услуги. «own» — работы именно по этой услуге (сверено с описаниями в projects.ts).
- * У ИИ, приложений и консультаций своих кейсов в портфолио нет — честно показываем «Работы студии».
+ * У приложений и консультаций своих кейсов в портфолио нет — честно показываем «Работы студии».
+ * С 31.10 у ИИ свои кейсы: ИИ-администратор, «Астана в 3D», «Голосовые в текст», ИИ-аналитик EvOil.
  */
 export const serviceCases: Record<ServiceKey, { kind: 'own' | 'studio'; ids: string[] }> = {
-  websites: { kind: 'own', ids: ['inpro-engineering', 'habipark', 'fida-concrete', 'global-solar', 'smart-shipping', 'arlift'] },
-  bots: { kind: 'own', ids: ['chatbot-realty'] },
+  websites: { kind: 'own', ids: ['albakov-stroy', 'sana-aroma', 'boberbuild', '4car', 'inpro-engineering', 'global-solar'] },
+  bots: { kind: 'own', ids: ['ai-admin-whatsapp', 'cargo-tracking', 'cyberpol-bot', 'saqtan', 'chatbot-realty'] },
   design: { kind: 'own', ids: ['habipark', 'inpro-engineering', 'bambino', 'asem-makeup', 'global-solar', 'helix-lab'] },
-  ai: { kind: 'studio', ids: ['karshyga', 'qinvesting', 'helix-lab'] },
-  mobile: { kind: 'studio', ids: ['karshyga', 'helix-lab', 'qinvesting'] },
+  ai: { kind: 'own', ids: ['ai-admin-whatsapp', 'ai-video-astana', 'wa-voice-text', 'evoil'] },
+  mobile: { kind: 'studio', ids: ['karshyga', 'evoil', 'helix-lab'] },
   consulting: { kind: 'studio', ids: ['karshyga', 'qinvesting', 'terricon-valley'] },
 };
 

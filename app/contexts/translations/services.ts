@@ -107,7 +107,7 @@ export const servicesTranslations = {
     'services.bots.faq.5.question': 'Do you provide bot maintenance?',
     'services.bots.faq.5.answer': 'Yes, we provide ongoing bot maintenance: updates, bug fixes, feature additions, performance monitoring, and consultations. Flexible support packages depending on your needs.',
     'services.bots.faq.6.question': 'How much does bot development cost?',
-    'services.bots.faq.6.answer': 'The cost depends on complexity and functionality. A simple Telegram bot starts from 250 000 ₸, a business bot with integrations from 350 000 ₸, a WhatsApp bot from 350 000 ₸, and business process automation from 400 000 ₸. We provide a detailed estimate after discussing your requirements.',
+    'services.bots.faq.6.answer': 'The cost depends on complexity and functionality. A Telegram bot on a ready-made scenario starts from 40 000 ₸, a WhatsApp bot from 60 000 ₸, a business bot with CRM and a database from 150 000 ₸, and business process automation from 400 000 ₸. We provide a detailed estimate after discussing your requirements.',
     'services.bots.faq.7.question': 'Can a bot send notifications automatically?',
     'services.bots.faq.7.answer': 'Yes, bots can send automatic notifications about orders, events, updates, and other important information. We configure notification systems based on your business needs.',
     
@@ -160,7 +160,7 @@ export const servicesTranslations = {
     'services.ai.faq.2.question': 'Can you train custom AI models?',
     'services.ai.faq.2.answer': 'Yes, we can train and fine-tune custom AI models for your specific needs. This includes data preparation, model training, evaluation, and deployment.',
     'services.ai.faq.3.question': 'How much does AI integration cost?',
-    'services.ai.faq.3.answer': 'The cost depends on complexity. An AI chatbot starts from 450 000 ₸, an AI assistant with CRM integration from 600 000 ₸, and an AI agent from 800 000 ₸. An AI audit of your processes starts from 150 000 ₸. We provide a detailed estimate after discussing your requirements.',
+    'services.ai.faq.3.answer': 'The cost depends on complexity. An express AI audit starts from 30 000 ₸, an AI bot that answers from your price list and FAQ from 70 000 ₸, an AI assistant with CRM integration from 450 000 ₸, and an AI agent from 800 000 ₸. We provide a detailed estimate after discussing your requirements.',
     'services.ai.faq.4.question': 'Do AI chatbots require constant maintenance?',
     'services.ai.faq.4.answer': 'AI chatbots require monitoring and occasional updates to improve responses and adapt to new requirements. We provide ongoing support and model optimization services.',
     'services.ai.faq.5.question': 'Can AI chatbots work in multiple languages?',
@@ -222,7 +222,7 @@ export const servicesTranslations = {
     'services.mobile.faq.4.question': 'Can you integrate the app with existing backend?',
     'services.mobile.faq.4.answer': 'Yes, we can integrate mobile apps with existing backends, APIs, and third-party services. We work with REST APIs, GraphQL, and various authentication systems.',
     'services.mobile.faq.5.question': 'How much does mobile app development cost?',
-    'services.mobile.faq.5.answer': 'As a guide: an MVP starts from 800 000 ₸, a native iOS or Android app from 1 200 000 ₸, a full-featured app from 1 500 000 ₸, and a complex product with a backend from 2 500 000 ₸. We prepare an exact estimate after a brief and the feature list for the first version.',
+    'services.mobile.faq.5.answer': 'As a guide: the first version of an app to test the idea starts from 400 000 ₸ (about a month), a native iOS or Android app from 1 200 000 ₸, a full-featured app from 1 500 000 ₸, and a complex product with a backend from 2 500 000 ₸. We prepare an exact estimate after a brief and the feature list for the first version.',
     'services.mobile.faq.6.question': 'Do you provide app maintenance?',
     'services.mobile.faq.6.answer': 'Yes, we provide ongoing app maintenance: updates, bug fixes, new features, performance optimization, and App Store/Google Play updates. Flexible maintenance packages depending on your needs.',
     
@@ -282,7 +282,7 @@ export const servicesTranslations = {
     'services.design.faq.5.question': 'What files do you provide?',
     'services.design.faq.5.answer': 'We provide all necessary files: Figma/XD source files, exported assets (images, icons), style guides, and design specifications for developers.',
     'services.design.faq.6.question': 'How much does design cost?',
-    'services.design.faq.6.answer': 'The cost depends on complexity. Landing page design starts from 150 000 ₸, multi-page website design from 300 000 ₸, mobile app design from 400 000 ₸, and a redesign from 250 000 ₸. We provide a detailed estimate after discussing your requirements.',
+    'services.design.faq.6.answer': 'The cost depends on complexity. Landing page design (up to 6 blocks, desktop and mobile) starts from 50 000 ₸, multi-page website design from 300 000 ₸, mobile app design from 400 000 ₸, and a redesign from 250 000 ₸. We provide a detailed estimate after discussing your requirements.',
     
     // Service cards - structured data
     'services.design.cards.0.title': 'Landing Page Design',
@@ -407,7 +407,7 @@ export const servicesTranslations = {
     'services.websites.faq.3.question': 'Работаете ли с существующими проектами?',
     'services.websites.faq.3.answer': 'Да, работаем с существующими проектами: можем улучшить, обновить, добавить новые функции, исправить ошибки, оптимизировать производительность и модернизировать устаревший код. Сначала анализируем текущее состояние и предлагаем план улучшений.',
     'services.websites.faq.4.question': 'Сколько стоит создание сайта?',
-    'services.websites.faq.4.answer': 'Ориентиры такие: лендинг — от 150 000 ₸, многостраничный сайт — от 300 000 ₸, интернет-магазин — от 450 000 ₸, SaaS/CRM-платформа — от 900 000 ₸, редизайн — от 200 000 ₸. Точная стоимость зависит от структуры, функционала, дизайна и интеграций.',
+    'services.websites.faq.4.answer': 'Ориентиры такие: сайт-визитка от 45 000 ₸, корпоративный сайт до 5 страниц от 90 000 ₸, интернет-магазин до 50 товаров от 120 000 ₸, сайты с админ-панелью и интеграциями от 300 000 ₸, SaaS/CRM-платформа от 900 000 ₸, редизайн от 200 000 ₸. Точная стоимость зависит от структуры, функционала, дизайна и интеграций.',
     'services.websites.faq.5.question': 'Помогаете с хостингом и настройкой домена?',
     'services.websites.faq.5.answer': 'Да, помогаем с регистрацией домена, настройкой хостинга и установкой SSL-сертификата. Можем порекомендовать надёжных хостинг-провайдеров и помочь с настройкой сервера.',
     'services.websites.faq.6.question': 'Что если проект затянется?',
@@ -482,7 +482,7 @@ export const servicesTranslations = {
     'services.bots.faq.5.question': 'Предоставляете ли вы обслуживание ботов?',
     'services.bots.faq.5.answer': 'Да, обслуживаем ботов на постоянной основе: обновления, исправление ошибок, добавление функций, мониторинг производительности, консультации. Пакеты поддержки подбираем под ваши задачи.',
     'services.bots.faq.6.question': 'Сколько стоит разработка бота?',
-    'services.bots.faq.6.answer': 'Стоимость зависит от сложности и функциональности. Простой Telegram-бот — от 250 000 ₸, бизнес-бот с интеграциями — от 350 000 ₸, WhatsApp-бот — от 350 000 ₸, автоматизация бизнес-процессов — от 400 000 ₸. Подробную оценку даём после обсуждения ваших требований.',
+    'services.bots.faq.6.answer': 'Стоимость зависит от сложности и функциональности. Telegram-бот по готовому сценарию от 40 000 ₸, WhatsApp-бот от 60 000 ₸, бизнес-бот с CRM и базой данных от 150 000 ₸, автоматизация бизнес-процессов от 400 000 ₸. Подробную оценку даём после обсуждения ваших требований.',
     'services.bots.faq.7.question': 'Может ли бот отправлять уведомления автоматически?',
     'services.bots.faq.7.answer': 'Да, боты могут автоматически отправлять уведомления о заказах, событиях, обновлениях и другой важной информации. Систему уведомлений настраиваем под ваши бизнес-процессы.',
     
@@ -535,7 +535,7 @@ export const servicesTranslations = {
     'services.ai.faq.2.question': 'Можете ли вы обучить кастомную AI-модель?',
     'services.ai.faq.2.answer': 'Да, можем обучить и дообучить кастомные AI-модели под ваши задачи. Это включает подготовку данных, обучение модели, оценку и развёртывание.',
     'services.ai.faq.3.question': 'Сколько стоит интеграция AI?',
-    'services.ai.faq.3.answer': 'Стоимость зависит от сложности. AI-чатбот — от 450 000 ₸, AI-ассистент с интеграцией CRM — от 600 000 ₸, AI-агент — от 800 000 ₸. AI-аудит процессов — от 150 000 ₸. Подробную оценку даём после обсуждения ваших требований.',
+    'services.ai.faq.3.answer': 'Стоимость зависит от сложности. Экспресс ИИ-аудит от 30 000 ₸, ИИ-бот, который отвечает по вашему прайсу и FAQ, от 70 000 ₸, ИИ-ассистент с интеграцией CRM от 450 000 ₸, ИИ-агент от 800 000 ₸. Подробную оценку даём после обсуждения ваших требований.',
     'services.ai.faq.4.question': 'Требуют ли AI-чатботы постоянного обслуживания?',
     'services.ai.faq.4.answer': 'AI-чатботам нужны мониторинг и периодические обновления, чтобы улучшать ответы и учитывать новые требования. Мы обеспечиваем постоянную поддержку и оптимизацию моделей.',
     'services.ai.faq.5.question': 'Могут ли AI-чатботы работать на нескольких языках?',
@@ -597,7 +597,7 @@ export const servicesTranslations = {
     'services.mobile.faq.4.question': 'Можно ли интегрировать приложение с существующим backend?',
     'services.mobile.faq.4.answer': 'Да, можем интегрировать мобильное приложение с существующим backend, API и сторонними сервисами. Работаем с REST API, GraphQL и различными системами аутентификации.',
     'services.mobile.faq.5.question': 'Сколько стоит разработка мобильного приложения?',
-    'services.mobile.faq.5.answer': 'Ориентиры такие: MVP — от 800 000 ₸, нативное iOS или Android приложение — от 1 200 000 ₸, полноценное приложение — от 1 500 000 ₸, сложный продукт с backend — от 2 500 000 ₸. Точную смету собираем после брифа и списка функций первой версии.',
+    'services.mobile.faq.5.answer': 'Ориентиры такие: первая версия приложения, чтобы проверить идею, от 400 000 ₸ (около месяца), нативное iOS или Android приложение от 1 200 000 ₸, полноценное приложение от 1 500 000 ₸, сложный продукт с backend от 2 500 000 ₸. Точную смету собираем после брифа и списка функций первой версии.',
     'services.mobile.faq.6.question': 'Предоставляете ли вы обслуживание приложений?',
     'services.mobile.faq.6.answer': 'Да, обслуживаем приложения на постоянной основе: обновления, исправление ошибок, новые функции, оптимизация производительности и публикация обновлений в App Store и Google Play. Пакеты обслуживания подбираем под ваши задачи.',
     
@@ -657,7 +657,7 @@ export const servicesTranslations = {
     'services.design.faq.5.question': 'Какие файлы вы предоставляете?',
     'services.design.faq.5.answer': 'Передаём все необходимые файлы: исходники Figma/XD, экспортированные ресурсы (изображения, иконки), гайдлайны и спецификации дизайна для разработчиков.',
     'services.design.faq.6.question': 'Сколько стоит UX/UI-дизайн сайта?',
-    'services.design.faq.6.answer': 'Стоимость зависит от сложности. Дизайн лендинга — от 150 000 ₸, многостраничного сайта — от 300 000 ₸, мобильного приложения — от 400 000 ₸, редизайн — от 250 000 ₸. Подробную оценку даём после обсуждения ваших требований.',
+    'services.design.faq.6.answer': 'Стоимость зависит от сложности. Дизайн лендинга до 6 блоков (для компьютера и телефона) от 50 000 ₸, многостраничного сайта от 300 000 ₸, мобильного приложения от 400 000 ₸, редизайн от 250 000 ₸. Подробную оценку даём после обсуждения ваших требований.',
     
     // Service cards - structured data
     'services.design.cards.0.title': 'Дизайн лендингов',
@@ -857,7 +857,7 @@ export const servicesTranslations = {
     'services.bots.faq.5.question': 'Боттарды қызмет көрсетуді ұсынасыз ба?',
     'services.bots.faq.5.answer': 'Иә, боттарға тұрақты қызмет көрсетеміз: жаңартулар, қателерді түзету, функциялар қосу, өнімділікті бақылау, кеңес беру. Қолдау пакеттерін сіздің қажеттілігіңізге қарай таңдаймыз.',
     'services.bots.faq.6.question': 'Ботты әзірлеу қанша тұрады?',
-    'services.bots.faq.6.answer': 'Баға күрделілігі мен функционалына байланысты. Қарапайым Telegram-бот — 250 000 ₸-ден, интеграциялары бар бизнес-бот — 350 000 ₸-ден, WhatsApp-бот — 350 000 ₸-ден, бизнес-процестерді автоматтандыру — 400 000 ₸-ден бастап. Талаптарыңызды талқылағаннан кейін толық баға есебін береміз.',
+    'services.bots.faq.6.answer': 'Баға күрделілігі мен функционалына байланысты. Дайын сценарий бойынша Telegram-бот 40 000 ₸-ден, WhatsApp-бот 60 000 ₸-ден, CRM мен дерекқоры бар бизнес-бот 150 000 ₸-ден, бизнес-процестерді автоматтандыру 400 000 ₸-ден басталады. Талаптарыңызды талқылағаннан кейін толық баға есебін береміз.',
     'services.bots.faq.7.question': 'Бот автоматты түрде хабарландырулар жібере ала ма?',
     'services.bots.faq.7.answer': 'Иә, боттар тапсырыстар, оқиғалар, жаңартулар және басқа маңызды ақпарат туралы автоматты түрде хабарландыру жібере алады. Хабарландыру жүйесін бизнес-процестеріңізге сай баптаймыз.',
     
@@ -910,7 +910,7 @@ export const servicesTranslations = {
     'services.ai.faq.2.question': 'Кастомды AI-модельді оқыта аласыз ба?',
     'services.ai.faq.2.answer': 'Иә, кастомды AI-модельдерді сіздің міндеттеріңізге қарай оқытып, қосымша оқыта аламыз. Бұған деректерді дайындау, модельді оқыту, бағалау және іске қосу кіреді.',
     'services.ai.faq.3.question': 'AI интеграциясы қанша тұрады?',
-    'services.ai.faq.3.answer': 'Баға күрделілікке байланысты. AI-чатбот — 450 000 ₸-ден, CRM-мен интеграцияланған AI-ассистент — 600 000 ₸-ден, AI-агент — 800 000 ₸-ден бастап. Процестердің AI-аудиті — 150 000 ₸-ден. Талаптарыңызды талқылағаннан кейін толық баға есебін береміз.',
+    'services.ai.faq.3.answer': 'Баға күрделілікке байланысты. Экспресс AI-аудит 30 000 ₸-ден, прайс пен FAQ бойынша жауап беретін AI-бот 70 000 ₸-ден, CRM-мен интеграцияланған AI-ассистент 450 000 ₸-ден, AI-агент 800 000 ₸-ден басталады. Талаптарыңызды талқылағаннан кейін толық баға есебін береміз.',
     'services.ai.faq.4.question': 'AI-чатботтар тұрақты қызмет көрсетуді талап ете ме?',
     'services.ai.faq.4.answer': 'AI-чатботтар жауаптарды жақсарту және жаңа талаптарға бейімделу үшін мониторингті және мерзімді жаңартуларды қажет етеді. Тұрақты қолдау көрсетіп, модельдерді оңтайландырамыз.',
     'services.ai.faq.5.question': 'AI-чатботтар бірнеше тілде жұмыс істей ала ма?',
@@ -972,7 +972,7 @@ export const servicesTranslations = {
     'services.mobile.faq.4.question': 'Қосымшаны бар backend-пен интеграциялауға бола ма?',
     'services.mobile.faq.4.answer': 'Иә, мобильді қосымшаны бар backend-пен, API-мен және үшінші тарап сервистерімен интеграциялай аламыз. REST API, GraphQL және әртүрлі аутентификация жүйелерімен жұмыс істейміз.',
     'services.mobile.faq.5.question': 'Мобильді қосымшаны әзірлеу қанша тұрады?',
-    'services.mobile.faq.5.answer': 'Бағдар ретінде: MVP — 800 000 ₸-ден, нативті iOS немесе Android қосымшасы — 1 200 000 ₸-ден, толыққанды қосымша — 1 500 000 ₸-ден, backend-і бар күрделі өнім — 2 500 000 ₸-ден бастап. Нақты сметаны брифтен және алғашқы нұсқаның функциялар тізімінен кейін жасаймыз.',
+    'services.mobile.faq.5.answer': 'Бағдар ретінде: идеяны тексеруге арналған қосымшаның алғашқы нұсқасы 400 000 ₸-ден (шамамен бір ай), нативті iOS немесе Android қосымшасы 1 200 000 ₸-ден, толыққанды қосымша 1 500 000 ₸-ден, backend-і бар күрделі өнім 2 500 000 ₸-ден басталады. Нақты сметаны брифтен және алғашқы нұсқаның функциялар тізімінен кейін жасаймыз.',
     'services.mobile.faq.6.question': 'Қосымшаларды қызмет көрсетуді ұсынасыз ба?',
     'services.mobile.faq.6.answer': 'Иә, қосымшаларға тұрақты қызмет көрсетеміз: жаңартулар, қателерді түзету, жаңа функциялар, өнімділікті оңтайландыру және App Store/Google Play-дегі жаңартулар. Қызмет көрсету пакеттерін қажеттілігіңізге қарай таңдаймыз.',
     
@@ -1032,7 +1032,7 @@ export const servicesTranslations = {
     'services.design.faq.5.question': 'Қандай файлдарды бересіз?',
     'services.design.faq.5.answer': 'Барлық қажетті файлдарды тапсырамыз: Figma/XD бастапқы файлдары, экспортталған ресурстар (суреттер, иконкалар), нұсқаулықтар және әзірлеушілерге арналған дизайн спецификациялары.',
     'services.design.faq.6.question': 'Дизайн қанша тұрады?',
-    'services.design.faq.6.answer': 'Баға күрделілікке байланысты. Лендинг дизайны — 150 000 ₸-ден, көпбетті сайт дизайны — 300 000 ₸-ден, мобильді қосымша дизайны — 400 000 ₸-ден, редизайн — 250 000 ₸-ден бастап. Талаптарыңызды талқылағаннан кейін толық баға есебін береміз.',
+    'services.design.faq.6.answer': 'Баға күрделілікке байланысты. 6 блокқа дейінгі лендинг дизайны (компьютер мен телефонға) 50 000 ₸-ден, көпбетті сайт дизайны 300 000 ₸-ден, мобильді қосымша дизайны 400 000 ₸-ден, редизайн 250 000 ₸-ден басталады. Талаптарыңызды талқылағаннан кейін толық баға есебін береміз.',
     
     // Service cards - structured data
     'services.design.cards.0.title': 'Лендингтер дизайны',

@@ -3,6 +3,9 @@ import Header from '../../components/landing/EditorialHeader';
 import Footer from '../../components/landing/Footer';
 import { LanguageProvider } from '../../contexts/LanguageContext';
 
+// Только языки из generateStaticParams в [lang]/layout: чужой первый сегмент (/wp-login.php, /.env) — 404 без рендера.
+export const dynamicParams = false;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
 type PrivacyLanguage = 'ru' | 'kz' | 'en';

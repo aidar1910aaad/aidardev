@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import type { BlogPost } from '../../data/blog-posts';
+import type { BlogPostCard } from '../../lib/blog-utils';
 
 interface BlogFiltersProps {
-  posts: BlogPost[];
+  posts: BlogPostCard[];
   lang: 'ru' | 'en' | 'kz';
-  onFilteredPostsChange: (filteredPosts: BlogPost[]) => void;
+  onFilteredPostsChange: (filteredPosts: BlogPostCard[]) => void;
 }
 
 export default function BlogFilters({ posts, lang, onFilteredPostsChange }: BlogFiltersProps) {
@@ -17,11 +17,11 @@ export default function BlogFilters({ posts, lang, onFilteredPostsChange }: Blog
   const categories = useMemo(() => {
     const cats = new Set<string>();
     posts.forEach(post => {
-      const cat = post.category[lang];
+      const cat = post.category;
       if (cat) cats.add(cat);
     });
     return Array.from(cats).sort();
-  }, [posts, lang]);
+  }, [posts]);
 
   // Фильтруем посты
   const filteredPosts = useMemo(() => {
@@ -29,22 +29,22 @@ export default function BlogFilters({ posts, lang, onFilteredPostsChange }: Blog
 
     // Фильтр по категории
     if (selectedCategory) {
-      filtered = filtered.filter(post => post.category[lang] === selectedCategory);
+      filtered = filtered.filter(post => post.category === selectedCategory);
     }
 
     // Фильтр по поисковому запросу
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
       filtered = filtered.filter(post => {
-        const title = post.title[lang]?.toLowerCase() || '';
-        const excerpt = post.excerpt[lang]?.toLowerCase() || '';
-        const category = post.category[lang]?.toLowerCase() || '';
+        const title = post.title.toLowerCase();
+        const excerpt = post.excerpt.toLowerCase();
+        const category = post.category.toLowerCase();
         return title.includes(query) || excerpt.includes(query) || category.includes(query);
       });
     }
 
     return filtered;
-  }, [posts, selectedCategory, searchQuery, lang]);
+  }, [posts, selectedCategory, searchQuery]);
 
   // Обновляем родительский компонент при изменении фильтров
   useEffect(() => {

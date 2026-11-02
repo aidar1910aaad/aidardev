@@ -21,6 +21,9 @@ import { servicesConfig } from '../../../../data/services-config';
 import { createBreadcrumbSchema, createFAQSchema, createServiceSchema } from '../../../../lib/schemas';
 import { buildWhatsAppUrl } from '../../../../lib/whatsapp';
 
+// Только пары «город × услуга» из generateStaticParams: остальное — 404 без рендера.
+export const dynamicParams = false;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 const allowedLanguages = ['ru', 'en', 'kz'] as const;
 

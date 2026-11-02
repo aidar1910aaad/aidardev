@@ -4,7 +4,7 @@ import type { ServiceKey } from '../../data/services-config';
 import { projects, type Project } from '../../data/projects';
 import { ArrowRight, ArrowUpRight, Check } from '../brand/icons';
 import TrackedLink from '../home/TrackedLink';
-import { container, getT, Kicker, sectionY, SectionTitle, type T } from '../home/shared';
+import { container, getT, Kicker, sectionY, SectionTitle, visitLabel, type T } from '../home/shared';
 import { parseBullets, serviceCases } from './meta';
 
 function VisitLink({ project, lang, t }: { project: Project; lang: Language; t: T }) {
@@ -16,7 +16,7 @@ function VisitLink({ project, lang, t }: { project: Project; lang: Language; t: 
       event={{ type: 'project', name: project.title[lang], url: project.live }}
       className="mt-auto inline-flex items-center gap-1.5 self-start pt-2 text-sm font-bold text-[#b4232c] hover:text-[#8f1b23]"
     >
-      {t('landing.work.visit')} <ArrowUpRight className="h-4 w-4" />
+      {visitLabel(project.live, t)} <ArrowUpRight className="h-4 w-4" />
     </TrackedLink>
   );
 }

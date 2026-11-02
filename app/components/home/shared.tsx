@@ -47,6 +47,13 @@ export function plain(text: string): string {
   return text.replace(/[[\]{}]/g, '');
 }
 
+/** Подпись ссылки на проект по адресу: ролики в TikTok и бот в Telegram — не «сайт». */
+export function visitLabel(url: string, t: T): string {
+  if (url.includes('tiktok.com')) return t('landing.work.visitTiktok');
+  if (url.includes('t.me/')) return t('landing.work.visitBot');
+  return t('landing.work.visit');
+}
+
 export const container = 'mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-10';
 export const sectionY = 'py-16 lg:py-28';
 

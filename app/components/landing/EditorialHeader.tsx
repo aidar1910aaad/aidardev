@@ -38,6 +38,8 @@ export default function EditorialHeader() {
   const servicesRef = useRef<HTMLDivElement>(null);
   const home = `/${language}`;
   const navItems = [
+    // «Сложная разработка» есть только на русском
+    ...(language === 'ru' ? [{ key: 'nav.solutions', href: '/ru/solutions' }] : []),
     { key: 'nav.projects', href: `${home}#projects` },
     { key: 'nav.testimonials', href: `${home}#testimonials` },
     { key: 'nav.pricing', href: `${home}/pricing` },
@@ -86,7 +88,9 @@ export default function EditorialHeader() {
     `/${lang}${pathname.replace(/^\/(ru|en|kz)(?=\/|$)/, '') || ''}`;
   // Статьи блога выходят на RU и KZ (бэкенд следит, чтобы KZ-версия была у каждой), EN-версий нет.
   const isArticle = /^\/(ru|en|kz)\/blog\/[^/]+/.test(pathname);
-  const switchLanguages: Language[] = isArticle ? ['ru', 'kz'] : ['ru', 'en', 'kz'];
+  // Раздел «Сложная разработка» только на русском: ссылки на другие языки вели бы на 404.
+  const isRuOnly = /^\/(ru|en|kz)\/solutions(\/|$)/.test(pathname);
+  const switchLanguages: Language[] = isRuOnly ? ['ru'] : isArticle ? ['ru', 'kz'] : ['ru', 'en', 'kz'];
 
   const languageSwitch = (extra: string) => (
     <div role="group" aria-label={copy.language[language]} className={`items-center rounded-full bg-white p-[3px] shadow-[0_4px_14px_rgba(27,31,59,0.08)] ${extra}`}>

@@ -1,8 +1,14 @@
 import { LanguageProvider } from "../../contexts/LanguageContext";
 import { Metadata } from "next";
-import { getAllBlogPosts, type BlogPost } from "../../data/blog-posts";
 import BlogPageClient from "./BlogPageClient";
 import { hasBlogContentForLang } from "../../lib/seo/blog-indexing";
+import { fetchPublishedBlogPosts } from "../../lib/blog-cache";
+import { toBlogPostCard } from "../../lib/blog-utils";
+
+// Список обновляется вебхуком бэкенда (тег blog-posts); срок — страховка на неделю.
+export const revalidate = 604800;
+// Язык — только ru/en/kz из generateStaticParams в [lang]/layout: прочее сразу 404 без рендера.
+export const dynamicParams = false;
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
@@ -48,45 +54,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
-import { fetchBackend, getBackendUrl } from '../../lib/backend-config';
-
-const BACKEND_API_URL = getBackendUrl();
-
-async function fetchBlogPosts(): Promise<BlogPost[]> {
-  try {
-    const url = `${BACKEND_API_URL}/api/blog/posts?published=true`;
-    console.log('🌐 [Blog Page] Запрос к бэкенду:', url);
-
-    const response = await fetchBackend(url, {
-      next: { revalidate: 60 }, // Кэшируем на 60 секунд
-    });
-
-    console.log('📥 [Blog Page] Ответ от бэкенда:', {
-      status: response.status,
-      ok: response.ok,
-      url: response.url,
-    });
-
-    if (!response.ok) {
-      console.error('❌ [Blog Page] Ошибка загрузки статей:', response.status, response.statusText);
-      return process.env.NODE_ENV === 'development' ? getAllBlogPosts() : [];
-    }
-
-    const result = await response.json();
-    const posts = result.posts || result || [];
-    
-    return posts.filter((post: BlogPost) => post.published !== false);
-  } catch (error) {
-    console.error('Ошибка загрузки статей:', error);
-    return process.env.NODE_ENV === 'development' ? getAllBlogPosts() : [];
-  }
-}
-
 export default async function BlogPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang: langParam } = await params;
   const lang = (langParam || 'ru') as 'ru' | 'en' | 'kz';
 
-  const blogPosts = (await fetchBlogPosts()).filter((post) => hasBlogContentForLang(post, lang));
+  // В клиент уходят только карточки текущего языка: без HTML статей и других языков.
+  const blogPosts = (await fetchPublishedBlogPosts())
+    .filter((post) => hasBlogContentForLang(post, lang))
+    .map((post) => toBlogPostCard(post, lang));
 
   return (
     <LanguageProvider initialLanguage={lang as 'ru' | 'en' | 'kz'}>

@@ -61,6 +61,8 @@ export default function Footer() {
 
   const navLinks = [
     { id: 'about', label: t('nav.about'), href: `/${language}/services` },
+    // «Сложная разработка» есть только на русском
+    ...(language === 'ru' ? [{ id: 'solutions', label: t('nav.solutions'), href: '/ru/solutions' }] : []),
     { id: 'projects', label: t('nav.projects') },
     { id: 'testimonials', label: t('nav.testimonials') },
     { id: 'process', label: t('nav.process') },

@@ -4,9 +4,9 @@ import { projects, type Project } from '../../data/projects';
 import { ArrowUpRight } from '../brand/icons';
 import ShowMore from './ShowMore';
 import TrackedLink from './TrackedLink';
-import { container, getT, Kicker, sectionY, SectionTitle, type T } from './shared';
+import { container, getT, Kicker, sectionY, SectionTitle, visitLabel, type T } from './shared';
 
-const featuredIds = ['inpro-engineering', 'habipark', 'fida-concrete', 'global-solar', 'karshyga', 'helix-lab'] as const;
+const featuredIds = ['evoil', 'boberbuild', 'ai-admin-whatsapp', 'ai-video-astana', 'karshyga', 'albakov-stroy'] as const;
 
 function byId(id: string): Project {
   const project = projects.find((item) => item.id === id);
@@ -31,7 +31,7 @@ function VisitLink({ project, lang, t, dark }: { project: Project; lang: Languag
         dark ? 'text-[#ffd166] hover:text-white' : 'text-[#b4232c] hover:text-[#8f1b23]'
       }`}
     >
-      {t('landing.work.visit')}
+      {visitLabel(project.live, t)}
       <ArrowUpRight className="h-4 w-4" />
     </TrackedLink>
   );

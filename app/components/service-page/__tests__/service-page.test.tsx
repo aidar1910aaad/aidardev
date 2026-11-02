@@ -39,7 +39,7 @@ describe('service pages', () => {
   });
 
   it('formats «from» prices per language from pricing.json', () => {
-    expect(minPrice('websites')).toBe(150000);
+    expect(minPrice('websites')).toBe(45000);
     expect(priceFrom(150000, 'ru', getT('ru'))).toBe('от 150 000 ₸');
     expect(priceFrom(150000, 'en', getT('en'))).toBe('from 150,000 ₸');
     expect(priceFrom(15000, 'kz', getT('kz'), true)).toBe('15 000 ₸-ден / сағат');

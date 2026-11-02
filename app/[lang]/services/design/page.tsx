@@ -7,6 +7,9 @@ import { Metadata } from "next";
 import { fitTitle } from "../../../lib/seo/title";
 import { servicesConfig } from "../../../data/services-config";
 
+// Только языки из generateStaticParams в [lang]/layout: чужой первый сегмент (/wp-login.php, /.env) — 404 без рендера.
+export const dynamicParams = false;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 const serviceKey = 'design';
 const config = servicesConfig[serviceKey];
@@ -18,13 +21,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const titles = {
     en: 'UI/UX Design Kazakhstan | Web Design Almaty, Astana',
     // GSC: «дизайн сайтов заказать» поз. 1.5, «заказать дизайн сайта» поз. 2 — главное и цена в первых 60 символах
-    ru: 'Заказать дизайн сайта — UX/UI от 150 000 ₸, Астана и Алматы',
+    ru: 'Заказать дизайн сайта: UX/UI от 50 000 ₸, Астана и Алматы',
     kz: 'UX/UI дизайнға тапсырыс беру | Қазақстан, Алматы, Астана',
   };
   
   const descriptions = {
     en: 'Professional UI/UX design services in Almaty, Astana, Shymkent and throughout Kazakhstan. Web design, mobile app design, website redesign. Modern interfaces, user experience optimization. 8+ years in development, 68+ projects.',
-    ru: 'Дизайн сайта под ключ: лендинг — от 150 000 ₸, многостраничный сайт — от 300 000 ₸, приложение — от 400 000 ₸. Прототип, UX/UI, адаптив. Смета после брифа.',
+    ru: 'Дизайн сайта под ключ: лендинг от 50 000 ₸, многостраничный сайт от 300 000 ₸, приложение от 400 000 ₸. Прототип, UX/UI, адаптив. Смета после брифа.',
     kz: 'Алматы, Астана және бүкіл Қазақстан бойынша UX/UI дизайн. Лендинг, редизайн, прототип. Брифтан кейін мерзім мен бағаны бағалаймыз.',
   };
 

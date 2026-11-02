@@ -17,6 +17,9 @@ import {
 import { LanguageProvider, type Language } from "../contexts/LanguageContext";
 import { Metadata } from "next";
 
+// Только языки из generateStaticParams в [lang]/layout: чужой первый сегмент (/wp-login.php, /.env) — 404 без рендера.
+export const dynamicParams = false;
+
 // Разделы главной — серверные компоненты (тексты из translations по языку страницы);
 // клиентские только форма, подвал и нижняя панель.
 const Contact = dynamic(() => import("../components/landing/ConversionContact"), {

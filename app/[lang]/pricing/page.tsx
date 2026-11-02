@@ -7,6 +7,9 @@ import { createWebSiteSchema, createPricingCatalogSchema } from "../../lib/schem
 import { LanguageProvider } from "../../contexts/LanguageContext";
 import { Metadata } from "next";
 
+// Только языки из generateStaticParams в [lang]/layout: чужой первый сегмент (/wp-login.php, /.env) — 404 без рендера.
+export const dynamicParams = false;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {

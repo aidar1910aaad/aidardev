@@ -74,7 +74,7 @@ export function getCityServiceContent(
         faq: [
           {
             question: 'Сколько стоит приложение в Астане?',
-            answer: 'Ориентиры такие: MVP — от 800 000 ₸, приложение под Android или iOS — от 1 200 000 ₸, полноценное приложение — от 1 500 000 ₸, сложный продукт с backend — от 2 500 000 ₸. Точная оценка зависит от количества экранов, ролей, API и сценариев первой версии.',
+            answer: 'Ориентиры такие: первая версия приложения от 400 000 ₸ (около месяца), приложение под Android или iOS от 1 200 000 ₸, полноценное приложение от 1 500 000 ₸, сложный продукт с backend от 2 500 000 ₸. Точная оценка зависит от количества экранов, ролей, API и сценариев первой версии.',
           },
           {
             question: 'Сколько времени занимает разработка?',
@@ -124,7 +124,7 @@ export function getCityServiceContent(
         faq: [
           {
             question: 'Сколько стоит бот в Алматы?',
-            answer: 'Простой Telegram-бот — от 250 000 ₸, бизнес-бот с CRM и базой данных — от 350 000 ₸, WhatsApp-бот — от 350 000 ₸.',
+            answer: 'Telegram-бот по готовому сценарию от 40 000 ₸, WhatsApp-бот от 60 000 ₸, бизнес-бот с CRM и базой данных от 150 000 ₸.',
           },
           {
             question: 'Можно ли принимать заявки в WhatsApp автоматически?',
@@ -173,7 +173,7 @@ export function getCityServiceContent(
         faq: [
           {
             question: `How much does an app cost ${cityLocative}?`,
-            answer: 'As a guide: an MVP starts from 800 000 ₸, an Android or iOS app from 1 200 000 ₸, a full-featured app from 1 500 000 ₸, and a complex product with a backend from 2 500 000 ₸.',
+            answer: 'As a guide: the first version of an app starts from 400 000 ₸ (about a month), an Android or iOS app from 1 200 000 ₸, a full-featured app from 1 500 000 ₸, and a complex product with a backend from 2 500 000 ₸.',
           },
           {
             question: `Do you work remotely with clients ${cityLocative}?`,
@@ -204,7 +204,7 @@ export function getCityServiceContent(
       faq: [
         {
           question: `How much does a bot cost ${cityLocative}?`,
-          answer: 'A simple Telegram bot starts from 250 000 ₸, a business bot with CRM and a database from 350 000 ₸, and a WhatsApp bot from 350 000 ₸.',
+          answer: 'A Telegram bot on a ready-made scenario starts from 40 000 ₸, a WhatsApp bot from 60 000 ₸, and a business bot with CRM and a database from 150 000 ₸.',
         },
         {
           question: 'Can WhatsApp enquiries be handled automatically?',
@@ -236,7 +236,7 @@ export function getCityServiceContent(
       faq: [
         {
           question: `${cityLocative} қосымша қанша тұрады?`,
-          answer: 'Бағдар ретінде: MVP — 800 000 ₸-ден, Android немесе iOS қосымшасы — 1 200 000 ₸-ден, толыққанды қосымша — 1 500 000 ₸-ден, backend-і бар күрделі өнім — 2 500 000 ₸-ден бастап.',
+          answer: 'Бағдар ретінде: қосымшаның алғашқы нұсқасы 400 000 ₸-ден (шамамен бір ай), Android немесе iOS қосымшасы 1 200 000 ₸-ден, толыққанды қосымша 1 500 000 ₸-ден, backend-і бар күрделі өнім 2 500 000 ₸-ден басталады.',
         },
         {
           question: `${cityLocative} клиенттермен қашықтан жұмыс істейсіз бе?`,
@@ -267,7 +267,7 @@ export function getCityServiceContent(
     faq: [
       {
         question: `${cityLocative} бот қанша тұрады?`,
-        answer: 'Қарапайым Telegram-бот — 250 000 ₸-ден, CRM мен дерекқоры бар бизнес-бот — 350 000 ₸-ден, WhatsApp-бот — 350 000 ₸-ден бастап.',
+        answer: 'Дайын сценарий бойынша Telegram-бот 40 000 ₸-ден, WhatsApp-бот 60 000 ₸-ден, CRM мен дерекқоры бар бизнес-бот 150 000 ₸-ден басталады.',
       },
       {
         question: 'WhatsApp-тағы өтінімдерді автоматты түрде қабылдауға бола ма?',

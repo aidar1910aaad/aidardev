@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { defaultLocale, locales } from './app/lib/i18n';
 
-const locales = ['ru', 'en', 'kz'];
-const defaultLocale = 'ru';
 const canonicalHost = 'www.aidardev.kz';
 
 export function proxy(request: NextRequest) {
@@ -52,7 +51,7 @@ export function proxy(request: NextRequest) {
   }
 
   // Всегда используем дефолтный язык (ru) для новых посетителей
-  let locale = defaultLocale;
+  const locale = defaultLocale;
 
   const localePrefix = `/${locale}`;
   const redirectToLocale = (targetPath: string) => {
@@ -65,7 +64,7 @@ export function proxy(request: NextRequest) {
     return redirectToLocale(localePrefix);
   }
 
-  const localelessPrefixes = ['/pricing', '/services', '/blog', '/cities', '/privacy'];
+  const localelessPrefixes = ['/pricing', '/services', '/blog', '/cities', '/privacy', '/solutions'];
   if (localelessPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
     return redirectToLocale(`${localePrefix}${pathname}`);
   }
@@ -73,17 +72,27 @@ export function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
+/**
+ * Proxy запускается только там, где возможен редирект: каждый вызов — это Fluid CPU на Vercel.
+ * Страницы с языком (/ru/...), RSC/prefetch, OG-картинки, sitemap, robots, RSS, /api и статика
+ * на www.aidardev.kz его не вызывают. Значения matcher должны быть литералами (статический разбор при сборке).
+ */
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (public folder)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)).*)',
+    // Хост без www → www. Как и раньше, кроме /api (вебхук бэкенда шлёт POST на aidardev.kz), статики Next и картинок.
+    {
+      source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)).*)',
+      has: [{ type: 'host', value: 'aidardev\\.kz' }],
+    },
+    // HTTP → HTTPS за прокси, который передаёт x-forwarded-proto: http (на Vercel запросы уже приходят по https).
+    {
+      source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)).*)',
+      has: [{ type: 'header', key: 'x-forwarded-proto', value: 'http' }],
+    },
+    // Корень → /ru.
+    '/',
+    // Разделы без языка (/pricing, /services/..., /blog/..., /cities/..., /privacy, /solutions/...) → /ru/... Картинки не трогаем.
+    '/((?!.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico))(?:pricing|services|blog|cities|privacy|solutions)(?:/.*)?)',
   ],
 };
 

@@ -219,6 +219,81 @@ export function createServiceSchema(service: {
   };
 }
 
+// Страница решения (/ru/solutions/*): услуга с нижней ценой в тенге, чтобы ИИ-поиск мог назвать цену «от».
+export function createSolutionSchema(solution: {
+  name: string;
+  category: string;
+  description: string;
+  url: string;
+  priceFrom: number;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: solution.name,
+    serviceType: solution.category,
+    description: solution.description,
+    url: solution.url,
+    provider: { '@type': 'Organization', name: 'aidardev', url: siteUrl },
+    areaServed: { '@type': 'Country', name: 'Казахстан' },
+    offers: {
+      '@type': 'Offer',
+      url: solution.url,
+      price: solution.priceFrom,
+      priceCurrency: 'KZT',
+      priceSpecification: { '@type': 'PriceSpecification', minPrice: solution.priceFrom, priceCurrency: 'KZT' },
+      availability: 'https://schema.org/InStock',
+    },
+  };
+}
+
+// Шаги «как это работает» на подробных страницах решений.
+export function createHowToSchema(howTo: { name: string; description: string; url: string; steps: Array<{ title: string; text: string }> }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: howTo.name,
+    description: howTo.description,
+    url: howTo.url,
+    step: howTo.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.title,
+      text: step.text,
+    })),
+  };
+}
+
+// Словарь терминов на подробных страницах решений.
+export function createDefinedTermSetSchema(set: { name: string; url: string; terms: Array<{ term: string; text: string }> }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: set.name,
+    url: set.url,
+    hasDefinedTerm: set.terms.map((item) => ({
+      '@type': 'DefinedTerm',
+      name: item.term,
+      description: item.text,
+      inDefinedTermSet: set.url,
+    })),
+  };
+}
+
+// Список решений на общих страницах раздела.
+export function createItemListSchema(items: Array<{ name: string; url: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  };
+}
+
 // Полный прайс-лист как машиночитаемая схема — для страницы /pricing.
 // Это самый прямой источник фактов для GEO: конкретные цифры, которые
 // AI-движок может процитировать дословно вместо общей фразы "цены индивидуальны".

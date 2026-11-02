@@ -21,6 +21,9 @@ import { cityServiceCombos, getCityServiceContent } from '../../../data/city-ser
 import { createBreadcrumbSchema, createFAQSchema, createServiceSchema } from '../../../lib/schemas';
 import { buildWhatsAppUrl } from '../../../lib/whatsapp';
 
+// Только языки и города из generateStaticParams: неизвестный город или язык — 404 без рендера.
+export const dynamicParams = false;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 const allowedLanguages: SupportedLanguage[] = ['ru', 'en', 'kz'];
 

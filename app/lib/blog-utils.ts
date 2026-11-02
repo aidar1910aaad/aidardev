@@ -37,6 +37,43 @@ export function buildWhatsAppUrl(input: {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
+/**
+ * Карточка статьи для клиентского списка блога: только текущий язык и только то, что нужно
+ * для карточки, фильтра по теме и поиска. Без HTML статьи и других языков — иначе весь блог
+ * уезжает в RSC-payload страницы.
+ */
+export type BlogPostCard = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  date: string;
+  readingTime: number;
+};
+
+export function toBlogPostCard(post: BlogPost, lang: BlogLang): BlogPostCard {
+  return {
+    id: post.id,
+    slug: post.slug,
+    title: post.title?.[lang] ?? '',
+    excerpt: post.excerpt?.[lang] ?? '',
+    category: post.category?.[lang] ?? '',
+    date: post.date,
+    readingTime: post.readingTime,
+  };
+}
+
+/** Ссылка «По теме» под статьёй. */
+export type BlogRelatedPost = {
+  slug: string;
+  title: string;
+};
+
+export function toBlogRelatedPost(post: BlogPost, lang: BlogLang): BlogRelatedPost {
+  return { slug: post.slug, title: post.title?.[lang] ?? '' };
+}
+
 function terms(post: BlogPost, lang: BlogLang): Set<string> {
   return new Set([
     post.category[lang],

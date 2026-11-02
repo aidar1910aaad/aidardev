@@ -7,6 +7,9 @@ import { Metadata } from "next";
 import { fitTitle } from "../../../lib/seo/title";
 import { servicesConfig } from "../../../data/services-config";
 
+// Только языки из generateStaticParams в [lang]/layout: чужой первый сегмент (/wp-login.php, /.env) — 404 без рендера.
+export const dynamicParams = false;
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 const serviceKey = 'mobile';
 const config = servicesConfig[serviceKey];
@@ -18,13 +21,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const titles = {
     en: 'Mobile App Development Kazakhstan | iOS and Android',
     // GSC: «разработка мобильного приложения под android цена» поз. 4, 81 показ, 0 кликов — цена в title
-    ru: 'Разработка приложений Android и iOS — цена от 800 000 ₸',
+    ru: 'Разработка приложений Android и iOS: цена от 400 000 ₸',
     kz: 'Мобильді қосымша әзірлеу Астана, Алматы | iOS, Android',
   };
   
   const descriptions = {
     en: 'Professional mobile app development for iOS and Android in Almaty, Astana, Shymkent and throughout Kazakhstan. Native and cross-platform apps. 8+ years in development, 68+ projects.',
-    ru: 'Цена разработки мобильного приложения: MVP — от 800 000 ₸, Android или iOS — от 1 200 000 ₸, полноценное — от 1 500 000 ₸. Смета после брифа, Астана и Алматы.',
+    ru: 'Цена разработки мобильного приложения: первая версия от 400 000 ₸, Android или iOS от 1 200 000 ₸, полноценное от 1 500 000 ₸. Смета после брифа, Астана и Алматы.',
     kz: 'Астана, Алматы және Қазақстан бойынша iOS/Android қосымшалар. MVP, нативті және кроссплатформалық әзірлеу.',
   };
 

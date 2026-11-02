@@ -1,33 +1,14 @@
 import { MetadataRoute } from 'next';
-import { getAllBlogPosts, type BlogPost } from './data/blog-posts';
 import { cityEntries, isCityIndexable } from './data/cities';
 import { cityServiceCombos } from './data/city-services';
+import { INDUSTRY_HUB, SOLUTIONS, SOLUTIONS_HUB } from './data/solutions';
 import { getAvailableBlogLangs, shouldIndexBlogPost } from './lib/seo/blog-indexing';
+import { BLOG_FEED_REVALIDATE_SECONDS, fetchPublishedBlogPosts } from './lib/blog-cache';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
-import { fetchBackend, getBackendUrl } from './lib/backend-config';
-
-const BACKEND_API_URL = getBackendUrl();
-
-async function fetchBlogPosts(): Promise<BlogPost[]> {
-  try {
-    const response = await fetchBackend(`${BACKEND_API_URL}/api/blog/posts?published=true`, {
-      next: { revalidate: 3600 }, // Кэшируем на 1 час
-    });
-
-    if (!response.ok) {
-      return process.env.NODE_ENV === 'development' ? getAllBlogPosts() : [];
-    }
-
-    const result = await response.json();
-    const posts = result.posts || result || [];
-    return posts.filter((post: BlogPost) => post.published !== false);
-  } catch (error) {
-    console.error('Ошибка загрузки статей для sitemap:', error);
-    return process.env.NODE_ENV === 'development' ? getAllBlogPosts() : [];
-  }
-}
+// Новые статьи добавляет вебхук бэкенда (тег blog-posts и revalidatePath('/sitemap.xml')); срок — страховка на сутки.
+export const revalidate = 86400;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const languages = ['ru', 'en', 'kz'];
@@ -150,8 +131,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
+  // «Сложная разработка»: раздел только на русском, без языковых версий.
+  const solutionsRoutes = [SOLUTIONS_HUB.path, INDUSTRY_HUB.path, ...SOLUTIONS.map((s) => `/ru/solutions/${s.slug}`)].map((path) => ({
+    url: `${siteUrl}${path}`,
+    lastModified: new Date('2026-11-02'),
+    changeFrequency: 'monthly' as const,
+    priority: 0.9,
+  }));
+
   // Blog posts для всех языков - динамически загружаем из БД
-  const blogPosts = await fetchBlogPosts();
+  const blogPosts = await fetchPublishedBlogPosts(BLOG_FEED_REVALIDATE_SECONDS);
   const blogPostRoutes = ['ru', 'kz'].flatMap((lang) =>
     blogPosts
       .filter((post) => shouldIndexBlogPost(post, lang))
@@ -187,6 +176,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Отдельных страниц проектов нет, поэтому не добавляем их в sitemap
   // Если в будущем создадите страницы /projects/[id], добавьте их сюда
 
-  return [...baseRoutes, ...pricingRoutes, ...servicesIndexRoutes, ...citiesIndexRoutes, ...serviceRoutes, ...cityLandingRoutes, ...cityServiceRoutes, ...blogRoutes, ...blogPostRoutes, ...privacyRoutes];
+  return [...baseRoutes, ...pricingRoutes, ...servicesIndexRoutes, ...citiesIndexRoutes, ...serviceRoutes, ...solutionsRoutes, ...cityLandingRoutes, ...cityServiceRoutes, ...blogRoutes, ...blogPostRoutes, ...privacyRoutes];
 }
 

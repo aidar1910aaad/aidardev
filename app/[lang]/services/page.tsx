@@ -9,11 +9,15 @@ import { Check } from "../../components/brand/icons";
 import HomeProcess from "../../components/home/HomeProcess";
 import HomeReviews from "../../components/home/HomeReviews";
 import RatingRow from "../../components/home/RatingRow";
-import { container, getT, Kicker, sectionY } from "../../components/home/shared";
+import { container, getT, Kicker, sectionY, SectionTitle } from "../../components/home/shared";
 import { ServiceLinkCard } from "../../components/service-page/ServiceCards";
+import { SolutionGroups } from "../../components/solutions/SolutionBlocks";
 import { SERVICE_KEYS } from "../../components/service-page/meta";
 import StructuredDataServer from "../../components/SEO/StructuredDataServer";
 import { createBreadcrumbSchema } from "../../lib/schemas";
+
+// Только языки из generateStaticParams в [lang]/layout: чужой первый сегмент (/wp-login.php, /.env) — 404 без рендера.
+export const dynamicParams = false;
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
@@ -117,6 +121,25 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
               </div>
             </div>
           </section>
+
+          {/* «Сложная разработка» есть только на русском */}
+          {lang === 'ru' && (
+            <section className="bg-white">
+              <div className={`${container} pb-16 lg:pb-28`}>
+                <div className="flex max-w-[780px] flex-col gap-3 lg:gap-4">
+                  <Kicker>Сложная разработка</Kicker>
+                  <SectionTitle className="text-[#1b1f3b]">Системы под задачу</SectionTitle>
+                  <p className="text-base leading-[1.6] text-[#464a66] lg:text-[17px]">
+                    Когда готовые сервисы не подходят: трекинг для карго, маркетплейсы, CRM, интеграции с Kaspi и 1С, ПО для заводов и нефтегаза.{' '}
+                    <a href="/ru/solutions" className="font-bold text-[#b4232c] hover:text-[#8f1b23]">Все решения</a>
+                  </p>
+                </div>
+                <div className="mt-6 lg:mt-12">
+                  <SolutionGroups groups={['sectors', 'industry', 'logistics', 'sales', 'public']} limit={3} />
+                </div>
+              </div>
+            </section>
+          )}
 
           <HomeProcess lang={lang} />
           <HomeReviews lang={lang} />

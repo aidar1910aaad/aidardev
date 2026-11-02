@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { BlogPost } from '../../data/blog-posts';
 import type { ServiceKey } from '../../data/services-config';
 import { analyticsEvents } from '../../lib/analytics';
-import { buildWhatsAppUrl, type BlogLang } from '../../lib/blog-utils';
+import { buildWhatsAppUrl, type BlogLang, type BlogRelatedPost } from '../../lib/blog-utils';
 import { PRIMARY_WHATSAPP_NUMBER } from '../../lib/whatsapp';
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
   title: string;
   lang: BlogLang;
   placement: 'inline' | 'end';
-  relatedPosts?: BlogPost[];
+  relatedPosts?: BlogRelatedPost[];
   relatedServices?: ServiceKey[];
 };
 
@@ -97,7 +96,7 @@ export function BlogRelated({ slug, lang, relatedPosts = [], relatedServices = [
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {relatedPosts.map((post) => (
           <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} onClick={() => analyticsEvents.blogRelatedClick(slug, post.slug, lang, 'post')} className="border border-slate-300 bg-white p-5 font-semibold hover:border-blue-700 hover:text-blue-700">
-            {post.title[lang]}
+            {post.title}
           </Link>
         ))}
         {relatedServices.map((service) => (

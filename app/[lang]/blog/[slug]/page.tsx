@@ -5,73 +5,26 @@ import { LanguageProvider } from "../../../contexts/LanguageContext";
 import { Metadata } from "next";
 import AnimatedSection from "../../../components/common/AnimatedSection";
 import Link from "next/link";
-import { getBlogPostBySlug, type BlogPost } from "../../../data/blog-posts";
 import { notFound } from "next/navigation";
 import StructuredDataServer from "../../../components/SEO/StructuredDataServer";
 import { fitTitle } from "../../../lib/seo/title";
 import { getAvailableBlogLangs, getBlogContentForLang, shouldIndexBlogPost } from "../../../lib/seo/blog-indexing";
-import { getRelatedPosts, getRelatedServices, splitArticleHtml } from "../../../lib/blog-utils";
+import { getRelatedPosts, getRelatedServices, splitArticleHtml, toBlogRelatedPost } from "../../../lib/blog-utils";
 import { BlogAnalytics, BlogCta, BlogRelated, BlogStickyCta } from "../../../components/blog/BlogArticleExperience";
+import { BLOG_RELATED_TAG, BLOG_REVALIDATE_SECONDS, fetchBlogPost, fetchPublishedBlogPosts } from "../../../lib/blog-cache";
+import { isLocale } from "../../../lib/i18n";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.aidardev.kz';
 
-import { fetchBackend, getBackendUrl } from '../../../lib/backend-config';
-
-const BACKEND_API_URL = getBackendUrl();
-
-async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  try {
-    const url = `${BACKEND_API_URL}/api/blog/posts/${slug}`;
-    console.log('🌐 [Blog Post Page] Запрос к бэкенду:', url);
-    
-    const response = await fetchBackend(url, {
-      next: { revalidate: 60 }, // Кэшируем на 60 секунд
-    });
-
-    console.log('📥 [Blog Post Page] Ответ от бэкенда:', {
-      status: response.status,
-      ok: response.ok,
-    });
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        return null;
-      }
-      console.error('❌ [Blog Post Page] Ошибка загрузки статьи:', response.status);
-      return null;
-    }
-
-    const result = await response.json();
-    return result.post || null;
-  } catch (error) {
-    console.error('❌ [Blog Post Page] Ошибка загрузки статьи:', error);
-    return process.env.NODE_ENV === 'development' ? getBlogPostBySlug(slug) ?? null : null;
-  }
-}
-
-async function fetchPublishedPosts(): Promise<BlogPost[]> {
-  try {
-    const response = await fetchBackend(`${BACKEND_API_URL}/api/blog/posts?published=true`, { next: { revalidate: 300 } });
-    if (!response.ok) return [];
-    const result = await response.json();
-    return (result.posts || result || []).filter((post: BlogPost) => post.published !== false);
-  } catch {
-    return [];
-  }
-}
+/**
+ * Статья и «По теме» обновляются вебхуком бэкенда (тег blog-post:<slug>); «По теме» — тег blog-related, вебхук его не сбрасывает. Срок — страховка на неделю.
+ * dynamicParams не выключаем: новые статьи открываются без пересборки (slug проверяется до запроса к бэкенду).
+ */
+export const revalidate = 604800;
 
 export async function generateStaticParams() {
   try {
-    // Пытаемся загрузить посты с бэкенда
-    const response = await fetchBackend(`${BACKEND_API_URL}/api/blog/posts?published=true`, {
-      next: { revalidate: 3600 }, // Кэшируем на 1 час для статической генерации
-    });
-
-    let posts: BlogPost[] = [];
-    if (response.ok) {
-      const result = await response.json();
-      posts = result.posts || [];
-    }
+    const posts = await fetchPublishedBlogPosts();
 
     const params: Array<{ slug: string; lang: string }> = [];
     ['ru', 'kz'].forEach((lang) => {
@@ -95,7 +48,7 @@ export async function generateMetadata({
   const { lang: langParam, slug } = await params;
   const lang = langParam || 'ru';
   
-  const post = await fetchBlogPostBySlug(slug);
+  const post = isLocale(lang) ? await fetchBlogPost(slug) : null;
   
   if (!post) {
     return {
@@ -157,9 +110,11 @@ export default async function BlogPostPage({
   params: Promise<{ lang: string; slug: string }> 
 }) {
   const { lang: langParam, slug } = await params;
-  const lang = (langParam || 'ru') as 'ru' | 'en' | 'kz';
+  // Чужой язык (/wp/blog/x) — 404 без запроса к бэкенду; неверный slug отсекает fetchBlogPost.
+  if (!isLocale(langParam)) notFound();
+  const lang = langParam;
   
-  const post = await fetchBlogPostBySlug(slug);
+  const post = await fetchBlogPost(slug);
   
   if (!post) {
     notFound();
@@ -173,7 +128,8 @@ export default async function BlogPostPage({
   const content = getBlogContentForLang(post, lang);
   if (!content) notFound();
   const [contentBeforeCta, contentAfterCta] = splitArticleHtml(content);
-  const relatedPosts = getRelatedPosts(await fetchPublishedPosts(), post, lang);
+  // В клиентский BlogRelated — только slug и заголовок, без текстов статей.
+  const relatedPosts = getRelatedPosts(await fetchPublishedBlogPosts(BLOG_REVALIDATE_SECONDS, BLOG_RELATED_TAG), post, lang).map((related) => toBlogRelatedPost(related, lang));
   const relatedServices = getRelatedServices(post, lang);
 
   // Structured Data для статьи

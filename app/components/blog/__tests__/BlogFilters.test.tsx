@@ -1,34 +1,26 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import BlogFilters from '../BlogFilters'
-import type { BlogPost } from '../../../data/blog-posts'
+import type { BlogPostCard } from '../../../lib/blog-utils'
 
-// Мок данных для тестов
-const mockPosts: BlogPost[] = [
+// Мок данных для тестов: карточки на русском, как их отдаёт страница /ru/blog
+const mockPosts: BlogPostCard[] = [
   {
     id: '1',
     slug: 'test-post-1',
-    title: { ru: 'Тестовая статья 1', en: 'Test Post 1', kz: 'Тест мақаласы 1' },
-    description: { ru: 'Описание 1', en: 'Description 1', kz: 'Сипаттама 1' },
-    excerpt: { ru: 'Краткое описание 1', en: 'Excerpt 1', kz: 'Қысқаша сипаттама 1' },
-    category: { ru: 'Веб-разработка', en: 'Web Development', kz: 'Веб-дамыту' },
+    title: 'Тестовая статья 1',
+    excerpt: 'Краткое описание 1',
+    category: 'Веб-разработка',
     date: '2025-01-01',
-    keywords: { ru: ['тест'], en: ['test'], kz: ['тест'] },
     readingTime: 5,
-    published: true,
-    content: { ru: '', en: '', kz: '' },
   },
   {
     id: '2',
     slug: 'test-post-2',
-    title: { ru: 'Тестовая статья 2', en: 'Test Post 2', kz: 'Тест мақаласы 2' },
-    description: { ru: 'Описание 2', en: 'Description 2', kz: 'Сипаттама 2' },
-    excerpt: { ru: 'Краткое описание 2', en: 'Excerpt 2', kz: 'Қысқаша сипаттама 2' },
-    category: { ru: 'Маркетинг и SEO', en: 'Marketing & SEO', kz: 'Маркетинг және SEO' },
+    title: 'Тестовая статья 2',
+    excerpt: 'Краткое описание 2',
+    category: 'Маркетинг и SEO',
     date: '2025-01-02',
-    keywords: { ru: ['тест'], en: ['test'], kz: ['тест'] },
     readingTime: 10,
-    published: true,
-    content: { ru: '', en: '', kz: '' },
   },
 ]
 
@@ -80,7 +72,7 @@ describe('BlogFilters Component', () => {
     const lastCall = mockOnFilteredPostsChange.mock.calls.at(-1)
     const filteredPosts = lastCall?.[0] ?? []
     expect(filteredPosts.length).toBe(1)
-    expect(filteredPosts[0].category.ru).toBe('Веб-разработка')
+    expect(filteredPosts[0].category).toBe('Веб-разработка')
   })
 
   it('фильтрует по поисковому запросу', () => {

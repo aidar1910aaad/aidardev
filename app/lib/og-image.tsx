@@ -1,5 +1,7 @@
 import { ImageResponse } from 'next/og';
+import { notFound } from 'next/navigation';
 import { translations } from '../contexts/translations';
+import { isLocale } from './i18n';
 
 /**
  * Карточка-превью для ссылок в WhatsApp, Telegram и соцсетях: заголовок страницы + бренд.
@@ -16,8 +18,14 @@ const tagline: Record<OgLang, string> = {
   en: 'Development studio · Astana · Kazakhstan',
 };
 
+/**
+ * Язык из URL картинки. OG-картинки собираются при сборке по generateStaticParams, но
+ * `dynamicParams` в opengraph-image Next.js не применяет, поэтому чужой первый сегмент
+ * (/wp-login.php/opengraph-image) отсекаем здесь: 404 без рендера и без записи картинки в кэш.
+ */
 export function ogLang(value: string): OgLang {
-  return value === 'kz' || value === 'en' ? value : 'ru';
+  if (!isLocale(value)) notFound();
+  return value;
 }
 
 /** Текст перевода без «| …»-хвоста, который используется в старых H1. */
@@ -26,17 +34,32 @@ export function ogTranslation(lang: OgLang, key: string, fallback: string): stri
   return value.split('|')[0].trim();
 }
 
-async function loadFont(weight: 400 | 600, text: string): Promise<ArrayBuffer | null> {
-  try {
-    const cssUrl = `https://fonts.googleapis.com/css2?family=Golos+Text:wght@${weight}&text=${encodeURIComponent(text)}`;
-    const css = await (await fetch(cssUrl, { next: { revalidate: 86400 } })).text();
-    const fontUrl = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/)?.[1];
-    if (!fontUrl) return null;
-    const response = await fetch(fontUrl, { next: { revalidate: 86400 } });
-    return response.ok ? await response.arrayBuffer() : null;
-  } catch {
-    return null;
+/**
+ * Картинки собираются при сборке (generateStaticParams в каждом opengraph-image), поэтому шрифт
+ * кэшируется без срока (force-cache): `revalidate` у fetch заставлял бы перегенерировать каждую
+ * картинку раз в сутки. Пара повторов — чтобы разовый сбой Google Fonts не ронял сборку.
+ */
+async function loadFont(weight: 400 | 600, text: string, attempts = 3): Promise<ArrayBuffer | null> {
+  const cssUrl = `https://fonts.googleapis.com/css2?family=Golos+Text:wght@${weight}&text=${encodeURIComponent(text)}`;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const cssResponse = await fetch(cssUrl, { cache: 'force-cache' });
+      if (!cssResponse.ok) throw new Error(`Google Fonts CSS: ${cssResponse.status}`);
+      const css = await cssResponse.text();
+      const fontUrl = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/)?.[1];
+      if (!fontUrl) return null;
+      const response = await fetch(fontUrl, { cache: 'force-cache' });
+      if (!response.ok) throw new Error(`Google Fonts file: ${response.status}`);
+      return await response.arrayBuffer();
+    } catch (error) {
+      if (attempt === attempts) {
+        console.error('❌ [OG] Шрифт Golos Text не загрузился:', error);
+        return null;
+      }
+      await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+    }
   }
+  return null;
 }
 
 export async function renderOgImage({

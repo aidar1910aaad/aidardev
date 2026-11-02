@@ -1,6 +1,7 @@
 export const navigation = {
   en: {
     'nav.about': 'Services',
+    'nav.solutions': 'Solutions',
     'nav.testimonials': 'Reviews',
     'nav.projects': 'Projects',
     'nav.pricing': 'Pricing',
@@ -11,6 +12,7 @@ export const navigation = {
   },
   ru: {
     'nav.about': 'Услуги',
+    'nav.solutions': 'Решения',
     'nav.testimonials': 'Отзывы',
     'nav.projects': 'Проекты',
     'nav.pricing': 'Цены',
@@ -21,6 +23,7 @@ export const navigation = {
   },
   kz: {
     'nav.about': 'Қызметтер',
+    'nav.solutions': 'Шешімдер',
     'nav.testimonials': 'Пікірлер',
     'nav.projects': 'Жобалар',
     'nav.pricing': 'Бағалар',
