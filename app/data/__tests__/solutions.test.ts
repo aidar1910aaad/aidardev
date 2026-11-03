@@ -87,6 +87,12 @@ describe('solutions content', () => {
         'fuel-fleet',
         'timesheets-shifts',
         'lab-quality',
+        'industrial-ai',
+        'oil-gas',
+        'dealer-portal',
+        'tenders-ai',
+        'food-production',
+        'furniture-production',
       ]),
     );
     for (const solution of detailed) {
