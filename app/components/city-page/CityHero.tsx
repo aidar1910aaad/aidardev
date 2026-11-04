@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { Language } from '../../contexts/LanguageContext';
 import type { ServiceKey } from '../../data/services-config';
 import RatingRow from '../home/RatingRow';
@@ -17,10 +18,12 @@ interface CityHeroProps {
   whatsappUrl: string;
   /** Метка страницы для аналитики: city_astana, city_astana_mobile. */
   source: string;
+  /** Своя карточка справа вместо карточки услуги (страницы «Астана × услуга» со своей ценой). */
+  aside?: ReactNode;
 }
 
 /** Первый экран страницы города — как у страниц услуг, но с текстами города. */
-export default function CityHero({ lang, crumbs, kicker, h1, lead, body, service, whatsappUrl, source }: CityHeroProps) {
+export default function CityHero({ lang, crumbs, kicker, h1, lead, body, service, whatsappUrl, source, aside }: CityHeroProps) {
   return (
     <section className="hero-bg relative overflow-hidden">
       <div className={`${container} relative pb-14 pt-[calc(4rem+16px)] lg:pb-24 lg:pt-[calc(5rem+32px)]`}>
@@ -38,7 +41,7 @@ export default function CityHero({ lang, crumbs, kicker, h1, lead, body, service
             <RatingRow lang={lang} source={`2gis_${source}`} />
           </div>
 
-          <ServiceOfferCard lang={lang} service={service} />
+          {aside ?? <ServiceOfferCard lang={lang} service={service} />}
         </div>
       </div>
     </section>

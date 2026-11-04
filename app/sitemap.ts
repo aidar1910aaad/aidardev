@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { cityEntries, isCityIndexable } from './data/cities';
+import { ASTANA_PAGES, ASTANA_PRICE_SLUG, astanaPagePath } from './data/astana-pages';
 import { cityServiceCombos } from './data/city-services';
 import { INDUSTRY_HUB, SOLUTIONS, SOLUTIONS_HUB } from './data/solutions';
 import { getAvailableBlogLangs, shouldIndexBlogPost } from './lib/seo/blog-indexing';
@@ -131,6 +132,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
+  // «Астана × услуга» и калькулятор цены (data/astana-pages.ts), только RU.
+  const astanaRoutes = [ASTANA_PRICE_SLUG, ...ASTANA_PAGES.map((page) => page.slug)].map((slug) => ({
+    url: `${siteUrl}${astanaPagePath(slug)}`,
+    lastModified: new Date('2026-11-04'),
+    changeFrequency: 'monthly' as const,
+    priority: 0.9,
+  }));
+
   // «Сложная разработка»: раздел только на русском, без языковых версий.
   const solutionsRoutes = [SOLUTIONS_HUB.path, INDUSTRY_HUB.path, ...SOLUTIONS.map((s) => `/ru/solutions/${s.slug}`)].map((path) => ({
     url: `${siteUrl}${path}`,
@@ -176,6 +185,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Отдельных страниц проектов нет, поэтому не добавляем их в sitemap
   // Если в будущем создадите страницы /projects/[id], добавьте их сюда
 
-  return [...baseRoutes, ...pricingRoutes, ...servicesIndexRoutes, ...citiesIndexRoutes, ...serviceRoutes, ...solutionsRoutes, ...cityLandingRoutes, ...cityServiceRoutes, ...blogRoutes, ...blogPostRoutes, ...privacyRoutes];
+  return [...baseRoutes, ...pricingRoutes, ...servicesIndexRoutes, ...citiesIndexRoutes, ...serviceRoutes, ...solutionsRoutes, ...cityLandingRoutes, ...cityServiceRoutes, ...astanaRoutes, ...blogRoutes, ...blogPostRoutes, ...privacyRoutes];
 }
 

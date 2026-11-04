@@ -18,6 +18,7 @@ import ServicePackages from '../../../components/service-page/ServicePackages';
 import { LanguageProvider } from '../../../contexts/LanguageContext';
 import { cityEntries, getCityBySlug, getCityLandingContent, isCityIndexable, type SupportedLanguage } from '../../../data/cities';
 import { cityServiceCombos, getCityServiceContent } from '../../../data/city-services';
+import { ASTANA_CITY_SLUG, ASTANA_PAGES, ASTANA_PRICE_SLUG, astanaPagePath, getAstanaPage } from '../../../data/astana-pages';
 import { createBreadcrumbSchema, createFAQSchema, createServiceSchema } from '../../../lib/schemas';
 import { buildWhatsAppUrl } from '../../../lib/whatsapp';
 
@@ -106,7 +107,15 @@ export default async function CityLandingPage({
     .flatMap((combo) => {
       const page = getCityServiceContent(city, combo.service, lang);
       return page ? [{ href: `${path}/${combo.service}`, label: page.h1 }] : [];
-    });
+    })
+    .concat(
+      lang === 'ru' && city.slug === ASTANA_CITY_SLUG
+        ? [ASTANA_PRICE_SLUG, ...ASTANA_PAGES.map((p) => p.slug)].map((slug) => ({
+            href: astanaPagePath(slug),
+            label: getAstanaPage(slug)?.h1 ?? 'Сколько стоит сайт: калькулятор',
+          }))
+        : [],
+    );
 
   const faqSchema = createFAQSchema(content.faq);
   const serviceSchema = createServiceSchema({

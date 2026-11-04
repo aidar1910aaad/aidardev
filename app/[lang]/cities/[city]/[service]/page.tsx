@@ -18,6 +18,8 @@ import { LanguageProvider } from '../../../../contexts/LanguageContext';
 import { getCityLandingContent, type SupportedLanguage } from '../../../../data/cities';
 import { cityServiceCombos, getCityServiceContent, resolveCityService } from '../../../../data/city-services';
 import { servicesConfig } from '../../../../data/services-config';
+import { ASTANA_CITY_SLUG, ASTANA_PAGES, ASTANA_PRICE_SLUG, getAstanaPage } from '../../../../data/astana-pages';
+import { AstanaPricePage, AstanaServicePage, astanaPageMetadata, astanaPriceMetadata } from '../../../../components/city-page/AstanaPages';
 import { createBreadcrumbSchema, createFAQSchema, createServiceSchema } from '../../../../lib/schemas';
 import { buildWhatsAppUrl } from '../../../../lib/whatsapp';
 
@@ -31,14 +33,25 @@ function normalizeLanguage(lang: string): SupportedLanguage {
   return allowedLanguages.includes(lang as SupportedLanguage) ? (lang as SupportedLanguage) : 'ru';
 }
 
+// Страницы «Астана × услуга» и калькулятор цены: только RU (data/astana-pages.ts).
+function isAstanaLocal(lang: string, citySlug: string, service: string) {
+  return lang === 'ru' && citySlug === ASTANA_CITY_SLUG && (service === ASTANA_PRICE_SLUG || Boolean(getAstanaPage(service)));
+}
+
 export function generateStaticParams() {
-  return allowedLanguages.flatMap((lang) =>
+  const combos = allowedLanguages.flatMap((lang) =>
     cityServiceCombos.map((combo) => ({
       lang,
       city: combo.citySlug,
       service: combo.service,
     })),
   );
+  const astana = [ASTANA_PRICE_SLUG, ...ASTANA_PAGES.map((page) => page.slug)].map((service) => ({
+    lang: 'ru',
+    city: ASTANA_CITY_SLUG,
+    service,
+  }));
+  return [...combos, ...astana];
 }
 
 export async function generateMetadata({
@@ -47,6 +60,10 @@ export async function generateMetadata({
   params: Promise<{ lang: string; city: string; service: string }>;
 }): Promise<Metadata> {
   const { lang: rawLang, city: citySlug, service } = await params;
+  if (isAstanaLocal(rawLang, citySlug, service)) {
+    const page = getAstanaPage(service);
+    return page ? astanaPageMetadata(page) : astanaPriceMetadata();
+  }
   const lang = normalizeLanguage(rawLang);
   const resolved = resolveCityService(citySlug, service);
   if (!resolved) return {};
@@ -81,6 +98,10 @@ export default async function CityServicePage({
   params: Promise<{ lang: string; city: string; service: string }>;
 }) {
   const { lang: rawLang, city: citySlug, service } = await params;
+  if (isAstanaLocal(rawLang, citySlug, service)) {
+    const page = getAstanaPage(service);
+    return page ? <AstanaServicePage page={page} /> : <AstanaPricePage />;
+  }
   const lang = normalizeLanguage(rawLang);
   const resolved = resolveCityService(citySlug, service);
   if (!resolved) notFound();
